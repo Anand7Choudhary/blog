@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anand Choudhary</title>
+  <link rel="stylesheet" href="style/toggleSwitch.css">
+  <link rel="stylesheet" href="style/home.css">
+  <script src="https://kit.fontawesome.com/f72c18304b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- nav bar -->
+  <nav>
+    <ul class="navMenu">
+      <li style="display: block;">
+        <a href="/" class="title">
+          <img alt="Anand Choudhary" id="signImg1" src="image/sign-black.webp">
+          <img alt="Anand Choudhary" id="signImg2" src="image/sign-white.webp">
+        </a>
+      </li>
+      <li style="display: none;">
+        <a href="/" class="backBtn"><i class="fa-solid fa-arrow-left"></i>&ensp;Back</a>
+      </li>
+      <li>
+        <ul class="navButtons">
+          <li><a class="portfolioBtn" href="https://anand-choudhary.netlify.app" target="_blank">Portfolio</a></li>
+          <li>
+            <div class="darkModeBody">
+              <div class="innerModeDiv" id="innerModeDiv">
+                <div class="lightBtn" onclick="changeTheme(1)"><i class="fa-solid fa-sun"></i></div>
+                <div class="darkBtn" onclick="changeTheme(2)"><i class="fa-solid fa-moon"></i></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <!-- landing page -->
+  <div class="landing-page">
+    <video id="myVideo" preload="auto" autoplay loop muted>
+      <source src="image/landingBg.webm" type="video/webm" />Your browser does not support the video tag.
+    </video>
+    <div class="shadow" id="videoShadow"></div>
+    <p>Obtain perspectives on several of the major advancements in the global business landscape.</p>
+  </div>
+  <div class="downArrow"><i class="fa-solid fa-angle-down fa-bounce"></i></div>
+  <!-- Blog cards -->
+  <div class="blogBody">
+    <div class="text">
+      <h3>Check out these captivating articles!</h3>
+      <h5>These blogs reflect my personal views and perspectives</h5>
+    </div>
+    <div class="card-container">
+      <!-- 
+
+
+
+
+       -->
+       <!-- 
+        keep adding above, change title, time, content, html page in href, click() function
+        -->
+      <!-- 1 -->
+      <div class="card" onclick="document.getElementById('hippoChips').click()">
+        <a href="/blogs/hippoChips.html" id="hippoChips" style="display: none"></a>
+        <img alt="Blog-Image"
+          src="https://static.wixstatic.com/media/86a29f_a8aa0d4cfe014949bf93f15dae4e8140~mv2.jpg/v1/fill/w_1000,h_569,al_c,q_90,usm_0.66_1.00_0.01/86a29f_a8aa0d4cfe014949bf93f15dae4e8140~mv2.jpg">
+        <div class="textBody">
+          <p class="cardTitle">Hippo Chips</p>
+          <p class="cardReadTime">(4min-6min read)</p>
+          <p class="cardMiniContent">Alternatively, you can try using the display: flex; property, which is supported in
+            modern browsers and can also achieve similar results. However, you may need to add additional vendor
+            prefixes to ensure cross-browser compatibility. Here is an example of using display: flex; with vendor
+            prefixes:
+          </p>
+        </div>
+      </div>
+
+
+
+      <!-- other card -->
+      <div class="otherCard">
+        <i class="fa-regular fa-square-plus"></i>
+        <p>Keep an eye out for my upcoming publication on the latest research in the field.</p>
+      </div>
+    </div>
+  </div>
+  <!-- footer -->
+  <footer>
+    <div class="footer-closing">
+      <p>When you invest in building connections, you invest in your own personal growth.</p>
+      <p>Let's get in touch!</p>
+    </div>
+    <div class="divider"></div>
+    <div class="social-links">
+      <ul>
+        <li><a href="https://anand-choudhary.netlify.app" target="_blank">Portfolio</a></li>
+        <li><a href="https://www.linkedin.com/in/anand-choudhary-51b4211b8/" target="_blank">Linkedin</a></li>
+        <li><a href="/">Blogs</a></li>
+        <li><a href="https://twitter.com/?lang=en-in" target="_blank">Twitter</a></li>
+        <li><a href="https://www.instagram.com/choudharyxanand/" target="_blank">Instagram</a></li>
+      </ul>
+    </div>
+  </footer>
+
+
+  <script type="text/javascript" src="script/home.js"></script>
+</body>
+
+</html>

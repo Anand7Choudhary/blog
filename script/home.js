@@ -12,3 +12,8 @@ const changeTheme=(n)=>{
         document.getElementById("signImg1").style.display = "block";
     }
 }
+window.onload = function () {
+    setTimeout(function () {
+        document.getElementById("myVideo").play();
+    }, 1000);
+};

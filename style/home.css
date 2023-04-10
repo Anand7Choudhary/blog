@@ -390,6 +390,9 @@ footer .social-links ul li a:hover {
     .landing-page .img-body img {
         width: 80%;
     }
+    .blogBody .card-container .card .textBody .cardMiniContent{
+        -webkit-line-clamp: 8;
+    }
 }
 @media screen and (max-width: 350px) {
     nav .navMenu li .navButtons {

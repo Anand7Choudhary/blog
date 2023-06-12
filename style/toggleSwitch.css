@@ -1,9 +1,9 @@
 nav {
     width: 100%;
     height: fit-content;
-    padding: 20px 15%;
+    padding: 20px 10%;
     background-color: var(--nav-color);
-    box-shadow: 0 0 30px 0px #59595924;
+    /* box-shadow: 0 0 30px 0px #59595924; */
     position: fixed;
     top: 0;
     left: 0;
@@ -26,27 +26,16 @@ nav .navMenu li a {
     cursor: pointer;
 }
 nav .navMenu li .title{
-    background-color: red;
+    background-color: transparent;
     width: fit-content;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    letter-spacing: 1px;
+    word-spacing: 5px;
 }
-nav .navMenu li .title img{
-    position: absolute;
-    width:200px;
-    left: 0;
-}
-
-nav .navMenu li .backBtn{
-    border: 2px solid var(--nav-text);
-    padding:10px 15px;
-    border-radius: 10px;
-    font-size: 16px;
-}
-
 nav .navMenu li .navButtons {
     list-style-type: none;
     width: fit-content;
@@ -58,17 +47,13 @@ nav .navMenu li .navButtons {
     gap: 20px;
     position: relative;
 }
-#signImg1{
-    display: none;
-}
 .darkModeBody {
-    width: 75px;
-    height: 35px;
+    width: 65px;
+    height: 30px;
     border-radius: 25px;
     overflow: hidden;
     cursor: pointer;
 }
-
 .darkModeBody .innerModeDiv {
     width: fit-content;
     height: 100%;
@@ -81,12 +66,12 @@ nav .navMenu li .navButtons {
 
 .darkModeBody .lightBtn,
 .darkModeBody .darkBtn {
-    padding: 0 10px;
+    padding: 0 6px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    min-width: 76px;
+    min-width: 66px;
 }
 
 .darkModeBody .lightBtn {
@@ -101,12 +86,12 @@ nav .navMenu li .navButtons {
 }
 
 .portfolioBtn {
-    background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+    background-image: linear-gradient(144deg, #8830c7, #3a24c5 50%, #00acb9);
     border: 0;
     border-radius: 8px;
     color: #FFFFFF !important;
     display: flex;
-    font-size: 18px;
+    font-size: 16px;
     justify-content: center;
     width: fit-content;
     padding: 3px;
@@ -116,5 +101,5 @@ nav .navMenu li .navButtons {
     font-weight: bolder;
 }
 .portfolioBtn:hover{
-    background-image: linear-gradient(144deg, #8830c7, #3a24c5 50%, #00acb9);
+    background-image: linear-gradient(144deg, #6d06b7, #1c04b8 50%, #007780);
 }

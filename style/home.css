@@ -93,7 +93,7 @@ body {
 .landing-page .landingPage-info-body .growthBubbleIcon img {
     width: 70%;
     position: relative;
-    left: 30px;
+    /* left: 30px; */
 }
 
 .landing-page .landingPage-info-body .infoText {
@@ -146,6 +146,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
     gap: 50px;
     justify-content: center;
+    align-content: center;
     align-items: center;
 }
 
@@ -372,24 +373,29 @@ footer .social-links ul li a:hover {
     color: #ffffff;
     text-decoration: underline;
 }
-@media screen and (max-width:1470px){
+
+@media screen and (max-width:1470px) {
     .social-connect-body {
         min-height: 60vh;
         max-height: 60vh;
     }
+
     .social-connect-body .earthBody {
         overflow: visible;
     }
+
     .social-connect-body .earthBody img {
         width: 200%;
         transform-origin: center;
         transform: translate3d(-25%, -45%, 0);
     }
 }
+
 @media screen and (max-width:1300px) {
     .landing-page .landingPage-info-body .growthBubbleIcon img {
         width: 100%;
     }
+
     .social-connect-body {
         min-height: 40vh;
         max-height: 40vh;
@@ -422,6 +428,7 @@ footer .social-links ul li a:hover {
     .blogBody {
         padding: 100px 5vw;
     }
+
     .social-connect-body {
         min-height: 35vh;
         max-height: 35vh;
@@ -462,6 +469,7 @@ footer .social-links ul li a:hover {
         font-size: 14px;
         margin-bottom: 50px;
     }
+
     nav .navMenu li .title img {
         width: 150px;
     }
@@ -509,6 +517,9 @@ footer .social-links ul li a:hover {
 
     .blogBody .card-container {
         grid-template-columns: repeat(auto-fit, minmax(75%, 75%));
+        justify-content: center;
+        align-content: center;
+        align-items: center;
     }
 
     .blogBody .card-container .card {
@@ -523,6 +534,7 @@ footer .social-links ul li a:hover {
         font-size: 24px;
         font-weight: bold;
     }
+
     .social-connect-body .earthBody img {
         width: 350%;
         transform-origin: center;

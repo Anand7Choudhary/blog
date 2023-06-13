@@ -78,6 +78,10 @@ nav .navMenu li .navButtons {
     color: rgb(255, 255, 0);
     background-color: rgb(0, 183, 255);
 }
+.darkModeBody .lightBtn img,
+.darkModeBody .darkBtn img{
+    width: 25px;
+}
 
 .darkModeBody .darkBtn {
     color: rgb(255, 255, 255);

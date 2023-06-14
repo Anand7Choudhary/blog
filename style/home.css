@@ -6,7 +6,8 @@
     --text: #101010;
     --card-bg: #ffffff;
     --card-title-color: #000000;
-    --card-time-color: #6b6b6b;
+    --card-date-color: #4567ff;
+    --card-time-color: #909090;
     --card-content-color: #2c2c2c;
     --blog-text: #1d1d1d;
     --shadow-color1: rgba(136, 165, 191, 0.48);
@@ -21,6 +22,7 @@
     --text: #ffffff;
     --card-bg: #202020;
     --card-title-color: #fdfdfd;
+    --card-date-color: #7d95ff;
     --card-time-color: #909090;
     --card-content-color: #a5a5a5;
     --blog-text: #ededed;
@@ -106,10 +108,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-
-
-
-
 .blogBody {
     width: 100%;
     height: fit-content;
@@ -137,14 +135,63 @@ body {
     color: var(--text);
     font-size: 18px;
     font-weight: 100;
-    margin-bottom: 100px;
+    margin-bottom: 75px;
+}
+
+.blogBody .searchContainer{
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    padding:0 25px 0 25px;
+    border-radius: 5px;
+    /* gap: 10px; */
+}
+.blogBody .searchContainer input{
+    width: 85%;
+    max-width: 350px;
+    height: 40px;
+    outline: none;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    font-size: 16px;
+    color: #101010;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    word-spacing: 3px;
+    padding: 0 0 0 20px;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    box-shadow: var(--shadow-color1) 6px 2px 16px 0px,
+    var(--shadow-color2) -6px -2px 16px 0px;
+}
+.blogBody .searchContainer button{
+    width: 15%;
+    max-width: 60px;
+    height: 40px;
+    outline: none;
+    background-color: #1000c5;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    box-shadow: var(--shadow-color1) 10px 5px 16px 0px,
+    var(--shadow-color2) -6px -2px 16px 0px;
+}
+.blogBody .searchContainer button img{
+    width: 35px;
 }
 
 .blogBody .card-container {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
-    gap: 50px;
+    column-gap: 75px;
+    row-gap: 50px;
     justify-content: center;
     align-content: center;
     align-items: center;
@@ -240,14 +287,18 @@ body {
     position: relative;
 }
 
-.blogBody .card-container .card .textBody .cardReadTime {
+.blogBody .card-container .card .textBody .cardReadTime,
+.blogBody .card-container .card .textBody .cardReadTime2 {
     width: 100%;
     font-size: 14px;
-    margin-bottom: 10px;
-    color: var(--card-time-color);
+    margin-bottom: 3px;
+    color: var(--card-date-color);
     position: relative;
 }
-
+.blogBody .card-container .card .textBody .cardReadTime2{
+    margin-bottom: 10px;
+    color: var(--card-time-color);
+}
 .blogBody .card-container .card .textBody .cardMiniContent {
     width: 100%;
     font-size: 14px;

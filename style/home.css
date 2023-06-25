@@ -12,6 +12,7 @@
     --blog-text: #1d1d1d;
     --shadow-color1: rgba(136, 165, 191, 0.48);
     --shadow-color2: rgba(255, 255, 255, 0.8);
+    --upArrow:#00a7e9;
 }
 
 :root.dark {
@@ -28,6 +29,7 @@
     --blog-text: #ededed;
     --shadow-color1: rgba(0, 0, 0, 0);
     --shadow-color2: rgba(0, 0, 0, 0);
+    --upArrow:#3e3e3e;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,500&display=swap');
@@ -173,7 +175,7 @@ body {
     max-width: 60px;
     height: 40px;
     outline: none;
-    background-color: #1000c5;
+    background-color: #202020;
     border: none;
     cursor: pointer;
     overflow: hidden;
@@ -567,14 +569,18 @@ footer .social-links ul li a:hover {
     }
 
     .blogBody .card-container {
-        grid-template-columns: repeat(auto-fit, minmax(75%, 75%));
+        grid-template-columns: repeat(auto-fit, minmax(76%, 76%));
         justify-content: center;
         align-content: center;
         align-items: center;
         column-gap: 0px;
+        margin-left: 12%;
+        margin-right: 12%;
     }
 
-    .blogBody .card-container .card {
+    .blogBody .card-container .card,
+    .blogBody .card-container .otherCard {
+        min-width: 76%;
         height: 400px;
     }
 
@@ -590,7 +596,7 @@ footer .social-links ul li a:hover {
     .social-connect-body .earthBody img {
         width: 350%;
         transform-origin: center;
-        transform: translate3d(-35%, -30%, 0);
+        transform: translate3d(-37%, -30%, 0);
     }
 }
 
@@ -602,7 +608,7 @@ footer .social-links ul li a:hover {
     .blogBody .text h5 {
         font-size: 14px;
     }
-
+    
     .social-connect-body .socialBody-header .title {
         font-size: 18px;
         font-weight: bold;

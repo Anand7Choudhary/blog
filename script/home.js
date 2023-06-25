@@ -23,6 +23,22 @@ window.onload=()=>{
     }
 }
 
+window.addEventListener('scroll', function () {
+    var scrollBox = document.getElementById('scrollBox');
+    if (window.scrollY >= 100) {
+        scrollBox.classList.add('show');
+    } else {
+        scrollBox.classList.remove('show');
+    }
+});
+
+document.getElementById('scrollBox').addEventListener('click', function () {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
 // card data
 const cards = [{
         id: '7',

@@ -571,6 +571,7 @@ footer .social-links ul li a:hover {
         justify-content: center;
         align-content: center;
         align-items: center;
+        column-gap: 0px;
     }
 
     .blogBody .card-container .card {

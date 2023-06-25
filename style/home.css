@@ -613,4 +613,9 @@ footer .social-links ul li a:hover {
         font-size: 18px;
         font-weight: bold;
     }
+    .scroll-box{
+        width: 40px;
+        height: 40px;
+        border-radius: 7px;
+    }
 }

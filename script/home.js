@@ -3,12 +3,25 @@ const changeTheme = (n) => {
     if (n == 1) {
         modeDiv.style.transform = "translateX(-50%)";
         document.querySelector("html").className = "dark";
+        localStorage.setItem("theme", "dark");
     } else {
         modeDiv.style.transform = "translateX(0)";
         document.querySelector("html").className = "light";
+        localStorage.setItem("theme", "light");
     }
 }
 
+window.onload=()=>{
+    let getTheme=localStorage.getItem("theme");
+    if(getTheme==null){
+        changeTheme(2);
+    }else{
+        if (getTheme == "light")
+            changeTheme(2);
+        else
+            changeTheme(1);
+    }
+}
 
 // card data
 const cards = [{

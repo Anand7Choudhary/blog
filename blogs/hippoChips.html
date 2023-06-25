@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
 
 <head>
     <meta charset="UTF-8">
@@ -27,8 +27,8 @@
                     <li>
                         <div class="darkModeBody">
                             <div class="innerModeDiv" id="innerModeDiv">
-                                <div class="lightBtn" onclick="changeTheme(1)"><i class="fa-solid fa-sun"></i></div>
-                                <div class="darkBtn" onclick="changeTheme(2)"><i class="fa-solid fa-moon"></i></div>
+                                <div class="lightBtn" onclick="changeTheme(1)"><img alt="moon" src="../image/sun.svg"></div>
+                                <div class="darkBtn" onclick="changeTheme(2)"><img alt="moon" src="../image/moon.svg"></div>
                             </div>
                         </div>
                     </li>
@@ -192,10 +192,9 @@
     </footer>
     <script type="text/javascript" src="../script/home.js"></script>
     <script>
+        document.querySelector("html").className=localStorage.getItem("theme");
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2118189722932279"
-         crossorigin="anonymous"></script> -->
 </body>
 
 </html>

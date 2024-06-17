@@ -40,82 +40,90 @@ document.getElementById('scrollBox').addEventListener('click', function () {
 });
 
 // card data
-const cards = [{
+const cards = [
+    {
+        id: '8',
+        title: "Crystal Ball for Businesses: Unlocking Future Consumer Behavior for Unmatched Growth",
+        imageUrl: 'image/articleImages/8.webp',
+        date: '16th June, 2024',
+        readTime: '5-7min read',
+        content: "In this fast-paced and ever-evolving business landscape, we have already understood the importance of limitless technology and best operations. But staying ahead of the competition requires more than just that. Imagine having a crystal ball that reveals the future behaviours and preferences of your customers.",
+        keywords: ['Crystal Ball for Businesses, future consumer behavior,consumer,behavior, predictive analytics,analytics,predictive, customer metrics, data privacy,privacy, business growth, customer satisfaction, customer loyalty, market trends,market,trends, competitive edge'],
+        link: 'https://www.linkedin.com/pulse/crystal-ball-businesses-unlocking-future-consumer-growth-choudhary-hmyqe/?trackingId=EtD3ylv0mhAg17UkXOSKYw%3D%3D',
+        iconLink:'image/icons/fire.json',
+    },
+    {
         id: '7',
         title: 'Understanding the Decline in Startup Valuations in India',
-        imageUrl: 'https://media.licdn.com/dms/image/D4D12AQHfsNVmrzb05g/article-cover_image-shrink_423_752/0/1686291199857?e=1692230400&v=beta&t=ceBM9sdMv6h_3w7k_KQ94mW6qXRYKiz6MVjXO1CGAlU',
+        imageUrl: 'image/articleImages/7.webp',
         date: '10th June, 2023',
         readTime: '8min-10min read',
         content: 'The Indian startup ecosystem has been on a tear in recent years, the tide seems to be turning, as venture capital (VC) firms are becoming more cautious about valuations.',
         keywords: ['Understanding the Decline in Startup Valuations in India', 'funding winter', 'fintech', 'startup valuations', 'India', 'venture capital', 'rising interest rates', 'cautious investors', 'down rounds', 'structured debt', 'unicorns', 'e-commerce', 'enterprise tech'],
         link: 'https://www.linkedin.com/pulse/navigating-shift-understanding-decline-startup-india-anand-choudhary',
+        iconLink: 'image/icons/fire.json',
     },
     {
         id: '6',
         title: "NVIDIA's Market Cap Reaches $970 Billion",
-        imageUrl: 'https://media.licdn.com/dms/image/D5622AQH0ntKs2B0Vcw/feedshare-shrink_2048_1536/0/1685358812182?e=1689206400&v=beta&t=HhLpZnnUD85spa6gDBQuX6_ObD5NerHOS4VUxHsD17Y',
+        imageUrl: 'image/articleImages/6.webp',
         date: '29th May, 2023',
         readTime: '3min-5min read',
         content: "Nvidia, the world's leading provider of GPUs, has reached a market capitalization of $970 billion, solidifying its position as a global tech powerhouse.",
         keywords: ['NVIDIA\'s Market Cap Reaches $970 Billion','NVIDIA', 'market cap','GPU\'s','AI','data center', 'automotive', 'gaming', 'cloud computing', 'metaverse', 'cryptocurrency'],
         link: 'https://www.linkedin.com/posts/anand-choudhary-51b4211b8_ai-leadership-growth-activity-7068907212286414849-43iq?utm_source=share&utm_medium=member_desktop',
+        iconLink: 'image/icons/globe.json',
     },
     {
         id: '5',
         title: 'The Gig Economy: A New Way to Work',
-        imageUrl: 'https://media.licdn.com/dms/image/D5622AQG9MO5zJqQB3A/feedshare-shrink_2048_1536/0/1685249621718?e=1689206400&v=beta&t=Ydx40o9ozdQifXbJs7aEzoI-VvcgHIQ6wDLF7PaWQTk',
+        imageUrl: 'image/articleImages/5.webp',
         date: '28th May, 2023',
         readTime: '3min-5min read',
         content: 'The gig economy is revolutionizing the way we work, offering exciting opportunities for independent contractors to engage in short-term projects through online platforms. Writers, designers, drivers, and delivery workers are just a few examples of professionals thriving in this dynamic landscape.',
         keywords: ['The Gig Economy: A New Way to Work', 'gig economy', 'work', 'Independent contractor', 'Freelancer', 'Online platform', 'Short-term project', 'Work-life balance', 'Flexibility', 'Independence', 'Opportunity', 'Rewarding'],
         link: 'https://www.linkedin.com/posts/anand-choudhary-51b4211b8_gigeconomy-independence-flexibility-activity-7068449233388912640-fc1K?utm_source=share&utm_medium=member_desktop',
+        iconLink: '',
     },
     {
         id: '4',
         title: 'Neuralink: The Future of Humankind?',
-        imageUrl: 'https://media.licdn.com/dms/image/D5622AQGTjJ5N4Ot52g/feedshare-shrink_800/0/1685110606775?e=1689206400&v=beta&t=f4O-MXNcR6i_m54aFCh5Cw-dVCjQKMzmokibVxUmTTc',
+        imageUrl: 'image/articleImages/4.webp',
         date: '26th May, 2023',
         readTime: '2min-4min read',
         content: "Elon Musk's Neuralink company has been making headlines for its groundbreaking development of brain-implant technology. The company has already achieved successful implantations in pigs and monkeys, and now it's gearing up for human trials!",
         keywords: ['Neuralink: The Future of Humankind?','Neuralink', 'brain-implant technology','groundbreaking development', 'brain-implant technology', 'successful implantations', 'pigs and monkeys', 'human trials', 'connect the human brain to a computer', 'wide range of potential applications', 'treating neurological disorders', 'enhancing human intelligence', 'potential risks', 'malfunction and damage the brain', 'control people\'s thoughts or behavior', 'potential benefits', 'revolutionize the way we treat neurological disorders', 'enhance human intelligence', 'groundbreaking technology', 'potential to change the world'],
         link: 'https://www.linkedin.com/posts/anand-choudhary-51b4211b8_technology-development-future-activity-7068073333283581953-Yutw?utm_source=share&utm_medium=member_desktop',
+        iconLink: '',
     },
     {
         id: '3',
         title: 'Have you heard of Neeva?',
-        imageUrl: 'https://media.licdn.com/dms/image/D5622AQFOXXPMN5ZEcA/feedshare-shrink_1280/0/1685097340060?e=1689206400&v=beta&t=GCN9iAS8QaOEhW-tR5i6HSd3JqdcdysLrOFoqSPTVjk',
+        imageUrl: 'image/articleImages/3.webp',
         date: '25th May, 2023',
         readTime: '2min-4min read',
         content: 'It\'s a 2019-founded company that aimed to challenge Google with an ad-free search engine, using AI for more relevant and accurate results. Founded by ex-Googlers Sridhar Ramaswamy and Vivek Raghunathan, Neeva prioritized user control and privacy.',
         keywords: ['Have you heard of Neeva?', 'Neeva', 'search engine', 'privacy', 'Ad-free', 'AI-powered', 'Privacy-focused', 'Personalized results', 'Custom search folders', 'Neeva', 'Search engine', 'Ad-free', 'AI-powered', 'Privacy-focused', 'Subscription-based', 'Sridhar Ramaswamy', 'Vivek Raghunathan', 'Neeva review', 'Neeva vs. Google', 'Neeva vs. DuckDuckGo', 'Neeva vs. Bing'],
         link: 'https://www.linkedin.com/posts/anand-choudhary-51b4211b8_neeva-searchengine-privacy-activity-7067810519646142464-B9Hs?utm_source=share&utm_medium=member_desktop',
+        iconLink: '',
     },
     {
         id: '2',
         title: 'Understanding Changing Consumer Behaviour',
-        imageUrl: 'https://media.licdn.com/dms/image/D5612AQHsAnSPoTL5qg/article-cover_image-shrink_423_752/0/1684678278422?e=1692230400&v=beta&t=koukhxDnf2vMXim2qqQ5WGq2Lt1dH_lkTkR0YgSKFuk',
+        imageUrl: 'image/articleImages/2.webp',
         date: '22nd May, 2023',
         readTime: '6min-8min read',
         content: 'Consumer behaviour has undergone significant transformations throughout history. From price-consciousness to an emphasis on quality and sustainability, consumers have become more discerning in recent years. This article explores the important revolutions that shaped consumer behaviour, examines current changes, and speculates the future.',
         keywords: ['Understanding Changing Consumer Behaviour', 'consumer behaviour', 'consumer trends', 'Consumer trends', 'Consumer insights', 'Customer journey', 'Customer experience', 'Personalization', 'Sustainability', 'Ethics', 'Technology', 'Globalization'],
         link: 'https://www.linkedin.com/pulse/understanding-changing-consumer-behaviour-journey-past-choudhary',
-    },
-    {
-        id: '1',
-        title: 'Hippo Chips',
-        imageUrl: 'https://static.wixstatic.com/media/86a29f_a8aa0d4cfe014949bf93f15dae4e8140~mv2.jpg/v1/fill/w_1000,h_569,al_c,q_90,usm_0.66_1.00_0.01/86a29f_a8aa0d4cfe014949bf93f15dae4e8140~mv2.jpginit',
-        date: '5th March, 2023',
-        readTime: '4min-6min read',
-        content: 'In India, "maa ka pyaar" (a mother\'s love) is a surefire winner. This is exactly what the snack brand "Hippo" did with its munchies variant. Initially, Parle Agro tried to tackle the global hunger issue with their product, but then shifted their focus to selling it based on the promise of love and care.',
-        keywords: ['Hippo Chips', 'Hippo', 'snack brand', 'India', 'Parle Agro', 'Munchies', 'Global hunger', 'Love and care', 'India'],
-        link: 'blogs/hippoChips.html',
+        iconLink: 'image/icons/heart.json',
     },
     // Add more card objects as needed
 ];
 
 // Define a class to style the cards
 class Card {
-    constructor(id, title, imageUrl, date, readTime, content, link) {
+    constructor(id, title, imageUrl, date, readTime, content, link, iconLink) {
         this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;
@@ -123,6 +131,7 @@ class Card {
         this.readTime = readTime;
         this.content = content;
         this.link = link;
+        this.iconLink = iconLink;
     }
 
     render() {
@@ -135,28 +144,55 @@ class Card {
                 window.open(this.link, '_blank');
             }
         };
+
         const cardImage = document.createElement('img');
         cardImage.src = this.imageUrl;
+
         const textBody = document.createElement('div');
         textBody.classList = "textBody";
+
         const cardTitle = document.createElement('p');
         cardTitle.classList = "cardTitle";
         cardTitle.textContent = this.title;
+
         const cardDate = document.createElement('p');
         cardDate.classList = "cardReadTime";
         cardDate.textContent = `Date: ${this.date}`;
+
         const cardTime = document.createElement('p');
         cardTime.classList = "cardReadTime2";
-        cardTime.textContent = `Date: ${this.readTime}`;
+        cardTime.textContent = `Read Time: ${this.readTime}`;
+
         const cardContent = document.createElement('p');
         cardContent.classList = "cardMiniContent";
         cardContent.textContent = this.content;
+
+        const iconContainer = document.createElement('div');
+        iconContainer.classList = "ani-icon";
+        var iconId = 'ani-icon-' + this.id;
+        iconContainer.id = iconId;
+
+        // Append elements to the card
         card.appendChild(cardImage);
         textBody.appendChild(cardTitle);
         textBody.appendChild(cardDate);
         textBody.appendChild(cardTime);
         textBody.appendChild(cardContent);
         card.appendChild(textBody);
+        card.appendChild(iconContainer);
+
+        // After the iconContainer is appended to the DOM, load the Lottie animation
+        setTimeout(() => {
+            lottie.loadAnimation({
+                container: document.getElementById(iconId), // the DOM element to render the animation
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: this.iconLink, // the path to the animation JSON file
+                speed: 2
+            });
+        }, 0);
+
         return card;
     }
 }
@@ -187,7 +223,7 @@ function displayCards() {
             continue;
         }
 
-        const cardElement = new Card(card.id, card.title, card.imageUrl, card.date, card.readTime, card.content, card.link);
+        const cardElement = new Card(card.id, card.title, card.imageUrl, card.date, card.readTime, card.content, card.link, card.iconLink);
         cardContainer.appendChild(cardElement.render());
     }
     const dynamicCard = createOtherCard();
@@ -231,3 +267,11 @@ function sortCardsByDate() {
     });
     displayCards();
 }
+
+var animation = lottie.loadAnimation({
+    container: document.getElementById('lottie-animation-com'), // the DOM element to render the animation
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'image/icons/communication.json' // the path to the animation JSON file
+});

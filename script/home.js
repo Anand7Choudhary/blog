@@ -42,13 +42,24 @@ document.getElementById('scrollBox').addEventListener('click', function () {
 // card data
 const cards = [
     {
+        id: '10',
+        title: "Zerodha: A Data-Driven Disruption in the Brokerage Market",
+        imageUrl: 'image/articleImages/10.webp',
+        date: '29th September, 2024',
+        readTime: '10-12min read',
+        content: "In the bustling landscape of Indian finance, where legacy brokerages have traditionally dominated through lavish advertising and extensive marketing budgets, Zerodha emerged as a beacon of innovation. Founded in 2010 by brothers Nithin and Nikhil Kamath",
+        keywords: ['Olympics 2024 Dashboard', 'Tableau', 'data visualization', 'dashboard design', 'Olympics insights', 'sports analytics', 'medal tally', 'athlete performance', 'country-wise medals', 'gender distribution', 'Paris Olympics', 'GrowthBubble', 'Olympic data analysis', 'interactive dashboard', 'Olympics statistics', 'data analytics', 'business intelligence', 'dashboard skills', 'job hunting', 'sports data', 'visual analytics'],
+        link: 'https://www.linkedin.com/pulse/zerodha-data-driven-disruption-brokerage-market-anand-choudhary-32the/?trackingId=cX3RkhPvQw2sXBvFOEZUGg%3D%3D',
+        iconLink:'image/icons/fire.json',
+    },
+    {
         id: '9',
         title: "Paris olympics 2024 Data Insights in Tableau dashboard",
         imageUrl: 'image/articleImages/9.webp',
         date: '19th September, 2024',
         readTime: '10-12min read',
         content: "What do you do when you’re not competing in the Olympics? Well, you create a Tableau dashboard to analyze the real champions! I just had a blast brushing up my dashboard design skills while building an interactive Olympics 2024 insights dashboard. From who’ s bagging the most medal to how athletes are stacking up by country, discipline, and gender.Wanna geek out on the numbers and reveal the insights ?",
-        keywords: ['Olympics 2024 Dashboard', 'Tableau', 'data visualization', 'dashboard design', 'Olympics insights', 'sports analytics', 'medal tally', 'athlete performance', 'country-wise medals', 'gender distribution', 'Paris Olympics', 'GrowthBubble', 'Olympic data analysis', 'interactive dashboard', 'Olympics statistics', 'data analytics', 'business intelligence', 'dashboard skills', 'job hunting', 'sports data', 'visual analytics'],
+        keywords: ['Zerodha', 'FinTech', 'customer satisfaction', 'brokerage model', 'disruption', 'business strategy', 'investment', 'low-cost trading', 'digital transformation', 'market penetration', 'NSE volume', 'customer acquisition', 'flat fee trading', 'financial innovation', 'startup success', 'Kamath brothers', 'business growth', 'data-driven strategy', 'Indian brokerage', 'revenue growth', 'financial services'],
         link: 'https://www.linkedin.com/posts/anand-choudhary-51b4211b8_tableau-olympics2024-datanerd-activity-7242835628881584130-hvEf?utm_source=share&utm_medium=member_desktop',
         iconLink:'image/icons/heart.json',
     },

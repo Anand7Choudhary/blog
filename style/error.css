@@ -1,0 +1,65 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Roboto Flex',sans-serif;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    background-color: #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    padding:30px;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap:30px;
+}
+.container .errorImg{
+    width: 30%;
+}
+.container .textBox{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap:20px;
+    color:aliceblue
+}
+.container .textBox .errorText{
+    text-align: center;
+}
+.container .textBox .backBtn{
+    background-color: rgb(78, 78, 255);
+    cursor: pointer;
+    color: white;
+    border-radius: 10px;
+    padding:15px 20px;
+    outline: none;
+    border: none;
+    transition: 0.25s ease-in-out;
+    text-decoration: none;
+}
+.container .textBox .backBtn:hover{
+    transform: scale(1.05);
+    background-color: rgb(47, 47, 255);
+}
+
+@media screen and (max-width:900px) {
+   .container .errorImg {
+       width: 50%;
+   }
+}
+@media screen and (max-width:600px) {
+    .container .errorImg {
+        width: 70%;
+    }
+}

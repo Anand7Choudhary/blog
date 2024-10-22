@@ -42,6 +42,17 @@ document.getElementById('scrollBox').addEventListener('click', function () {
 // card data
 const cards = [
     {
+        id: '11',
+        title: "Hosuing market vs Mutual Funds for middle class",
+        imageUrl: 'image/articleImages/11.webp',
+        date: '21st October, 2024',
+        readTime: '2-3min read',
+        content: "For someone earning ₹50,000 per month (around £1,650 PPP), investing in mutual funds or SIPs is generally a better financial decision than purchasing property. With low rental yields and high costs associated with real estate, mutual funds offer higher returns and liquidity, making them more attractive for long-term wealth creation. While mutual funds provide flexibility and potential growth, the emotional bond and sense of security that come with homeownership are significant factors to consider.",
+        keywords: ['Nikhil Kamat', 'homeownership', 'financial advice', 'personal finance', 'real estate', 'mutual funds', 'SIPs', 'investment strategies', 'emotional value', 'financial literacy', 'context matters', 'year-on-year growth', 'property prices', 'rental yields', 'equity funds', 'investment costs', 'liquidity', 'financial decisions', 'risk tolerance', 'wealth creation', 'personal circumstances'],
+        link: 'https://www.linkedin.com/posts/anand-choudhary-51b4211b8_lately-ive-noticed-a-surge-of-posts-in-activity-7254068916132491265-5Noe?utm_source=share&utm_medium=member_desktop',
+        iconLink: '',
+    },
+    {
         id: '10',
         title: "Zerodha: A Data-Driven Disruption in the Brokerage Market",
         imageUrl: 'image/articleImages/10.webp',

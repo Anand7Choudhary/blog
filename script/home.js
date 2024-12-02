@@ -42,6 +42,17 @@ document.getElementById('scrollBox').addEventListener('click', function () {
 // card data
 const cards = [
     {
+        id: '12',
+        title: "Part -1 Understanding Financial terms",
+        imageUrl: 'image/articleImages/12.webp',
+        date: '2nd December, 2024',
+        readTime: '5-6min read',
+        content: "Equity is ownership in a company, typically in the form of shares or stock. Shares are the units into which the company’s equity is divided. Owning shares is the practical representation of equity.",
+        keywords: ['Finance','Equity', 'Shares', 'Ownership', 'Founder’s equity', 'Employee equity', 'Investor equity', 'Reserved equity', 'ESOP (Employee Stock Option Plan)', 'TechSpark Inc.', 'Common shares', 'Preferred shares', 'Voting rights', 'Liquidation preference', 'Dividends', 'Convertible preferred shares', 'Participating preferred shares', 'Venture capital (VC)', 'Funding rounds', 'Startup funding', 'Shareholding patterns', 'Equity allocation', 'Vesting', 'Investment returns', 'Financial literacy', 'Ownership structure', 'Company assets', 'Hybrid options', 'Recapitalization', 'Wealth distribution', 'Risk management in equity', 'Startup equity management'],
+        link: 'https://www.linkedin.com/posts/anand-choudhary-51b4211b8_understanding-start-up-financial-terms-activity-7269319649886982144-KQqi?utm_source=share&utm_medium=member_desktop',
+        iconLink: '',
+    },
+    {
         id: '11',
         title: "Hosuing market vs Mutual Funds for middle class",
         imageUrl: 'image/articleImages/11.webp',

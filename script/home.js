@@ -42,6 +42,17 @@ document.getElementById('scrollBox').addEventListener('click', function () {
 // card data
 const cards = [
     {
+        id: '13',
+        title: "Nespresso: Brewing Success One Capsule at a Time",
+        imageUrl: 'image/articleImages/13.webp',
+        date: '16th December, 2024',
+        readTime: '5-6min read',
+        content: "Nespresso’s strategy is a textbook example of the razor-and-blades model. While machines are often sold at competitive prices or bundled with promotions, the real profit lies in the proprietary coffee capsules.",
+        keywords: ['Nespresso', 'Premium coffee', 'Capsule technology', 'Razor-and-blades model', 'Coffee capsules', 'Luxury retail', 'Nespresso boutiques', 'Vertuo system', 'AAA Sustainable Quality Program', 'Sustainability', 'Recurring revenue', 'Premium customers', 'Espresso market', 'Coffee recycling', 'Direct-to-consumer (DTC)', 'Nespresso vs. Starbucks', 'Capsule pricing', 'Customer lock-in', 'Subscription models', 'Strategic branding', 'Experiential marketing', 'Revenue performance', 'Organic growth', 'Market reach', 'Ethical sourcing', 'High-margin products', 'Market competition', 'Third-party capsules', 'Global expansion strategies'],
+        link: 'https://www.linkedin.com/pulse/nespresso-brewing-success-one-capsule-time-anand-choudhary-x73vf/?trackingId=pUxbd2McSqKqbdz48S%2FX0Q%3D%3D',
+        iconLink: 'image/icons/fire.json',
+    },
+    {
         id: '12',
         title: "Part -1 Understanding Financial terms",
         imageUrl: 'image/articleImages/12.webp',

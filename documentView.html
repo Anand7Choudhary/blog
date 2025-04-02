@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional PDF Viewer</title>
+    <link rel="stylesheet" href="style/documentViewer.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="image/logo-dark.svg" alt="Growth Bubble" class="title">
+            <div class="buttons-container">
+                <button class="btn back-btn" id="backBtn">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back
+                </button>
+                <button class="btn download-btn" id="downloadBtn">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="pdf-container">
+            <iframe class="pdf-viewer" id="pdfViewer" src="about:blank"></iframe>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Your Company. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get path parameter from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const documentPath = urlParams.get('path') || '';
+
+            // Set PDF source
+            const pdfViewer = document.getElementById('pdfViewer');
+            if (documentPath) {
+                pdfViewer.src = documentPath;
+            } else {
+                pdfViewer.src = "about:blank";
+            }
+
+            // Back button functionality
+            document.getElementById('backBtn').addEventListener('click', function () {
+                window.history.back();
+            });
+
+            // Download button functionality
+            document.getElementById('downloadBtn').addEventListener('click', function () {
+                if (documentPath) {
+                    const link = document.createElement('a');
+                    link.href = documentPath;
+                    link.download = documentPath.split('/').pop();
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

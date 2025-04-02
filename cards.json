@@ -1,4 +1,15 @@
 [{
+        "id": "21",
+        "title": "KAZAM-Business Break Down",
+        "imageUrl": "image/articleImages/21.webp",
+        "date": "31st March, 2025",
+        "readTime": "10-15min read",
+        "content": "The report analyzes Kazam’s market position, growth strategy, competitive landscape, regulatory risks, financial performance, and fundraising history, offering insights into market expansion, investment opportunities, and strategic direction in the EV sector.",
+        "keywords": ["EV market", "electric vehicle charging", "Kazam strategy", "market segmentation", "growth opportunities", "regulatory risks", "competitive landscape", "financial performance", "fundraising history", "investment analysis", "business model evaluation", "market expansion", "unit economics", "scalability", "venture capital", "policy challenges", "consumer adoption", "charging infrastructure", "government incentives", "sustainable mobility"],
+        "link": "",
+        "iconLink": "image/icons/lock.json"
+    },
+    {
         "id": "20",
         "title": "The €1.9 Billion Lie",
         "imageUrl": "image/articleImages/20.webp",

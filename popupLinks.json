@@ -1,0 +1,20 @@
+{
+    "21": {
+        "links": [{
+                "title": "Kazam Business Strategy Report",
+                "description": "Detailed analysis of Kazam's market position and competitive landscape",
+                "url": "documents/AnandChoudhary_KazamReport.pdf"
+            },
+            {
+                "title": "Kazam Business Report",
+                "description": "In-depth review of financial metrics and history",
+                "url": "documents/KazamReport.pdf"
+            },
+            {
+                "title": "Linkedin Post",
+                "description": "Insights on Linkedin",
+                "url": "https://www.linkedin.com/posts/ch-anand_kazam-activity-7313134653001879552-FcGs?utm_source=share&utm_medium=member_desktop&rcm=ACoAADKbm6cBVm135R3DQ9MR4dxdbZ0CHyihcrU"
+            }
+        ]
+    }
+}

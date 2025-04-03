@@ -52,7 +52,7 @@
         // Extract the PDF file path from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const pdfPath = urlParams.get('path');
-        const pdfUrl = `https://growthbubble.netlify.app/documentview?path=${pdfPath}`;
+        const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
         const pdfContainer = document.getElementById("pdf-container");
 
         // Load the PDF document lazily

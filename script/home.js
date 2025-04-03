@@ -14,7 +14,7 @@ const changeTheme = (n) => {
 window.onload=()=>{
     let getTheme=localStorage.getItem("theme");
     if(getTheme==null){
-        changeTheme(2);
+        changeTheme(1);
     }else{
         if (getTheme == "light")
             changeTheme(2);

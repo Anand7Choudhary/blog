@@ -35,45 +35,110 @@
             </div>
         </div>
 
-        <div class="pdf-container">
-            <iframe class="pdf-viewer" id="pdfViewer" src="about:blank"></iframe>
-        </div>
+        <div id="pdf-container"></div>
+        
+        <!-- Scroll to Top Button inside PDF viewer -->
+        <button id="scrollTopBtn">▲</button>
 
         <div class="footer">
             <p>© 2025 Your Company. All rights reserved.</p>
         </div>
     </div>
 
+    <!-- PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get path parameter from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const documentPath = urlParams.get('path') || '';
+        // Extract the PDF file path from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const pdfPath = urlParams.get('path');
+        const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
+        const pdfContainer = document.getElementById("pdf-container");
 
-            // Set PDF source
-            const pdfViewer = document.getElementById('pdfViewer');
-            if (documentPath) {
-                pdfViewer.src = documentPath;
-            } else {
-                pdfViewer.src = "about:blank";
+        // Load the PDF document lazily
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+            for (let i = 1; i <= pdf.numPages; i++) {
+                // Create a wrapper for each page to allow lazy loading
+                const pageWrapper = document.createElement("div");
+                pageWrapper.classList.add("pdf-page-wrapper");
+                pageWrapper.setAttribute("data-page-number", i);
+                pdfContainer.appendChild(pageWrapper);
             }
+            loadVisiblePages(pdf);
+        });
 
-            // Back button functionality
-            document.getElementById('backBtn').addEventListener('click', function () {
-                window.history.back();
+        // Function to only load pages when they are in view (lazy loading)
+        function loadVisiblePages(pdf) {
+            const pages = document.querySelectorAll(".pdf-page-wrapper");
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        renderPage(pdf, parseInt(entry.target.dataset.pageNumber), entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
             });
+            pages.forEach(page => observer.observe(page));
+        }
 
-            // Download button functionality
-            document.getElementById('downloadBtn').addEventListener('click', function () {
-                if (documentPath) {
-                    const link = document.createElement('a');
-                    link.href = documentPath;
-                    link.download = documentPath.split('/').pop();
-                    link.target = '_blank';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
+        // Render a specific page of the PDF when called
+        function renderPage(pdf, pageNumber, container) {
+            pdf.getPage(pageNumber).then(page => {
+                const scale = window.devicePixelRatio * 2;
+                const viewport = page.getViewport({
+                    scale
+                });
+
+                // Create a div container for the page
+                const pageDiv = document.createElement("div");
+                pageDiv.classList.add("pdf-page");
+                container.appendChild(pageDiv);
+
+                // Create and append the canvas to render the page
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                pageDiv.appendChild(canvas);
+
+                // Render the PDF page onto the canvas
+                page.render({
+                    canvasContext: ctx,
+                    viewport
+                });
+            });
+        }
+
+        // Handle back button navigation
+        document.getElementById('backBtn').addEventListener('click', () => window.history.back());
+
+        // Handle PDF download functionality
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = pdfPath.split('/').pop();
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // Show or hide the Scroll to Top button inside pdf-container
+        pdfContainer.addEventListener("scroll", () => {
+            if (pdfContainer.scrollTop > 200) {
+                scrollTopBtn.style.display = "block";
+            } else {
+                scrollTopBtn.style.display = "none";
+            }
+        });
+
+        // Scroll back to top within the PDF viewer when the button is clicked
+        scrollTopBtn.addEventListener("click", () => {
+            pdfContainer.scrollTo({
+                top: 0,
+                behavior: "smooth"
             });
         });
     </script>

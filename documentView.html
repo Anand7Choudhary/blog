@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional PDF Viewer</title>
+    <title>Growth Bubble PDF Viewer</title>
     <link rel="stylesheet" href="style/documentViewer.css">
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <img src="image/logo-dark.svg" alt="Growth Bubble" class="title">
+            <img src="image/logo-dark.svg" alt="Growth Bubble" class="title" />
             <div class="buttons-container">
                 <button class="btn back-btn" id="backBtn">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -36,12 +36,17 @@
         </div>
 
         <div id="pdf-container"></div>
-        
-        <!-- Scroll to Top Button inside PDF viewer -->
-        <button id="scrollTopBtn"><img src="image/up-arrow.svg" alt="UP"></button>
+
+        <!-- Loader -->
+        <div id="global-loader" class="loading">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+        <button id="scrollTopBtn"><img src="image/up-arrow.svg" alt="UP" /></button>
 
         <div class="footer">
-            <p>© 2025 Your Company. All rights reserved.</p>
+            <p>Research By Growth Bubble</p>
         </div>
     </div>
 
@@ -50,28 +55,122 @@
 
     <script>
         // Extract the PDF file path from URL parameters
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const pdfPath = urlParams.get('path');
+        // // const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
+        // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
+        // const pdfContainer = document.getElementById("pdf-container");
+
+        // // Load the PDF document lazily
+        // pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+        //     for (let i = 1; i <= pdf.numPages; i++) {
+        //         // Create a wrapper for each page to allow lazy loading
+        //         const pageWrapper = document.createElement("div");
+        //         pageWrapper.classList.add("pdf-page-wrapper");
+        //         pageWrapper.setAttribute("data-page-number", i);
+        //         pdfContainer.appendChild(pageWrapper);
+        //     }
+        //     loadVisiblePages(pdf);
+        // });
+
+        // // Function to only load pages when they are in view (lazy loading)
+        // function loadVisiblePages(pdf) {
+        //     const pages = document.querySelectorAll(".pdf-page-wrapper");
+        //     const observer = new IntersectionObserver(entries => {
+        //         entries.forEach(entry => {
+        //             if (entry.isIntersecting) {
+        //                 renderPage(pdf, parseInt(entry.target.dataset.pageNumber), entry.target);
+        //                 observer.unobserve(entry.target);
+        //             }
+        //         });
+        //     }, {
+        //         threshold: 0.1
+        //     });
+        //     pages.forEach(page => observer.observe(page));
+        // }
+
+        // // Render a specific page of the PDF when called
+        // function renderPage(pdf, pageNumber, container) {
+        //     pdf.getPage(pageNumber).then(page => {
+        //         const scale = window.devicePixelRatio * 2;
+        //         const viewport = page.getViewport({
+        //             scale
+        //         });
+
+        //         // Create a div container for the page
+        //         const pageDiv = document.createElement("div");
+        //         pageDiv.classList.add("pdf-page");
+        //         container.appendChild(pageDiv);
+
+        //         // Create and append the canvas to render the page
+        //         const canvas = document.createElement("canvas");
+        //         const ctx = canvas.getContext("2d");
+        //         canvas.width = viewport.width;
+        //         canvas.height = viewport.height;
+        //         pageDiv.appendChild(canvas);
+
+        //         // Render the PDF page onto the canvas
+        //         page.render({
+        //             canvasContext: ctx,
+        //             viewport
+        //         });
+        //     });
+        // }
+
+        // // Handle back button navigation
+        // document.getElementById('backBtn').addEventListener('click', () => window.history.back());
+
+        // // Handle PDF download functionality
+        // document.getElementById('downloadBtn').addEventListener('click', () => {
+        //     const link = document.createElement('a');
+        //     link.href = pdfUrl;
+        //     link.download = pdfPath.split('/').pop();
+        //     link.target = '_blank';
+        //     document.body.appendChild(link);
+        //     link.click();
+        //     document.body.removeChild(link);
+        // });
+
+        // // Show or hide the Scroll to Top button inside pdf-container
+        // pdfContainer.addEventListener("scroll", () => {
+        //     if (pdfContainer.scrollTop > 200) {
+        //         scrollTopBtn.style.display = "block";
+        //     } else {
+        //         scrollTopBtn.style.display = "none";
+        //     }
+        // });
+
+        // // Scroll back to top within the PDF viewer when the button is clicked
+        // scrollTopBtn.addEventListener("click", () => {
+        //     pdfContainer.scrollTo({
+        //         top: 0,
+        //         behavior: "smooth"
+        //     });
+        // });
+
         const urlParams = new URLSearchParams(window.location.search);
-        const pdfPath = urlParams.get('path');
+        const pdfPath = urlParams.get("path");
         const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
         // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
         const pdfContainer = document.getElementById("pdf-container");
+        const loader = document.getElementById("global-loader");
 
-        // Load the PDF document lazily
         pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
             for (let i = 1; i <= pdf.numPages; i++) {
-                // Create a wrapper for each page to allow lazy loading
                 const pageWrapper = document.createElement("div");
                 pageWrapper.classList.add("pdf-page-wrapper");
                 pageWrapper.setAttribute("data-page-number", i);
                 pdfContainer.appendChild(pageWrapper);
             }
+            loader.style.display = "none";
             loadVisiblePages(pdf);
         });
 
-        // Function to only load pages when they are in view (lazy loading)
-        function loadVisiblePages(pdf) {
+        function
+        loadVisiblePages(pdf) {
             const pages = document.querySelectorAll(".pdf-page-wrapper");
-            const observer = new IntersectionObserver(entries => {
+            const observer = new
+            IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         renderPage(pdf, parseInt(entry.target.dataset.pageNumber), entry.target);
@@ -84,49 +183,49 @@
             pages.forEach(page => observer.observe(page));
         }
 
-        // Render a specific page of the PDF when called
         function renderPage(pdf, pageNumber, container) {
+            const loadingSpinner = document.createElement("div");
+            loadingSpinner.className = "loading";
+            loadingSpinner.innerHTML = `<div class="spinner"></div>
+            <p>Loading page ${pageNumber}...</p>`;
+            container.appendChild(loadingSpinner);
+
             pdf.getPage(pageNumber).then(page => {
                 const scale = window.devicePixelRatio * 2;
                 const viewport = page.getViewport({
                     scale
                 });
-
-                // Create a div container for the page
-                const pageDiv = document.createElement("div");
-                pageDiv.classList.add("pdf-page");
-                container.appendChild(pageDiv);
-
-                // Create and append the canvas to render the page
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
                 canvas.width = viewport.width;
                 canvas.height = viewport.height;
-                pageDiv.appendChild(canvas);
 
-                // Render the PDF page onto the canvas
+                const pageDiv = document.createElement("div");
+                pageDiv.classList.add("pdf-page");
+                pageDiv.appendChild(canvas);
+                container.appendChild(pageDiv);
+
                 page.render({
                     canvasContext: ctx,
                     viewport
+                }).promise.then(() => {
+                    loadingSpinner.remove();
                 });
             });
         }
 
-        // Handle back button navigation
-        document.getElementById('backBtn').addEventListener('click', () => window.history.back());
+        document.getElementById("backBtn").addEventListener("click", () => window.history.back());
 
-        // Handle PDF download functionality
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-            const link = document.createElement('a');
+        document.getElementById("downloadBtn").addEventListener("click", () => {
+            const link = document.createElement("a");
             link.href = pdfUrl;
-            link.download = pdfPath.split('/').pop();
-            link.target = '_blank';
+            link.download = pdfPath.split("/").pop();
+            link.target = "_blank";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         });
 
-        // Show or hide the Scroll to Top button inside pdf-container
         pdfContainer.addEventListener("scroll", () => {
             if (pdfContainer.scrollTop > 200) {
                 scrollTopBtn.style.display = "block";
@@ -135,7 +234,6 @@
             }
         });
 
-        // Scroll back to top within the PDF viewer when the button is clicked
         scrollTopBtn.addEventListener("click", () => {
             pdfContainer.scrollTo({
                 top: 0,

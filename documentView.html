@@ -54,168 +54,113 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 
     <script>
-        // Extract the PDF file path from URL parameters
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const pdfPath = urlParams.get('path');
-        // // const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
-        // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
-        // const pdfContainer = document.getElementById("pdf-container");
-
-        // // Load the PDF document lazily
-        // pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-        //     for (let i = 1; i <= pdf.numPages; i++) {
-        //         // Create a wrapper for each page to allow lazy loading
-        //         const pageWrapper = document.createElement("div");
-        //         pageWrapper.classList.add("pdf-page-wrapper");
-        //         pageWrapper.setAttribute("data-page-number", i);
-        //         pdfContainer.appendChild(pageWrapper);
-        //     }
-        //     loadVisiblePages(pdf);
-        // });
-
-        // // Function to only load pages when they are in view (lazy loading)
-        // function loadVisiblePages(pdf) {
-        //     const pages = document.querySelectorAll(".pdf-page-wrapper");
-        //     const observer = new IntersectionObserver(entries => {
-        //         entries.forEach(entry => {
-        //             if (entry.isIntersecting) {
-        //                 renderPage(pdf, parseInt(entry.target.dataset.pageNumber), entry.target);
-        //                 observer.unobserve(entry.target);
-        //             }
-        //         });
-        //     }, {
-        //         threshold: 0.1
-        //     });
-        //     pages.forEach(page => observer.observe(page));
-        // }
-
-        // // Render a specific page of the PDF when called
-        // function renderPage(pdf, pageNumber, container) {
-        //     pdf.getPage(pageNumber).then(page => {
-        //         const scale = window.devicePixelRatio * 2;
-        //         const viewport = page.getViewport({
-        //             scale
-        //         });
-
-        //         // Create a div container for the page
-        //         const pageDiv = document.createElement("div");
-        //         pageDiv.classList.add("pdf-page");
-        //         container.appendChild(pageDiv);
-
-        //         // Create and append the canvas to render the page
-        //         const canvas = document.createElement("canvas");
-        //         const ctx = canvas.getContext("2d");
-        //         canvas.width = viewport.width;
-        //         canvas.height = viewport.height;
-        //         pageDiv.appendChild(canvas);
-
-        //         // Render the PDF page onto the canvas
-        //         page.render({
-        //             canvasContext: ctx,
-        //             viewport
-        //         });
-        //     });
-        // }
-
-        // // Handle back button navigation
-        // document.getElementById('backBtn').addEventListener('click', () => window.history.back());
-
-        // // Handle PDF download functionality
-        // document.getElementById('downloadBtn').addEventListener('click', () => {
-        //     const link = document.createElement('a');
-        //     link.href = pdfUrl;
-        //     link.download = pdfPath.split('/').pop();
-        //     link.target = '_blank';
-        //     document.body.appendChild(link);
-        //     link.click();
-        //     document.body.removeChild(link);
-        // });
-
-        // // Show or hide the Scroll to Top button inside pdf-container
-        // pdfContainer.addEventListener("scroll", () => {
-        //     if (pdfContainer.scrollTop > 200) {
-        //         scrollTopBtn.style.display = "block";
-        //     } else {
-        //         scrollTopBtn.style.display = "none";
-        //     }
-        // });
-
-        // // Scroll back to top within the PDF viewer when the button is clicked
-        // scrollTopBtn.addEventListener("click", () => {
-        //     pdfContainer.scrollTo({
-        //         top: 0,
-        //         behavior: "smooth"
-        //     });
-        // });
-
         const urlParams = new URLSearchParams(window.location.search);
         const pdfPath = urlParams.get("path");
         const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
         // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
         const pdfContainer = document.getElementById("pdf-container");
         const loader = document.getElementById("global-loader");
+        const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+        // Determine if the user is on mobile (less than 768px)
+        const isMobile = window.innerWidth < 768;
+        const scale = isMobile ? 1.3 : 1.5;
+
+        // Track rendered pages to prevent duplicates
+        const renderedPages = new Set();
 
         pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
             for (let i = 1; i <= pdf.numPages; i++) {
                 const pageWrapper = document.createElement("div");
                 pageWrapper.classList.add("pdf-page-wrapper");
                 pageWrapper.setAttribute("data-page-number", i);
+
+                // Add simple margin to fix overlapping
+                pageWrapper.style.marginBottom = "20px";
+
                 pdfContainer.appendChild(pageWrapper);
             }
+
             loader.style.display = "none";
+
+            // Render first page immediately
+            renderPage(pdf, 1, document.querySelector('[data-page-number="1"]'));
+
+            // Set up observer for remaining pages
             loadVisiblePages(pdf);
         });
 
-        function
-        loadVisiblePages(pdf) {
+        let rendering = false;
+
+        function loadVisiblePages(pdf) {
             const pages = document.querySelectorAll(".pdf-page-wrapper");
-            const observer = new
-            IntersectionObserver(entries => {
+
+            const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        renderPage(pdf, parseInt(entry.target.dataset.pageNumber), entry.target);
-                        observer.unobserve(entry.target);
+                    const pageNumber = parseInt(entry.target.dataset.pageNumber);
+
+                    if (entry.isIntersecting && !renderedPages.has(pageNumber) && !rendering) {
+                        rendering = true;
+                        renderPage(pdf, pageNumber, entry.target).then(() => {
+                            observer.unobserve(entry.target);
+                            rendering = false;
+                        });
                     }
                 });
             }, {
-                threshold: 0.1
+                root: null,
+                threshold: 0.1,
+                rootMargin: '100px 0px',
             });
+
             pages.forEach(page => observer.observe(page));
         }
 
         function renderPage(pdf, pageNumber, container) {
-            const loadingSpinner = document.createElement("div");
-            loadingSpinner.className = "loading";
-            loadingSpinner.innerHTML = `<div class="spinner"></div>
-            <p>Loading page ${pageNumber}...</p>`;
-            container.appendChild(loadingSpinner);
+            return new Promise(resolve => {
+                // Skip if already rendered
+                if (container.querySelector('canvas') || renderedPages.has(pageNumber)) {
+                    resolve();
+                    return;
+                }
 
-            pdf.getPage(pageNumber).then(page => {
-                const scale = window.devicePixelRatio * 2;
-                const viewport = page.getViewport({
-                    scale
-                });
-                const canvas = document.createElement("canvas");
-                const ctx = canvas.getContext("2d");
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
+                const loadingSpinner = document.createElement("div");
+                loadingSpinner.className = "loading";
+                loadingSpinner.innerHTML = `<div class="spinner"></div><p>Loading page ${pageNumber}...</p>`;
+                container.appendChild(loadingSpinner);
 
-                const pageDiv = document.createElement("div");
-                pageDiv.classList.add("pdf-page");
-                pageDiv.appendChild(canvas);
-                container.appendChild(pageDiv);
+                pdf.getPage(pageNumber).then(page => {
+                    const viewport = page.getViewport({
+                        scale
+                    });
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
 
-                page.render({
-                    canvasContext: ctx,
-                    viewport
-                }).promise.then(() => {
-                    loadingSpinner.remove();
+                    const pageDiv = document.createElement("div");
+                    pageDiv.classList.add("pdf-page");
+
+                    // Center the canvas
+                    pageDiv.style.display = "flex";
+                    pageDiv.style.justifyContent = "center";
+
+                    pageDiv.appendChild(canvas);
+                    container.appendChild(pageDiv);
+
+                    page.render({
+                        canvasContext: ctx,
+                        viewport
+                    }).promise.then(() => {
+                        loadingSpinner.remove();
+                        renderedPages.add(pageNumber);
+                        resolve();
+                    });
                 });
             });
         }
 
         document.getElementById("backBtn").addEventListener("click", () => window.history.back());
-
         document.getElementById("downloadBtn").addEventListener("click", () => {
             const link = document.createElement("a");
             link.href = pdfUrl;
@@ -240,6 +185,17 @@
                 behavior: "smooth"
             });
         });
+
+        // Add minimal CSS for spacing
+        (function () {
+            const style = document.createElement('style');
+            style.textContent = `
+        .pdf-page-wrapper {
+            margin-bottom: 30px;
+        }
+    `;
+            document.head.appendChild(style);
+        })();
     </script>
 </body>
 

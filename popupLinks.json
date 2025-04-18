@@ -20,6 +20,11 @@
     "22": {
         "links": [{
                 "title": "Turbine Finance Strategy Report",
+                "description": "Turbine Memo Pitch",
+                "url": "documents/Turbine.pdf"
+            },
+            {
+                "title": "Turbine - Study Report",
                 "description": "Detailed analysis of Turbine's Business Landscape",
                 "url": "documents/Turbine_Finance.pdf"
             },

@@ -16,5 +16,18 @@
                 "url": "https://www.linkedin.com/posts/ch-anand_kazam-activity-7313134653001879552-FcGs?utm_source=share&utm_medium=member_desktop&rcm=ACoAADKbm6cBVm135R3DQ9MR4dxdbZ0CHyihcrU"
             }
         ]
+    },
+    "22": {
+        "links": [{
+                "title": "Turbine Finance Strategy Report",
+                "description": "Detailed analysis of Turbine's Business Landscape",
+                "url": "documents/Turbine_Finance.pdf"
+            },
+            {
+                "title": "Linkedin Post",
+                "description": "Insights on Linkedin",
+                "url": "https://www.linkedin.com/posts/ch-anand_turbine-activity-7318929483921592321-t80i?utm_source=share&utm_medium=member_desktop&rcm=ACoAADKbm6cBVm135R3DQ9MR4dxdbZ0CHyihcrU"
+            }
+        ]
     }
 }

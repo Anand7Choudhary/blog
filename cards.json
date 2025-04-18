@@ -1,4 +1,15 @@
 [{
+        "id": "22",
+        "title": "Turbine Finance Case Study",
+        "imageUrl": "image/articleImages/22.webp",
+        "date": "18th April, 2025",
+        "readTime": "8-10min read",
+        "content": "Turbine Finance Corp., established in 2022 and headquartered in Santa Monica, California, is a pioneering liquidity platform designed to address the liquidity constraints faced by Limited Partners (LPs) in venture capital (VC) and private equity funds. ",
+        "keywords": ["venture capital", "limited partners", "LP liquidity", "secondary market", "fund stake loans", "Turbine Finance", "liquidity solutions", "data-driven underwriting", "machine learning in finance", "HELOC for VC", "VC exits", "IPOs slowdown", "capital calls", "fundraising history", "financial backing", "venture debt", "Silicon Valley Bank", "credit facilities", "alternative assets", "portfolio management", "illiquid investments", "non-dilutive financing", "private equity", "VC returns", "secondary sales", "fund valuation", "liquidity crunch", "LP restlessness", "early-stage fintech", "investment thesis"],
+        "link": "",
+        "iconLink": ""
+    },
+    {
         "id": "21",
         "title": "KAZAM-Business Break Down",
         "imageUrl": "image/articleImages/21.webp",

@@ -54,10 +54,153 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 
     <script>
+        //     const urlParams = new URLSearchParams(window.location.search);
+        //     const pdfPath = urlParams.get("path");
+        //     const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
+        //     // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
+        //     const pdfContainer = document.getElementById("pdf-container");
+        //     const loader = document.getElementById("global-loader");
+        //     const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+        //     // Determine if the user is on mobile (less than 768px)
+        //     const isMobile = window.innerWidth < 768;
+        //     const scale = isMobile ? 1.3 : 1.5;
+
+        //     // Track rendered pages to prevent duplicates
+        //     const renderedPages = new Set();
+
+        //     pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+        //         for (let i = 1; i <= pdf.numPages; i++) {
+        //             const pageWrapper = document.createElement("div");
+        //             pageWrapper.classList.add("pdf-page-wrapper");
+        //             pageWrapper.setAttribute("data-page-number", i);
+
+        //             // Add simple margin to fix overlapping
+        //             pageWrapper.style.marginBottom = "20px";
+
+        //             pdfContainer.appendChild(pageWrapper);
+        //         }
+
+        //         loader.style.display = "none";
+
+        //         // Render first page immediately
+        //         renderPage(pdf, 1, document.querySelector('[data-page-number="1"]'));
+
+        //         // Set up observer for remaining pages
+        //         loadVisiblePages(pdf);
+        //     });
+
+        //     let rendering = false;
+
+        //     function loadVisiblePages(pdf) {
+        //         const pages = document.querySelectorAll(".pdf-page-wrapper");
+
+        //         const observer = new IntersectionObserver(entries => {
+        //             entries.forEach(entry => {
+        //                 const pageNumber = parseInt(entry.target.dataset.pageNumber);
+
+        //                 if (entry.isIntersecting && !renderedPages.has(pageNumber) && !rendering) {
+        //                     rendering = true;
+        //                     renderPage(pdf, pageNumber, entry.target).then(() => {
+        //                         observer.unobserve(entry.target);
+        //                         rendering = false;
+        //                     });
+        //                 }
+        //             });
+        //         }, {
+        //             root: null,
+        //             threshold: 0.1,
+        //             rootMargin: '100px 0px',
+        //         });
+
+        //         pages.forEach(page => observer.observe(page));
+        //     }
+
+        //     function renderPage(pdf, pageNumber, container) {
+        //         return new Promise(resolve => {
+        //             // Skip if already rendered
+        //             if (container.querySelector('canvas') || renderedPages.has(pageNumber)) {
+        //                 resolve();
+        //                 return;
+        //             }
+
+        //             const loadingSpinner = document.createElement("div");
+        //             loadingSpinner.className = "loading";
+        //             loadingSpinner.innerHTML = `<div class="spinner"></div><p>Loading page ${pageNumber}...</p>`;
+        //             container.appendChild(loadingSpinner);
+
+        //             pdf.getPage(pageNumber).then(page => {
+        //                 const viewport = page.getViewport({
+        //                     scale
+        //                 });
+        //                 const canvas = document.createElement("canvas");
+        //                 const ctx = canvas.getContext("2d");
+        //                 canvas.width = viewport.width;
+        //                 canvas.height = viewport.height;
+
+        //                 const pageDiv = document.createElement("div");
+        //                 pageDiv.classList.add("pdf-page");
+
+        //                 // Center the canvas
+        //                 pageDiv.style.display = "flex";
+        //                 pageDiv.style.justifyContent = "center";
+
+        //                 pageDiv.appendChild(canvas);
+        //                 container.appendChild(pageDiv);
+
+        //                 page.render({
+        //                     canvasContext: ctx,
+        //                     viewport
+        //                 }).promise.then(() => {
+        //                     loadingSpinner.remove();
+        //                     renderedPages.add(pageNumber);
+        //                     resolve();
+        //                 });
+        //             });
+        //         });
+        //     }
+
+        //     document.getElementById("backBtn").addEventListener("click", () => window.history.back());
+        //     document.getElementById("downloadBtn").addEventListener("click", () => {
+        //         const link = document.createElement("a");
+        //         link.href = pdfUrl;
+        //         link.download = pdfPath.split("/").pop();
+        //         link.target = "_blank";
+        //         document.body.appendChild(link);
+        //         link.click();
+        //         document.body.removeChild(link);
+        //     });
+
+        //     pdfContainer.addEventListener("scroll", () => {
+        //         if (pdfContainer.scrollTop > 200) {
+        //             scrollTopBtn.style.display = "block";
+        //         } else {
+        //             scrollTopBtn.style.display = "none";
+        //         }
+        //     });
+
+        //     scrollTopBtn.addEventListener("click", () => {
+        //         pdfContainer.scrollTo({
+        //             top: 0,
+        //             behavior: "smooth"
+        //         });
+        //     });
+
+        //     // Add minimal CSS for spacing
+        //     (function () {
+        //         const style = document.createElement('style');
+        //         style.textContent = `
+        //     .pdf-page-wrapper {
+        //         margin-bottom: 30px;
+        //     }
+        // `;
+        //         document.head.appendChild(style);
+        //     })();
+
+
         const urlParams = new URLSearchParams(window.location.search);
         const pdfPath = urlParams.get("path");
-        const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
-        // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
+        const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
         const pdfContainer = document.getElementById("pdf-container");
         const loader = document.getElementById("global-loader");
         const scrollTopBtn = document.getElementById("scrollTopBtn");
@@ -83,12 +226,34 @@
 
             loader.style.display = "none";
 
-            // Render first page immediately
-            renderPage(pdf, 1, document.querySelector('[data-page-number="1"]'));
+            // Preload the first 4 pages immediately
+            preloadInitialPages(pdf, 4);
 
             // Set up observer for remaining pages
             loadVisiblePages(pdf);
         });
+
+        // Function to preload the first N pages
+        function preloadInitialPages(pdf, count) {
+            // Limit count to available pages
+            const pagesToLoad = Math.min(count, pdf.numPages);
+
+            // Load pages in sequence
+            let currentPage = 1;
+
+            function loadNextInitialPage() {
+                if (currentPage <= pagesToLoad) {
+                    const pageContainer = document.querySelector(`[data-page-number="${currentPage}"]`);
+                    renderPage(pdf, currentPage, pageContainer).then(() => {
+                        currentPage++;
+                        loadNextInitialPage();
+                    });
+                }
+            }
+
+            // Start loading the first page
+            loadNextInitialPage();
+        }
 
         let rendering = false;
 
@@ -113,7 +278,12 @@
                 rootMargin: '100px 0px',
             });
 
-            pages.forEach(page => observer.observe(page));
+            pages.forEach(page => {
+                // Only observe pages that haven't been preloaded
+                if (!renderedPages.has(parseInt(page.dataset.pageNumber))) {
+                    observer.observe(page);
+                }
+            });
         }
 
         function renderPage(pdf, pageNumber, container) {
@@ -156,6 +326,10 @@
                         renderedPages.add(pageNumber);
                         resolve();
                     });
+                }).catch(err => {
+                    console.error(`Error rendering page ${pageNumber}:`, err);
+                    loadingSpinner.remove();
+                    resolve(); // Resolve anyway to continue
                 });
             });
         }
@@ -192,6 +366,24 @@
             style.textContent = `
         .pdf-page-wrapper {
             margin-bottom: 30px;
+        }
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #09f;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     `;
             document.head.appendChild(style);

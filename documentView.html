@@ -38,10 +38,10 @@
         <div id="pdf-container"></div>
 
         <!-- Loader -->
-        <div id="global-loader" class="loading">
+        <!-- <div id="global-loader" class="loading">
             <div class="spinner"></div>
             <p>Loading...</p>
-        </div>
+        </div> -->
 
         <button id="scrollTopBtn"><img src="image/up-arrow.svg" alt="UP" /></button>
 
@@ -54,297 +54,514 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 
     <script>
-        //     const urlParams = new URLSearchParams(window.location.search);
-        //     const pdfPath = urlParams.get("path");
-        //     const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
-        //     // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
-        //     const pdfContainer = document.getElementById("pdf-container");
-        //     const loader = document.getElementById("global-loader");
-        //     const scrollTopBtn = document.getElementById("scrollTopBtn");
+        // // Extract the PDF file path from URL parameters
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const pdfPath = urlParams.get('path');
+        // // const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
+        // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
+        // const pdfContainer = document.getElementById("pdf-container");
 
-        //     // Determine if the user is on mobile (less than 768px)
-        //     const isMobile = window.innerWidth < 768;
-        //     const scale = isMobile ? 1.3 : 1.5;
+        // // Load the PDF document lazily
+        // pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+        //     for (let i = 1; i <= pdf.numPages; i++) {
+        //         // Create a wrapper for each page to allow lazy loading
+        //         const pageWrapper = document.createElement("div");
+        //         pageWrapper.classList.add("pdf-page-wrapper");
+        //         pageWrapper.setAttribute("data-page-number", i);
+        //         pdfContainer.appendChild(pageWrapper);
+        //     }
+        //     loadVisiblePages(pdf);
+        // });
 
-        //     // Track rendered pages to prevent duplicates
-        //     const renderedPages = new Set();
-
-        //     pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-        //         for (let i = 1; i <= pdf.numPages; i++) {
-        //             const pageWrapper = document.createElement("div");
-        //             pageWrapper.classList.add("pdf-page-wrapper");
-        //             pageWrapper.setAttribute("data-page-number", i);
-
-        //             // Add simple margin to fix overlapping
-        //             pageWrapper.style.marginBottom = "20px";
-
-        //             pdfContainer.appendChild(pageWrapper);
-        //         }
-
-        //         loader.style.display = "none";
-
-        //         // Render first page immediately
-        //         renderPage(pdf, 1, document.querySelector('[data-page-number="1"]'));
-
-        //         // Set up observer for remaining pages
-        //         loadVisiblePages(pdf);
+        // // Function to only load pages when they are in view (lazy loading)
+        // function loadVisiblePages(pdf) {
+        //     const pages = document.querySelectorAll(".pdf-page-wrapper");
+        //     const observer = new IntersectionObserver(entries => {
+        //         entries.forEach(entry => {
+        //             if (entry.isIntersecting) {
+        //                 renderPage(pdf, parseInt(entry.target.dataset.pageNumber), entry.target);
+        //                 observer.unobserve(entry.target);
+        //             }
+        //         });
+        //     }, {
+        //         threshold: 0.1
         //     });
+        //     pages.forEach(page => observer.observe(page));
+        // }
 
-        //     let rendering = false;
-
-        //     function loadVisiblePages(pdf) {
-        //         const pages = document.querySelectorAll(".pdf-page-wrapper");
-
-        //         const observer = new IntersectionObserver(entries => {
-        //             entries.forEach(entry => {
-        //                 const pageNumber = parseInt(entry.target.dataset.pageNumber);
-
-        //                 if (entry.isIntersecting && !renderedPages.has(pageNumber) && !rendering) {
-        //                     rendering = true;
-        //                     renderPage(pdf, pageNumber, entry.target).then(() => {
-        //                         observer.unobserve(entry.target);
-        //                         rendering = false;
-        //                     });
-        //                 }
-        //             });
-        //         }, {
-        //             root: null,
-        //             threshold: 0.1,
-        //             rootMargin: '100px 0px',
+        // // Render a specific page of the PDF when called
+        // function renderPage(pdf, pageNumber, container) {
+        //     pdf.getPage(pageNumber).then(page => {
+        //         const scale = window.devicePixelRatio * 2;
+        //         const viewport = page.getViewport({
+        //             scale
         //         });
 
-        //         pages.forEach(page => observer.observe(page));
+        //         // Create a div container for the page
+        //         const pageDiv = document.createElement("div");
+        //         pageDiv.classList.add("pdf-page");
+        //         container.appendChild(pageDiv);
+
+        //         // Create and append the canvas to render the page
+        //         const canvas = document.createElement("canvas");
+        //         const ctx = canvas.getContext("2d");
+        //         canvas.width = viewport.width;
+        //         canvas.height = viewport.height;
+        //         pageDiv.appendChild(canvas);
+
+        //         // Render the PDF page onto the canvas
+        //         page.render({
+        //             canvasContext: ctx,
+        //             viewport
+        //         });
+        //     });
+        // }
+
+        // // Handle back button navigation
+        // document.getElementById('backBtn').addEventListener('click', () => window.history.back());
+
+        // // Handle PDF download functionality
+        // document.getElementById('downloadBtn').addEventListener('click', () => {
+        //     const link = document.createElement('a');
+        //     link.href = pdfUrl;
+        //     link.download = pdfPath.split('/').pop();
+        //     link.target = '_blank';
+        //     document.body.appendChild(link);
+        //     link.click();
+        //     document.body.removeChild(link);
+        // });
+
+        // // Show or hide the Scroll to Top button inside pdf-container
+        // pdfContainer.addEventListener("scroll", () => {
+        //     if (pdfContainer.scrollTop > 200) {
+        //         scrollTopBtn.style.display = "block";
+        //     } else {
+        //         scrollTopBtn.style.display = "none";
+        //     }
+        // });
+
+        // // Scroll back to top within the PDF viewer when the button is clicked
+        // scrollTopBtn.addEventListener("click", () => {
+        //     pdfContainer.scrollTo({
+        //         top: 0,
+        //         behavior: "smooth"
+        //     });
+        // });
+
+        // Extract the PDF file path from URL parameters
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const pdfPath = urlParams.get('path');
+        // // const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
+        // const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
+        // const pdfContainer = document.getElementById("pdf-container");
+
+        // // Show loading indicator
+        // const loadingIndicator = document.createElement("div");
+        // loadingIndicator.textContent = "Loading PDF...";
+        // loadingIndicator.style.textAlign = "center";
+        // loadingIndicator.style.padding = "20px";
+        // loadingIndicator.id = "pdf-loading-indicator";
+        // pdfContainer.appendChild(loadingIndicator);
+
+        // // Force hide loader after 3 seconds regardless of loading status
+        // setTimeout(() => {
+        //     const indicator = document.getElementById("pdf-loading-indicator");
+        //     if (indicator) {
+        //         indicator.remove();
         //     }
 
-        //     function renderPage(pdf, pageNumber, container) {
-        //         return new Promise(resolve => {
-        //             // Skip if already rendered
-        //             if (container.querySelector('canvas') || renderedPages.has(pageNumber)) {
-        //                 resolve();
-        //                 return;
+        //     // Remove any other potential progress indicators
+        //     const progressIndicator = document.getElementById("pdf-progress");
+        //     if (progressIndicator) {
+        //         progressIndicator.remove();
+        //     }
+        // }, 3000);
+
+        // // Track rendered pages
+        // let renderedPages = 0;
+
+        // // Detect mobile
+        // const isMobile = window.innerWidth < 768;
+
+        // // Critical performance settings
+        // const scale = isMobile ? 1.0 : window.devicePixelRatio * 1.5;
+        // const pagesPerBatch = isMobile ? 1 : 2;
+        // const batchDelay = isMobile ? 300 : 150;
+
+        // // Configure PDF.js worker
+        // if (pdfjsLib.GlobalWorkerOptions) {
+        //     pdfjsLib.GlobalWorkerOptions.workerSrc =
+        //         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js";
+        // }
+
+        // // Load the PDF with performance optimizations
+        // pdfjsLib.getDocument({
+        //         url: pdfUrl,
+        //         cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/cmaps/',
+        //         cMapPacked: true,
+        //         disableRange: isMobile, // Better for mobile
+        //         disableStream: isMobile,
+        //     }).promise
+        //     .then(pdf => {
+        //         // Remove loading indicator as soon as PDF structure is loaded
+        //         const indicator = document.getElementById("pdf-loading-indicator");
+        //         if (indicator) {
+        //             indicator.remove();
+        //         }
+
+        //         // Render pages in batches
+        //         renderPagesInBatches(pdf, 1, pagesPerBatch, batchDelay);
+        //     })
+        //     .catch(error => {
+        //         const indicator = document.getElementById("pdf-loading-indicator");
+        //         if (indicator) {
+        //             indicator.remove();
+        //         }
+        //         pdfContainer.innerHTML =
+        //             `<div style="color:red; padding:20px;">Error loading PDF: ${error.message}</div>`;
+        //         console.error("PDF loading error:", error);
+        //     });
+
+        // // Render pages in small batches with delays between them
+        // function renderPagesInBatches(pdf, startPage, pagesPerBatch, delay) {
+        //     const endPage = Math.min(startPage + pagesPerBatch - 1, pdf.numPages);
+
+        //     // Create a batch promise to track when this batch is complete
+        //     const batchPromises = [];
+
+        //     // Process current batch
+        //     for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
+        //         const pagePromise = renderPageSimplified(pdf, pageNum);
+        //         batchPromises.push(pagePromise);
+        //     }
+
+        //     // After this batch is done, schedule the next batch
+        //     Promise.all(batchPromises)
+        //         .then(() => {
+        //             // Update rendered pages count
+        //             renderedPages += (endPage - startPage + 1);
+
+        //             // Remove loading indicator after first batch is rendered
+        //             if (renderedPages >= pagesPerBatch) {
+        //                 const indicator = document.getElementById("pdf-loading-indicator");
+        //                 if (indicator) {
+        //                     indicator.remove();
+        //                 }
         //             }
 
-        //             const loadingSpinner = document.createElement("div");
-        //             loadingSpinner.className = "loading";
-        //             loadingSpinner.innerHTML = `<div class="spinner"></div><p>Loading page ${pageNumber}...</p>`;
-        //             container.appendChild(loadingSpinner);
+        //             const nextStartPage = endPage + 1;
+        //             if (nextStartPage <= pdf.numPages) {
+        //                 // Schedule next batch with delay
+        //                 setTimeout(() => {
+        //                     renderPagesInBatches(pdf, nextStartPage, pagesPerBatch, delay);
+        //                 }, delay);
+        //             }
+        //         })
+        //         .catch(error => console.error("Error rendering batch:", error));
+        // }
 
-        //             pdf.getPage(pageNumber).then(page => {
-        //                 const viewport = page.getViewport({
-        //                     scale
-        //                 });
-        //                 const canvas = document.createElement("canvas");
-        //                 const ctx = canvas.getContext("2d");
-        //                 canvas.width = viewport.width;
-        //                 canvas.height = viewport.height;
+        // // Simplified page rendering function - focus on essentials only
+        // function renderPageSimplified(pdf, pageNumber) {
+        //     return new Promise((resolve, reject) => {
+        //         // Create wrapper div for this page
+        //         const pageDiv = document.createElement('div');
+        //         pageDiv.className = 'pdf-page';
+        //         pageDiv.style.margin = '10px 0';
+        //         pageDiv.style.position = 'relative';
 
-        //                 const pageDiv = document.createElement("div");
-        //                 pageDiv.classList.add("pdf-page");
+        //         // Add to container early to maintain page order
+        //         pdfContainer.appendChild(pageDiv);
 
-        //                 // Center the canvas
-        //                 pageDiv.style.display = "flex";
-        //                 pageDiv.style.justifyContent = "center";
-
-        //                 pageDiv.appendChild(canvas);
-        //                 container.appendChild(pageDiv);
-
-        //                 page.render({
-        //                     canvasContext: ctx,
-        //                     viewport
-        //                 }).promise.then(() => {
-        //                     loadingSpinner.remove();
-        //                     renderedPages.add(pageNumber);
-        //                     resolve();
-        //                 });
+        //         // Load and render the page
+        //         pdf.getPage(pageNumber).then(page => {
+        //             const viewport = page.getViewport({
+        //                 scale
         //             });
+
+        //             // Create canvas
+        //             const canvas = document.createElement('canvas');
+        //             const ctx = canvas.getContext('2d');
+        //             canvas.width = viewport.width;
+        //             canvas.height = viewport.height;
+
+        //             // Make canvas responsive
+        //             canvas.style.width = '100%';
+        //             canvas.style.height = 'auto';
+        //             canvas.style.display = 'block';
+
+        //             pageDiv.appendChild(canvas);
+
+        //             // Render with optimized settings
+        //             const renderTask = page.render({
+        //                 canvasContext: ctx,
+        //                 viewport,
+        //                 intent: isMobile ? 'display' : 'print',
+        //                 renderInteractiveForms: false,
+        //                 enableWebGL: false
+        //             });
+
+        //             renderTask.promise
+        //                 .then(() => {
+        //                     // Remove loading indicator as soon as first page is rendered
+        //                     if (pageNumber <= pagesPerBatch) {
+        //                         const indicator = document.getElementById("pdf-loading-indicator");
+        //                         if (indicator) {
+        //                             indicator.remove();
+        //                         }
+        //                     }
+        //                     resolve();
+        //                 })
+        //                 .catch(error => {
+        //                     console.error(`Error rendering page ${pageNumber}:`, error);
+        //                     pageDiv.innerHTML +=
+        //                         `<div style="color:red;">Error rendering page</div>`;
+        //                     resolve(); // Still resolve to allow other pages to continue
+        //                 });
+        //         }).catch(error => {
+        //             console.error(`Error getting page ${pageNumber}:`, error);
+        //             pageDiv.innerHTML =
+        //                 `<div style="color:red; padding:10px;">Failed to load page ${pageNumber}</div>`;
+        //             resolve(); // Still resolve to allow other pages to continue
         //         });
+        //     });
+        // }
+
+        // // Handle back button navigation
+        // document.getElementById('backBtn').addEventListener('click', () => window.history.back());
+
+        // // Handle PDF download functionality
+        // document.getElementById('downloadBtn').addEventListener('click', () => {
+        //     const link = document.createElement('a');
+        //     link.href = pdfUrl;
+        //     link.download = pdfPath.split('/').pop();
+        //     link.target = '_blank';
+        //     document.body.appendChild(link);
+        //     link.click();
+        //     document.body.removeChild(link);
+        // });
+
+        // // Handle scroll to top button
+        // const scrollTopBtn = document.getElementById('scrollTopBtn');
+        // pdfContainer.addEventListener("scroll", () => {
+        //     if (pdfContainer.scrollTop > 200) {
+        //         scrollTopBtn.style.display = "block";
+        //     } else {
+        //         scrollTopBtn.style.display = "none";
         //     }
+        // });
 
-        //     document.getElementById("backBtn").addEventListener("click", () => window.history.back());
-        //     document.getElementById("downloadBtn").addEventListener("click", () => {
-        //         const link = document.createElement("a");
-        //         link.href = pdfUrl;
-        //         link.download = pdfPath.split("/").pop();
-        //         link.target = "_blank";
-        //         document.body.appendChild(link);
-        //         link.click();
-        //         document.body.removeChild(link);
+        // scrollTopBtn.addEventListener("click", () => {
+        //     pdfContainer.scrollTo({
+        //         top: 0,
+        //         behavior: "smooth"
         //     });
-
-        //     pdfContainer.addEventListener("scroll", () => {
-        //         if (pdfContainer.scrollTop > 200) {
-        //             scrollTopBtn.style.display = "block";
-        //         } else {
-        //             scrollTopBtn.style.display = "none";
-        //         }
-        //     });
-
-        //     scrollTopBtn.addEventListener("click", () => {
-        //         pdfContainer.scrollTo({
-        //             top: 0,
-        //             behavior: "smooth"
-        //         });
-        //     });
-
-        //     // Add minimal CSS for spacing
-        //     (function () {
-        //         const style = document.createElement('style');
-        //         style.textContent = `
-        //     .pdf-page-wrapper {
-        //         margin-bottom: 30px;
-        //     }
-        // `;
-        //         document.head.appendChild(style);
-        //     })();
+        // });
 
 
+        // Extract the PDF file path from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const pdfPath = urlParams.get("path");
+        const pdfPath = urlParams.get('path');
+        // const pdfUrl = `https://growthbubble.netlify.app/${pdfPath}`;
         const pdfUrl = `http://127.0.0.1:5500/${pdfPath}`;
         const pdfContainer = document.getElementById("pdf-container");
-        const loader = document.getElementById("global-loader");
-        const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-        // Determine if the user is on mobile (less than 768px)
+        // Add CSS to center PDF content
+        pdfContainer.style.display = "flex";
+        pdfContainer.style.flexDirection = "column";
+        pdfContainer.style.alignItems = "center";
+
+        // Show loading indicator
+        const loadingIndicator = document.createElement("div");
+        loadingIndicator.textContent = "Loading PDF...";
+        loadingIndicator.style.textAlign = "center";
+        loadingIndicator.style.padding = "20px";
+        loadingIndicator.id = "pdf-loading-indicator";
+        pdfContainer.appendChild(loadingIndicator);
+
+        // Force hide loader after 3 seconds regardless of loading status
+        setTimeout(() => {
+            const indicator = document.getElementById("pdf-loading-indicator");
+            if (indicator) {
+                indicator.remove();
+            }
+
+            // Remove any other potential progress indicators
+            const progressIndicator = document.getElementById("pdf-progress");
+            if (progressIndicator) {
+                progressIndicator.remove();
+            }
+        }, 3000);
+
+        // Track rendered pages
+        let renderedPages = 0;
+
+        // Detect mobile
         const isMobile = window.innerWidth < 768;
-        const scale = isMobile ? 1.3 : 1.5;
 
-        // Track rendered pages to prevent duplicates
-        const renderedPages = new Set();
+        // Critical performance settings
+        const scale = isMobile ? 1.0 : window.devicePixelRatio * 1.5;
+        const pagesPerBatch = isMobile ? 1 : 2;
+        const batchDelay = isMobile ? 300 : 150;
 
-        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const pageWrapper = document.createElement("div");
-                pageWrapper.classList.add("pdf-page-wrapper");
-                pageWrapper.setAttribute("data-page-number", i);
-
-                // Add simple margin to fix overlapping
-                pageWrapper.style.marginBottom = "20px";
-
-                pdfContainer.appendChild(pageWrapper);
-            }
-
-            loader.style.display = "none";
-
-            // Preload the first 4 pages immediately
-            preloadInitialPages(pdf, 4);
-
-            // Set up observer for remaining pages
-            loadVisiblePages(pdf);
-        });
-
-        // Function to preload the first N pages
-        function preloadInitialPages(pdf, count) {
-            // Limit count to available pages
-            const pagesToLoad = Math.min(count, pdf.numPages);
-
-            // Load pages in sequence
-            let currentPage = 1;
-
-            function loadNextInitialPage() {
-                if (currentPage <= pagesToLoad) {
-                    const pageContainer = document.querySelector(`[data-page-number="${currentPage}"]`);
-                    renderPage(pdf, currentPage, pageContainer).then(() => {
-                        currentPage++;
-                        loadNextInitialPage();
-                    });
-                }
-            }
-
-            // Start loading the first page
-            loadNextInitialPage();
+        // Configure PDF.js worker
+        if (pdfjsLib.GlobalWorkerOptions) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js";
         }
 
-        let rendering = false;
+        // Load the PDF with performance optimizations
+        pdfjsLib.getDocument({
+                url: pdfUrl,
+                cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/cmaps/',
+                cMapPacked: true,
+                disableRange: isMobile, // Better for mobile
+                disableStream: isMobile,
+            }).promise
+            .then(pdf => {
+                // Remove loading indicator as soon as PDF structure is loaded
+                const indicator = document.getElementById("pdf-loading-indicator");
+                if (indicator) {
+                    indicator.remove();
+                }
 
-        function loadVisiblePages(pdf) {
-            const pages = document.querySelectorAll(".pdf-page-wrapper");
+                // Render pages in batches
+                renderPagesInBatches(pdf, 1, pagesPerBatch, batchDelay);
+            })
+            .catch(error => {
+                const indicator = document.getElementById("pdf-loading-indicator");
+                if (indicator) {
+                    indicator.remove();
+                }
+                pdfContainer.innerHTML =
+                    `<div style="color:red; padding:20px;">Error loading PDF: ${error.message}</div>`;
+                console.error("PDF loading error:", error);
+            });
 
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    const pageNumber = parseInt(entry.target.dataset.pageNumber);
+        // Render pages in small batches with delays between them
+        function renderPagesInBatches(pdf, startPage, pagesPerBatch, delay) {
+            const endPage = Math.min(startPage + pagesPerBatch - 1, pdf.numPages);
 
-                    if (entry.isIntersecting && !renderedPages.has(pageNumber) && !rendering) {
-                        rendering = true;
-                        renderPage(pdf, pageNumber, entry.target).then(() => {
-                            observer.unobserve(entry.target);
-                            rendering = false;
-                        });
+            // Create a batch promise to track when this batch is complete
+            const batchPromises = [];
+
+            // Process current batch
+            for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
+                const pagePromise = renderPageSimplified(pdf, pageNum);
+                batchPromises.push(pagePromise);
+            }
+
+            // After this batch is done, schedule the next batch
+            Promise.all(batchPromises)
+                .then(() => {
+                    // Update rendered pages count
+                    renderedPages += (endPage - startPage + 1);
+
+                    // Remove loading indicator after first batch is rendered
+                    if (renderedPages >= pagesPerBatch) {
+                        const indicator = document.getElementById("pdf-loading-indicator");
+                        if (indicator) {
+                            indicator.remove();
+                        }
                     }
-                });
-            }, {
-                root: null,
-                threshold: 0.1,
-                rootMargin: '100px 0px',
-            });
 
-            pages.forEach(page => {
-                // Only observe pages that haven't been preloaded
-                if (!renderedPages.has(parseInt(page.dataset.pageNumber))) {
-                    observer.observe(page);
-                }
-            });
+                    const nextStartPage = endPage + 1;
+                    if (nextStartPage <= pdf.numPages) {
+                        // Schedule next batch with delay
+                        setTimeout(() => {
+                            renderPagesInBatches(pdf, nextStartPage, pagesPerBatch, delay);
+                        }, delay);
+                    }
+                })
+                .catch(error => console.error("Error rendering batch:", error));
         }
 
-        function renderPage(pdf, pageNumber, container) {
-            return new Promise(resolve => {
-                // Skip if already rendered
-                if (container.querySelector('canvas') || renderedPages.has(pageNumber)) {
-                    resolve();
-                    return;
-                }
+        // Simplified page rendering function - focus on essentials only
+        function renderPageSimplified(pdf, pageNumber) {
+            return new Promise((resolve, reject) => {
+                // Create wrapper div for this page
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'pdf-page';
+                pageDiv.style.margin = '10px 0';
+                pageDiv.style.position = 'relative';
+                pageDiv.style.maxWidth = '100%';
+                pageDiv.style.width = 'auto';
+                pageDiv.style.display = 'flex';
+                pageDiv.style.justifyContent = 'center';
 
-                const loadingSpinner = document.createElement("div");
-                loadingSpinner.className = "loading";
-                loadingSpinner.innerHTML = `<div class="spinner"></div><p>Loading page ${pageNumber}...</p>`;
-                container.appendChild(loadingSpinner);
+                // Add to container early to maintain page order
+                pdfContainer.appendChild(pageDiv);
 
+                // Load and render the page
                 pdf.getPage(pageNumber).then(page => {
                     const viewport = page.getViewport({
                         scale
                     });
-                    const canvas = document.createElement("canvas");
-                    const ctx = canvas.getContext("2d");
+
+                    // Create canvas
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
 
-                    const pageDiv = document.createElement("div");
-                    pageDiv.classList.add("pdf-page");
-
-                    // Center the canvas
-                    pageDiv.style.display = "flex";
-                    pageDiv.style.justifyContent = "center";
+                    // Make canvas responsive and centered
+                    canvas.style.width = '100%';
+                    canvas.style.height = 'auto';
+                    canvas.style.display = 'block';
+                    canvas.style.maxWidth = isMobile ? '100%' : '90%';
 
                     pageDiv.appendChild(canvas);
-                    container.appendChild(pageDiv);
 
-                    page.render({
+                    // Render with optimized settings
+                    const renderTask = page.render({
                         canvasContext: ctx,
-                        viewport
-                    }).promise.then(() => {
-                        loadingSpinner.remove();
-                        renderedPages.add(pageNumber);
-                        resolve();
+                        viewport,
+                        intent: isMobile ? 'display' : 'print',
+                        renderInteractiveForms: false,
+                        enableWebGL: false
                     });
-                }).catch(err => {
-                    console.error(`Error rendering page ${pageNumber}:`, err);
-                    loadingSpinner.remove();
-                    resolve(); // Resolve anyway to continue
+
+                    renderTask.promise
+                        .then(() => {
+                            // Remove loading indicator as soon as first page is rendered
+                            if (pageNumber <= pagesPerBatch) {
+                                const indicator = document.getElementById("pdf-loading-indicator");
+                                if (indicator) {
+                                    indicator.remove();
+                                }
+                            }
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.error(`Error rendering page ${pageNumber}:`, error);
+                            pageDiv.innerHTML +=
+                                `<div style="color:red;">Error rendering page</div>`;
+                            resolve(); // Still resolve to allow other pages to continue
+                        });
+                }).catch(error => {
+                    console.error(`Error getting page ${pageNumber}:`, error);
+                    pageDiv.innerHTML =
+                        `<div style="color:red; padding:10px;">Failed to load page ${pageNumber}</div>`;
+                    resolve(); // Still resolve to allow other pages to continue
                 });
             });
         }
 
-        document.getElementById("backBtn").addEventListener("click", () => window.history.back());
-        document.getElementById("downloadBtn").addEventListener("click", () => {
-            const link = document.createElement("a");
+        // Handle back button navigation
+        document.getElementById('backBtn').addEventListener('click', () => window.history.back());
+
+        // Handle PDF download functionality
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const link = document.createElement('a');
             link.href = pdfUrl;
-            link.download = pdfPath.split("/").pop();
-            link.target = "_blank";
+            link.download = pdfPath.split('/').pop();
+            link.target = '_blank';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         });
 
+        // Handle scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
         pdfContainer.addEventListener("scroll", () => {
             if (pdfContainer.scrollTop > 200) {
                 scrollTopBtn.style.display = "block";
@@ -359,35 +576,6 @@
                 behavior: "smooth"
             });
         });
-
-        // Add minimal CSS for spacing
-        (function () {
-            const style = document.createElement('style');
-            style.textContent = `
-        .pdf-page-wrapper {
-            margin-bottom: 30px;
-        }
-        .loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #09f;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    `;
-            document.head.appendChild(style);
-        })();
     </script>
 </body>
 

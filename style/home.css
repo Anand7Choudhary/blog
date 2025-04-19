@@ -568,6 +568,25 @@ footer .social-links ul li a:hover {
         font-size: 24px;
         font-weight: bold;
     }
+    #bmc-wbtn{
+        width: 50px !important;
+        height: 50px !important;
+        bottom: 20px !important;
+        left: 20px !important;
+    }
+    #bmc-wbtn img {
+        width: 32px !important;
+        height: 32px !important;
+    }
+    #bmc-wbtn+div {
+        /* your styles here */
+        bottom: 20px !important;
+        display: block !important;
+        visibility: visible !important;
+        font-size: 14px !important;
+        padding:12px !important;
+        left: 90px !important;
+    }
 }
 
 @media screen and (max-width: 350px) {

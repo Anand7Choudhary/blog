@@ -34,5 +34,23 @@
                 "url": "https://www.linkedin.com/posts/ch-anand_turbine-activity-7318929483921592321-t80i?utm_source=share&utm_medium=member_desktop&rcm=ACoAADKbm6cBVm135R3DQ9MR4dxdbZ0CHyihcrU"
             }
         ]
+    },
+    "23": {
+        "links": [{
+                "title": "Investment Insights Report",
+                "description": "Investment Deck",
+                "url": "documents/spaceInvestmentDeck.pdf"
+            },
+            {
+                "title": "Market research Report",
+                "description": "Research report",
+                "url": "documents/spaceInvestment.pdf"
+            },
+            {
+                "title": "Linkedin Post",
+                "description": "Insights on Linkedin",
+                "url": "https://www.linkedin.com/posts/ch-anand_indian-space-investment-activity-7319983366173327360-7oWp?utm_source=share&utm_medium=member_desktop&rcm=ACoAADKbm6cBVm135R3DQ9MR4dxdbZ0CHyihcrU"
+            }
+        ]
     }
 }

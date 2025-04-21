@@ -11,17 +11,23 @@ const changeTheme = (n) => {
     }
 }
 
-window.onload=()=>{
-    let getTheme=localStorage.getItem("theme");
-    if(getTheme==null){
-        changeTheme(1);
-    }else{
-        if (getTheme == "light")
+window.onload = () => {
+    let getTheme = localStorage.getItem("theme");
+    if (getTheme == null) {
+        // Check screen width - tablets and smaller (~768px or less) use light theme
+        if (window.innerWidth <= 768) {
+            changeTheme(2); // light
+        } else {
+            changeTheme(1); // dark
+        }
+    } else {
+        if (getTheme === "light") {
             changeTheme(2);
-        else
+        } else {
             changeTheme(1);
+        }
     }
-}
+};
 
 window.addEventListener('scroll', function () {
     var scrollBox = document.getElementById('scrollBox');

@@ -1,4 +1,15 @@
 [{
+        "id": "24",
+        "title": "Google’s $32B acquisition of Wiz",
+        "imageUrl": "image/articleImages/24.webp",
+        "date": "24th April, 2025",
+        "readTime": "4-5min read",
+        "content": "Google aims to strengthen its cloud security offerings and compete with Amazon Web Services (AWS) and Microsoft Azure by acquiring Wiz, a leading cloud security startup, to capitalize on AI and multicloud trends. The $32 billion price reflects Wiz’s rapid growth, with over $700 million in annual recurring revenue (ARR) and a projected $1 billion, though some analysts question the high 45x–65x revenue multiple.",
+        "keywords": ["Google acquisition", "Wiz cybersecurity", "cloud security", "strategic M&A", "enterprise tech", "venture capital", "AI infrastructure", "multicloud strategy", "GCP market share", "high-growth startups", "ARR growth", "valuation multiples", "cybersecurity investment", "cloud computing", "startup acquisition", "unicorn startups", "SaaS valuation", "strategic analysis", "tech M&A", "cloud infrastructure", "talent acquisition", "platform integration", "AI-driven security", "Google Cloud strategy", "market consolidation", "cloud-native security", "VC insights", "infrastructure innovation", "competitive positioning", "technology trends", "startup ecosystem"],
+        "link": "",
+        "iconLink": ""
+    },
+    {
         "id": "23",
         "title": "Indian Gov investment in Space",
         "imageUrl": "image/articleImages/23.webp",

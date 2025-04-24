@@ -52,5 +52,18 @@
                 "url": "https://www.linkedin.com/posts/ch-anand_indian-space-investment-activity-7319983366173327360-7oWp?utm_source=share&utm_medium=member_desktop&rcm=ACoAADKbm6cBVm135R3DQ9MR4dxdbZ0CHyihcrU"
             }
         ]
+    },
+    "24": {
+        "links": [{
+                "title": "Google-WIZ report deck",
+                "description": "Analysis Deck",
+                "url": "documents/GoogleWiz.pdf"
+            },
+            {
+                "title": "Linkedin Post",
+                "description": "Insights on Linkedin",
+                "url": "https://www.linkedin.com/posts/ch-anand_googlewiz-activity-7321070701442916352-ye34?utm_source=share&utm_medium=member_desktop&rcm=ACoAADKbm6cBVm135R3DQ9MR4dxdbZ0CHyihcrU"
+            }
+        ]
     }
 }

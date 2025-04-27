@@ -1,4 +1,15 @@
 [{
+        "id": "25",
+        "title": "Why are Start-ups shutting down",
+        "imageUrl": "image/articleImages/25.webp",
+        "date": "27th April, 2025",
+        "readTime": "10-15min read",
+        "content": "Google aims to strengthen its cloud security offerings and compete with Amazon Web Services (AWS) and Microsoft Azure by acquiring Wiz, a leading cloud security startup, to capitalize on AI and multicloud trends. The $32 billion price reflects Wiz’s rapid growth, with over $700 million in annual recurring revenue (ARR) and a projected $1 billion, though some analysts question the high 45x–65x revenue multiple.",
+        "keywords": ["Indian startups", "Series A funding", "startup shutdowns", "venture capital India", "startup ecosystem", "cash burn", "product-market fit", "SaaS startups", "Fintech startups", "EdTech growth", "consumer startups", "startup scaling", "regulatory challenges", "startup funding trends", "startup failures", "startup sustainability", "funding winter", "VC insights", "growth-stage startups", "unit economics", "startup survival", "startup industry trends", "fintech regulations", "startup funding patterns", "customer acquisition", "startup burn rate", "Indian tech startups", "market consolidation", "startup lifecycle", "product scaling", "venture capitalists", "startup funding landscape", "high-growth startups", "tech startup failure rates", "startups in India"],
+        "link": "",
+        "iconLink": "image/icons/fire.json"
+    },
+    {
         "id": "24",
         "title": "Google’s $32B acquisition of Wiz",
         "imageUrl": "image/articleImages/24.webp",
@@ -84,7 +95,7 @@
         "content": "This project delves into quantitative finance and market risk analysis, focusing on portfolio risk management using historical data from NIFTY 50 constituents. Leveraging advanced financial models like ARIMA for time-series forecasting, GARCH for volatility estimation, and Value at Risk (VaR) & Expected Shortfall (ES) for downside risk quantification, the analysis uncovers market dynamics and risk exposure. Stress testing and scenario analysis further assess vulnerabilities to systemic and idiosyncratic shocks, aligning with IFRS 9 risk frameworks. By integrating stochastic modeling, financial derivatives, and risk-adjusted performance metrics like the Sharpe Ratio, this work bridges data-driven insights with real-world financial strategies, enhancing decision-making in volatile markets. ",
         "keywords": ["Quantitative finance", "Market risk analysis", "Portfolio risk management", "NIFTY 50", "ARIMA modeling", "GARCH volatility", "Value at Risk (VaR)", "Expected Shortfall (ES)", "Stress testing", "Scenario analysis", "Financial forecasting", "Risk-adjusted returns", "Sharpe Ratio", "Market volatility", "Systemic risk", "Idiosyncratic risk", "Financial derivatives", "Stochastic modeling", "IFRS 9 compliance", "Time-series forecasting", "Downside risk quantification", "Risk frameworks", "Monte Carlo simulations", "Portfolio optimization", "Economic downturn impact", "Tail risk management", "Financial analytics", "Risk mitigation strategies", "Quant trading", "Investment risk insights"],
         "link": "https://www.linkedin.com/posts/ch-anand_risk-analysis-activity-7280437578464391168-WfEO?utm_source=share&utm_medium=member_desktop&rcm=ACoAADKbm6cBVm135R3DQ9MR4dxdbZ0CHyihcrU",
-        "iconLink": "image/icons/fire.json"
+        "iconLink": ""
     },
     {
         "id": "16",
@@ -128,7 +139,7 @@
         "content": "Nespresso’s strategy is a textbook example of the razor-and-blades model. While machines are often sold at competitive prices or bundled with promotions, the real profit lies in the proprietary coffee capsules.",
         "keywords": ["Startup finance", "Financial strategy", "Airbnb business model", "Zoho bootstrapping", "Asset-light model", "Profitability in startups", "Revenue model", "EBITDA margin", "R&D investment", "Scalability", "Tech-driven marketplace", "Commission-based revenue", "Cost efficiency", "Financial efficiency", "Business adaptability", "SaaS growth strategy", "Self-funded startups", "Venture capital alternatives", "Long-term business success", "Innovation in business", "Recurring revenue", "Customer acquisition", "Competitive advantage", "Strategic pivoting", "Global expansion", "Subscription models", "Revenue performance", "Organic growth", "Market competition", "High-margin products"],
         "link": "https://www.linkedin.com/pulse/nespresso-brewing-success-one-capsule-time-anand-choudhary-x73vf",
-        "iconLink": "image/icons/fire.json"
+        "iconLink": ""
     },
     {
         "id": "12",
@@ -161,7 +172,7 @@
         "content": "In the bustling landscape of Indian finance, where legacy brokerages have traditionally dominated through lavish advertising and extensive marketing budgets, Zerodha emerged as a beacon of innovation. Founded in 2010 by brothers Nithin and Nikhil Kamath",
         "keywords": ["Olympics 2024 Dashboard", "Tableau", "data visualization", "dashboard design", "Olympics insights", "sports analytics", "medal tally", "athlete performance", "country-wise medals", "gender distribution", "Paris Olympics", "GrowthBubble", "Olympic data analysis", "interactive dashboard", "Olympics statistics", "data analytics", "business intelligence", "dashboard skills", "job hunting", "sports data", "visual analytics"],
         "link": "https://www.linkedin.com/pulse/zerodha-data-driven-disruption-brokerage-market-anand-choudhary-32the",
-        "iconLink": "image/icons/fire.json"
+        "iconLink": ""
     },
     {
         "id": "9",
@@ -172,7 +183,7 @@
         "content": "What do you do when you’re not competing in the Olympics? Well, you create a Tableau dashboard to analyze the real champions! I just had a blast brushing up my dashboard design skills while building an interactive Olympics 2024 insights dashboard. From who’ s bagging the most medal to how athletes are stacking up by country, discipline, and gender.Wanna geek out on the numbers and reveal the insights ?",
         "keywords": ["Zerodha", "FinTech", "customer satisfaction", "brokerage model", "disruption", "business strategy", "investment", "low-cost trading", "digital transformation", "market penetration", "NSE volume", "customer acquisition", "flat fee trading", "financial innovation", "startup success", "Kamath brothers", "business growth", "data-driven strategy", "Indian brokerage", "revenue growth", "financial services"],
         "link": "https://www.linkedin.com/posts/ch-anand_tableau-olympics2024-datanerd-activity-7242835628881584130-hvEf?utm_source=share&utm_medium=member_desktop",
-        "iconLink": "image/icons/heart.json"
+        "iconLink": ""
     },
     {
         "id": "8",
@@ -183,7 +194,7 @@
         "content": "In this fast-paced and ever-evolving business landscape, we have already understood the importance of limitless technology and best operations. But staying ahead of the competition requires more than just that. Imagine having a crystal ball that reveals the future behaviours and preferences of your customers.",
         "keywords": ["Crystal Ball for Businesses, future consumer behavior,consumer,behavior, predictive analytics,analytics,predictive, customer metrics, data privacy,privacy, business growth, customer satisfaction, customer loyalty, market trends,market,trends, competitive edge"],
         "link": "https://www.linkedin.com/pulse/crystal-ball-businesses-unlocking-future-consumer-growth-choudhary-hmyqe/?trackingId=EtD3ylv0mhAg17UkXOSKYw%3D%3D",
-        "iconLink": "image/icons/fire.json"
+        "iconLink": ""
     },
     {
         "id": "7",
@@ -194,7 +205,7 @@
         "content": "The Indian startup ecosystem has been on a tear in recent years, the tide seems to be turning, as venture capital (VC) firms are becoming more cautious about valuations.",
         "keywords": ["Understanding the Decline in Startup Valuations in India", "funding winter", "fintech", "startup valuations", "India", "venture capital", "rising interest rates", "cautious investors", "down rounds", "structured debt", "unicorns", "e-commerce", "enterprise tech"],
         "link": "https://www.linkedin.com/pulse/navigating-shift-understanding-decline-startup-india-anand-choudhary",
-        "iconLink": "image/icons/fire.json"
+        "iconLink": ""
     },
     {
         "id": "6",
@@ -205,7 +216,7 @@
         "content": "Nvidia, the world's leading provider of GPUs, has reached a market capitalization of $970 billion, solidifying its position as a global tech powerhouse.",
         "keywords": ["NVIDIA's Market Cap Reaches $970 Billion", "NVIDIA", "market cap", "GPU's", "AI", "data center", "automotive", "gaming", "cloud computing", "metaverse", "cryptocurrency"],
         "link": "https://www.linkedin.com/posts/ch-anand_ai-leadership-growth-activity-7068907212286414849-43iq?utm_source=share&utm_medium=member_desktop",
-        "iconLink": "image/icons/globe.json"
+        "iconLink": ""
     },
     {
         "id": "5",

@@ -548,11 +548,24 @@
 
         // Handle back button navigation
         // document.getElementById('backBtn').addEventListener('click', () => window.history.back());
-        document.getElementById('backBtn').addEventListener('click', () => {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                window.location.href = 'https://growthbubble.netlify.app';
+        // Updated back button handler - matches your existing element ID
+        document.addEventListener('DOMContentLoaded', function () {
+            const backButton = document.getElementById('backBtn');
+
+            if (backButton) {
+                backButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Check if there's a previous page in the browser history within your domain
+                    if (document.referrer && document.referrer.includes('growthbubble.netlify.app')) {
+                        // If user navigated from within the site, go back
+                        window.history.back();
+                    } else {
+                        // If user landed directly on this page or came from external site,
+                        // redirect to the home page
+                        window.location.href = '/'; // or your specific home page URL
+                    }
+                });
             }
         });
 

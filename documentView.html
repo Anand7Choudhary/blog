@@ -547,7 +547,16 @@
         }
 
         // Handle back button navigation
-        document.getElementById('backBtn').addEventListener('click', () => window.history.back());
+        // document.getElementById('backBtn').addEventListener('click', () => window.history.back());
+        document.getElementById('backBtn').addEventListener('click', () => {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'https://growthbubble.netlify.app';
+            }
+        });
+
+
 
         // Handle PDF download functionality
         document.getElementById('downloadBtn').addEventListener('click', () => {

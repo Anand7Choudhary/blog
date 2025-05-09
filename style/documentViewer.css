@@ -245,7 +245,9 @@ canvas {
     background-color: #00376fe3;
     transform: scale(1.1);
 }
-
+#pdf-loading-indicator{
+    color: #f4f4f4;
+}
 
 
 

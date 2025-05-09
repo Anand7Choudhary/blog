@@ -557,14 +557,15 @@
                 backButton.addEventListener('click', function (e) {
                     e.preventDefault();
 
-                    // Check if there's a previous page in the browser history within your domain
-                    if (document.referrer && document.referrer.includes('growthbubble.netlify.app')) {
-                        // If user navigated from within the site, go back
+                    const referrer = document.referrer;
+                    const currentDomain = window.location.hostname;
+
+                    if (referrer && new URL(referrer).hostname === currentDomain) {
+                        // Came from a page within the same domain — go back
                         window.history.back();
                     } else {
-                        // If user landed directly on this page or came from external site,
-                        // redirect to the home page
-                        window.location.href = '/'; // or your specific home page URL
+                        // Direct entry or external referrer — go to homepage
+                        window.location.href = '/';
                     }
                 });
             }

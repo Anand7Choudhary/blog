@@ -16,7 +16,7 @@ window.onload = () => {
     if (getTheme == null) {
         // Check screen width - tablets and smaller (~768px or less) use light theme
         if (window.innerWidth <= 768) {
-            changeTheme(2); // light
+            changeTheme(1); // light
         } else {
             changeTheme(1); // dark
         }

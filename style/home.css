@@ -13,6 +13,7 @@
     --shadow-color1: rgba(136, 165, 191, 0.48);
     --shadow-color2: rgba(255, 255, 255, 0.8);
     --upArrow:#00a7e9;
+    --filter-hover-bg-color:rgba(0, 195, 255, 0.25);
 }
 
 :root.dark {
@@ -30,6 +31,7 @@
     --shadow-color1: rgba(0, 0, 0, 0);
     --shadow-color2: rgba(0, 0, 0, 0);
     --upArrow:#3e3e3e;
+    --filter-hover-bg-color:rgba(255, 255, 255, 0.25);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,500&display=swap');
@@ -143,7 +145,7 @@ body {
 .blogBody .searchContainer{
     width: 100%;
     height: fit-content;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -637,4 +639,89 @@ footer .social-links ul li a:hover {
 
 .card img.loaded {
     animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+
+
+
+/* Style for button fiters */
+.filter-container {
+    width: 100%;
+    margin: 20px auto;
+    margin-bottom: 50px;
+    padding: 0 15px;
+}
+
+.filter-title {
+    color: var(--blog-text);
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.filter-tags {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
+.filter-tags::-webkit-scrollbar {
+    height: 4px;
+}
+
+.filter-tags::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 10px;
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    color: var(--blog-text);
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.filter-tag:hover {
+    background-color: var(--filter-hover-bg-color);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.filter-tag.active {
+    background-color: #4567ff;
+    border-color: #4567ff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .filter-tags {
+        padding-bottom: 12px;
+    }
+
+    .filter-tag {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 769px) {
+    .filter-tags {
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow-x: visible;
+    }
 }

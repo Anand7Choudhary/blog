@@ -158,7 +158,151 @@ function getCards() {
         .catch(error => console.error('Error fetching cards:', error));
 }
 
-// Update the displayCards function to load popup data first
+// Define the categories and their keywords
+const filterCategories = [{
+        name: "Startups",
+        keywords: ["startups", "startup", "unicorns", "growth-stage", "early-stage", "product-market fit", "startup failures", "startup scaling", "startup sustainability", "startup ecosystem"]
+    },
+    {
+        name: "Funding",
+        keywords: ["venture capital", "funding", "Series A", "fundraising", "investment", "limited partners", "valuations", "funding winter", "capital calls", "VC insights", "strategic investment", "seed funding"]
+    },
+    {
+        name: "Business Models",
+        keywords: ["business model", "revenue model", "subscription economy", "marketplace", "platform business", "vertical integration", "asset-light model", "freemium", "recurring revenue", "unit economics"]
+    },
+    {
+        name: "Market Trends",
+        keywords: ["market trends", "industry insights", "competitive landscape", "market expansion", "growth opportunities", "technology trends", "consumer behavior", "disruptive innovation"]
+    },
+    {
+        name: "Tech",
+        keywords: ["AI", "machine learning", "cloud computing", "InsurTech", "FinTech", "SaaS", "Space Technology", "EV market", "cybersecurity", "blockchain"]
+    },
+    {
+        name: "Finance",
+        keywords: ["financial performance", "quantitative finance", "risk analysis", "profitability", "EBITDA", "cash burn", "capital efficiency", "revenue diversification", "valuation multiples", "financial strategy"]
+    },
+    {
+        name: "Case Studies",
+        keywords: ["business breakdown", "strategic analysis", "case study", "success stories", "failure analysis", "company profiles"]
+    }
+];
+
+// Active filters
+let activeFilters = [];
+
+// Function to initialize filters
+function initializeFilters() {
+    const filterTagsContainer = document.getElementById('filter-tags');
+
+    // Clear existing filters
+    filterTagsContainer.innerHTML = '';
+
+    // Create filter tags
+    filterCategories.forEach(category => {
+        const filterTag = document.createElement('div');
+        filterTag.className = 'filter-tag';
+        filterTag.textContent = category.name;
+        filterTag.dataset.category = category.name;
+
+        filterTag.addEventListener('click', () => {
+            toggleFilter(filterTag, category);
+        });
+
+        filterTagsContainer.appendChild(filterTag);
+    });
+}
+
+// Function to toggle filter selection
+function toggleFilter(element, category) {
+    const isActive = element.classList.toggle('active');
+
+    if (isActive) {
+        // Add to active filters
+        activeFilters.push(category.name);
+    } else {
+        // Remove from active filters
+        activeFilters = activeFilters.filter(filter => filter !== category.name);
+    }
+
+    // Apply filters to cards
+    applyFilters();
+}
+
+// Function to check if card matches active filters
+function cardMatchesFilters(card) {
+    // If no filters are active, show all cards
+    if (activeFilters.length === 0) {
+        return true;
+    }
+
+    // Check if the card has any keywords matching the active filters
+    return activeFilters.some(activeFilter => {
+        const category = filterCategories.find(cat => cat.name === activeFilter);
+        if (!category) return false;
+
+        return category.keywords.some(keyword =>
+            card.keywords.some(cardKeyword =>
+                cardKeyword.toLowerCase().includes(keyword.toLowerCase())
+            )
+        );
+    });
+}
+
+// Function to apply filters to cards
+function applyFilters() {
+    // Get the current search filter text
+    const searchText = document.getElementById('search-input').value.toLowerCase().trim();
+
+    // Update the global filterText variable using your existing logic
+    filterText = searchText;
+
+    // Override the displayCards function to include category filtering
+    displayCards();
+}
+
+// // Update the displayCards function to load popup data first
+// async function displayCards() {
+//     // Ensure popup links data is loaded
+//     if (Object.keys(popupLinksData).length === 0) {
+//         await fetchPopupLinks();
+//     }
+
+//     const cardContainer = document.querySelector('.card-container');
+//     cardContainer.innerHTML = '';
+//     const cards = await getCards();
+//     for (const card of cards) {
+//         if (filterText && !card.keywords.some(keyword => keyword.toLowerCase().includes(filterText))) {
+//             continue;
+//         }
+//         const cardElement = new Card(card.id, card.title, card.imageUrl, card.date, card.readTime, card.content, card.link, card.iconLink);
+//         cardContainer.appendChild(cardElement.render());
+//     }
+//     const dynamicCard = createOtherCard();
+//     cardContainer.appendChild(dynamicCard);
+
+//     // Initialize Intersection Observer for lazy loading
+//     const observer = new IntersectionObserver((entries) => {
+//         entries.forEach(entry => {
+//             if (entry.isIntersecting) {
+//                 entry.target.src = entry.target.dataset.src;
+//                 entry.target.classList.add('loaded');
+//                 observer.unobserve(entry.target);
+//             }
+//         });
+//     });
+
+//     // Observe each card image for lazy loading
+//     const cardImages = cardContainer.querySelectorAll('img');
+//     cardImages.forEach(img => {
+//         img.dataset.src = img.src;
+//         img.src = '';
+//         observer.observe(img);
+//     });
+// }
+
+// Modified displayCards function to include category filtering
 async function displayCards() {
     // Ensure popup links data is loaded
     if (Object.keys(popupLinksData).length === 0) {
@@ -168,13 +312,18 @@ async function displayCards() {
     const cardContainer = document.querySelector('.card-container');
     cardContainer.innerHTML = '';
     const cards = await getCards();
+
     for (const card of cards) {
-        if (filterText && !card.keywords.some(keyword => keyword.toLowerCase().includes(filterText))) {
-            continue;
+        // Check if card matches both text search and category filters
+        const matchesTextFilter = !filterText || card.keywords.some(keyword => keyword.toLowerCase().includes(filterText));
+        const matchesCategoryFilter = cardMatchesFilters(card);
+
+        if (matchesTextFilter && matchesCategoryFilter) {
+            const cardElement = new Card(card.id, card.title, card.imageUrl, card.date, card.readTime, card.content, card.link, card.iconLink);
+            cardContainer.appendChild(cardElement.render());
         }
-        const cardElement = new Card(card.id, card.title, card.imageUrl, card.date, card.readTime, card.content, card.link, card.iconLink);
-        cardContainer.appendChild(cardElement.render());
     }
+
     const dynamicCard = createOtherCard();
     cardContainer.appendChild(dynamicCard);
 
@@ -197,9 +346,6 @@ async function displayCards() {
         observer.observe(img);
     });
 }
-
-
-
 
 // Get the input element
 const searchInput = document.getElementById('search-input');
@@ -337,6 +483,7 @@ function showPopup(title, links) {
 window.addEventListener('DOMContentLoaded', async () => {
     await fetchPopupLinks();
     await displayCards();
+    initializeFilters();
 });
 
 

@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="image/logo.svg" alt="Growth Bubble" class="title" id="logoBtn" style="cursor: pointer;"/>
+            <img src="image/logo.svg" alt="Growth Bubble" class="title" id="logoBtn" style="cursor: pointer;" />
             <div class="buttons-container">
                 <button class="btn back-btn" id="backBtn">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -245,29 +245,6 @@
         }
 
         // Handle back button navigation
-        // document.getElementById('backBtn').addEventListener('click', () => window.history.back());
-        // Updated back button handler - matches your existing element ID
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     const backButton = document.getElementById('backBtn');
-
-        //     if (backButton) {
-        //         backButton.addEventListener('click', function (e) {
-        //             e.preventDefault();
-
-        //             const referrer = document.referrer;
-        //             const currentDomain = window.location.hostname;
-
-        //             if (referrer && new URL(referrer).hostname === currentDomain) {
-        //                 // Came from a page within the same domain — go back
-        //                 window.history.back();
-        //             } else {
-        //                 // Direct entry or external referrer — go to homepage
-        //                 window.location.href = '/';
-        //             }
-        //         });
-        //     }
-        // });
-
         function handleBackButtonClick(e) {
             e.preventDefault();
 
@@ -323,6 +300,11 @@
 
         scrollTopBtn.addEventListener("click", () => {
             pdfContainer.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+            // Scroll the page
+            window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });

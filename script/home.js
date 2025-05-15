@@ -160,6 +160,10 @@ function getCards() {
 
 // Define the categories and their keywords
 const filterCategories = [{
+        name: "Consumer",
+        keywords: ["consumer behavior", "buying habits", "purchase decisions", "brand loyalty", "customer journey", "consumer psychology", "shopping trends", "online shopping", "e-commerce", "digital retail"]
+    },
+    {
         name: "Startups",
         keywords: ["startups", "startup", "unicorns", "growth-stage", "early-stage", "product-market fit", "startup failures", "startup scaling", "startup sustainability", "startup ecosystem"]
     },
@@ -453,7 +457,7 @@ function showPopup(title, links) {
             link.textContent = "View Document";
         }
         link.classList.add('document-link');
-        
+
         linkContainer.appendChild(linkTitle);
         linkContainer.appendChild(linkDescription);
         linkContainer.appendChild(link);

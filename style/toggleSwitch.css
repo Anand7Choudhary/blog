@@ -5,7 +5,8 @@
     right: 25px;
     width: 50px;
     height: 50px;
-    background-color: var(--upArrow);
+    /* background-color: var(--upArrow); */
+    background-color: #3e3e3e;
     border: none;
     border-radius: 10px;
     text-align: center;
@@ -122,9 +123,11 @@ nav .navMenu li .navButtons {
 
 .portfolioBtn {
     background-image: linear-gradient(144deg, #8830c7, #3a24c5 50%, #00acb9);
+    /* background-color: rgb(209, 250, 4); */
     border: 0;
     border-radius: 8px;
     color: #FFFFFF !important;
+    /* color: #0022ff !important; */
     display: flex;
     font-size: 16px;
     justify-content: center;

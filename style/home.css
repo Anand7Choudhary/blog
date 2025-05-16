@@ -285,7 +285,7 @@ body {
     align-items: flex-start;
     flex-direction: column;
     flex-wrap: nowrap;
-    box-shadow: 0 0 30px 0 #00000076;
+    /* box-shadow: 0 0 30px 0 #00000076; */
     overflow: hidden;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -605,8 +605,8 @@ footer .social-links ul li a:hover {
         font-weight: bold;
     }
     .scroll-box{
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
         border-radius: 7px;
     }
 }

@@ -14,6 +14,7 @@
   <title>Growth Bubble</title>
   <link rel="stylesheet" href="style/toggleSwitch.css">
   <link rel="stylesheet" href="style/home.css">
+  <link rel="stylesheet" href="style/nav.css">
   <link rel="stylesheet" href="style/popup.css">
   <link rel="shortcut icon" href="image/iconLogo.svg">
 </head>
@@ -32,7 +33,7 @@
       </li>
       <li>
         <ul class="navButtons">
-          <li><a class="portfolioBtn" href="https://anand-choudhary.netlify.app">Portfolio</a></li>
+          <li><a class="portfolioBtn" href="https://anand-choudhary.netlify.app">My Site</a></li>
           <li>
             <div class="darkModeBody">
               <div class="innerModeDiv" id="innerModeDiv">
@@ -45,6 +46,60 @@
       </li>
     </ul>
   </nav>
+
+
+
+
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Footer with expandable menu -->
+  <div class="footer-container">
+    <div class="add-button" id="addButton">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+          d="M12 4C12.5523 4 13 4.44772 13 5V11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H13V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V13H5C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11H11V5C11 4.44772 11.4477 4 12 4Z">
+        </path>
+      </svg>
+    </div>
+
+    <div class="nav-menu" id="navMenu">
+      <div class="nav-item" id="notionItem">
+        <span>Notion Articles</span>
+        <div class="icon pin">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L12 16"></path>
+            <path d="M5 12H2C2 17.5228 6.47715 22 12 22V22C17.5228 22 22 17.5228 22 12H19"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="nav-item" id="financeItem">
+        <span>Financial Models</span>
+        <div class="icon new">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+            </polygon>
+          </svg>
+        </div>
+      </div>
+
+      <div class="nav-item" id="videosItem">
+        <span>Videos</span>
+        <div class="icon soon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -139,8 +194,22 @@
     </div>
   </footer>
 
+
+
+
+  <!-- Alert Box -->
+  <div id="customAlertOverlay" class="custom-alert-overlay">
+    <div class="custom-alert-box">
+      <h2 id="alertTitle">Title</h2>
+      <p id="alertComment">Comment</p>
+      <button onclick="closeCustomAlert()">Close</button>
+    </div>
+  </div>
+  
+
   <script type="text/javascript" src="script/home.js"></script>
   <script type="text/javascript" src="script/iconsRun.js"></script>
+  <script type="text/javascript" src="script/nav.js"></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-23K862ZP30"></script>
   <script>
@@ -153,7 +222,7 @@
 
     gtag('config', 'G-23K862ZP30');
   </script>
-  <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="anandchoudhary" data-description="Support me on Buy me a coffee!" data-message="Hey, thank you for visiting." data-color="#5F7FFF" data-position="left" data-x_margin="18" data-y_margin="18"></script>
+  <!-- <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="anandchoudhary" data-description="Support me on Buy me a coffee!" data-message="Hey, thank you for visiting." data-color="#5F7FFF" data-position="left" data-x_margin="18" data-y_margin="18"></script> -->
 </body>
 
 </html>

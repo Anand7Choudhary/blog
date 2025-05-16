@@ -45,6 +45,80 @@ document.getElementById('scrollBox').addEventListener('click', function () {
     });
 });
 
+// Animation
+ // Parallax effect on mouse movement
+ document.addEventListener('DOMContentLoaded', function () {
+     const landingPage = document.querySelector('.landing-page');
+     const parallaxLayers = document.querySelectorAll('.parallax-layer');
+
+     landingPage.addEventListener('mousemove', function (e) {
+         const x = e.clientX / window.innerWidth;
+         const y = e.clientY / window.innerHeight;
+
+         parallaxLayers.forEach(layer => {
+             const depth = parseFloat(layer.getAttribute('data-depth')) || 0.2;
+             const translateX = (x * 100 - 50) * depth;
+             const translateY = (y * 100 - 50) * depth;
+
+             layer.style.transform = `translate(${translateX}px, ${translateY}px)`;
+         });
+     });
+
+     // Interactive logo effect
+     const logo = document.querySelector('.growthBubbleIcon img');
+     logo.addEventListener('mouseover', function () {
+         this.style.transform = 'scale(1.1) rotate(5deg)';
+     });
+
+     logo.addEventListener('mouseout', function () {
+         this.style.transform = '';
+     });
+
+     // Bubble animation on click
+     landingPage.addEventListener('click', function (e) {
+         // Create a new bubble at click position
+         const bubble = document.createElement('div');
+         bubble.classList.add('click-bubble');
+         bubble.style.position = 'absolute';
+         bubble.style.left = `${e.clientX}px`;
+         bubble.style.top = `${e.clientY}px`;
+         bubble.style.width = '10px';
+         bubble.style.height = '10px';
+         bubble.style.background = 'rgba(255,255,255,0.5)';
+         bubble.style.borderRadius = '50%';
+         bubble.style.pointerEvents = 'none';
+         bubble.style.zIndex = '100';
+         bubble.style.transform = 'translate(-50%, -50%)';
+         bubble.style.animation = 'bubble-expand 1s forwards';
+
+         document.body.appendChild(bubble);
+
+         // Remove bubble after animation completes
+         setTimeout(() => {
+             bubble.remove();
+         }, 1000);
+     });
+
+     // Add keyframe animation for click bubbles
+     const style = document.createElement('style');
+     style.textContent = `
+        @keyframes bubble-expand {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(10);
+                opacity: 0;
+            }
+        }
+    `;
+     document.head.appendChild(style);
+ });
+
+
+
+
 // Modify the Card class render method to handle popup cards
 class Card {
     constructor(id, title, imageUrl, date, readTime, content, link, iconLink) {

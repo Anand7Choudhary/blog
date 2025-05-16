@@ -31,10 +31,13 @@ window.onload = () => {
 
 window.addEventListener('scroll', function () {
     var scrollBox = document.getElementById('scrollBox');
+    var nav = document.querySelector('nav');
     if (window.scrollY >= 100) {
         scrollBox.classList.add('show');
+        nav.classList.add('scrolled');
     } else {
         scrollBox.classList.remove('show');
+        nav.classList.remove('scrolled');
     }
 });
 
@@ -115,7 +118,6 @@ document.getElementById('scrollBox').addEventListener('click', function () {
     `;
      document.head.appendChild(style);
  });
-
 
 
 

@@ -27,12 +27,19 @@ nav {
     width: 100%;
     height: fit-content;
     padding: 20px 10%;
-    background-color: var(--nav-color);
+    /* background-color: var(--nav-color); */
+    background-color: transparent;
     /* box-shadow: 0 0 30px 0px #59595924; */
     position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
+    transition: background-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+/* When scrolled */
+nav.scrolled {
+    background-color: var(--bg-color);
 }
 
 nav .navMenu {

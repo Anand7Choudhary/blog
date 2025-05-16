@@ -100,8 +100,10 @@
 
 .nav-item {
     position: relative;
-    background-color: var(--card-bg);
-    color: var(--card-title-color);
+    /* background-color: var(--card-bg); */
+    background-color: #ffffff;
+    /* color: var(--card-title-color); */
+    color: #000000;
     padding: 1rem 1.5rem;
     border-radius: 12px;
     box-shadow: 0 8px 20px var(--shadow-color1);
@@ -150,7 +152,7 @@
 .nav-item:hover {
     transform: translateY(-8px) scale(1.2);
     box-shadow: 0 12px 24px var(--shadow-color1);
-    background-color: var(--card-bg);
+    background-color: #ffffff;
 }
 
 .nav-item:active {

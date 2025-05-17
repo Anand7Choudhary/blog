@@ -50,67 +50,6 @@ body {
     overflow-x: hidden;
     background-color: var(--bg-color);
 }
-
-
-
-/* .landing-page {
-    width: 100%;
-    min-height: 100vh;
-    max-height: fit-content;
-    overflow: hidden;
-    position: relative;
-    background-color: var(--bg-color);
-    padding: 50px 7vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 10%;
-}
-
-.landing-page .waveAni {
-    width: 100%;
-    position: absolute;
-    bottom: -7px;
-    left: 0;
-    z-index: 1;
-}
-
-.landing-page .landingPage-info-body {
-    position: relative;
-    width: 100%;
-    height: fit-content;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    z-index: 2;
-    padding: 25px;
-}
-
-.landing-page .landingPage-info-body .growthBubbleIcon {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.landing-page .landingPage-info-body .growthBubbleIcon img {
-    width: 70%;
-    position: relative;
-    left: 15px;
-}
-
-.landing-page .landingPage-info-body .infoText {
-    width: 60%;
-    font-weight: bolder;
-    font-size: 1rem;
-    color: #ffffff;
-    text-align: center;
-    word-spacing: 4px;
-    letter-spacing: 0.5px;
-} */
-
 /* 
 
 
@@ -740,10 +679,6 @@ footer .social-links ul li a:hover {
 }
 
 @media screen and (max-width:1300px) {
-    .landing-page .landingPage-info-body .growthBubbleIcon img {
-        /* width: 100%; */
-    }
-
     .social-connect-body {
         min-height: 40vh;
     }

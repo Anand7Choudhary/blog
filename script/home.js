@@ -342,46 +342,6 @@ function applyFilters() {
     displayCards();
 }
 
-// // Update the displayCards function to load popup data first
-// async function displayCards() {
-//     // Ensure popup links data is loaded
-//     if (Object.keys(popupLinksData).length === 0) {
-//         await fetchPopupLinks();
-//     }
-
-//     const cardContainer = document.querySelector('.card-container');
-//     cardContainer.innerHTML = '';
-//     const cards = await getCards();
-//     for (const card of cards) {
-//         if (filterText && !card.keywords.some(keyword => keyword.toLowerCase().includes(filterText))) {
-//             continue;
-//         }
-//         const cardElement = new Card(card.id, card.title, card.imageUrl, card.date, card.readTime, card.content, card.link, card.iconLink);
-//         cardContainer.appendChild(cardElement.render());
-//     }
-//     const dynamicCard = createOtherCard();
-//     cardContainer.appendChild(dynamicCard);
-
-//     // Initialize Intersection Observer for lazy loading
-//     const observer = new IntersectionObserver((entries) => {
-//         entries.forEach(entry => {
-//             if (entry.isIntersecting) {
-//                 entry.target.src = entry.target.dataset.src;
-//                 entry.target.classList.add('loaded');
-//                 observer.unobserve(entry.target);
-//             }
-//         });
-//     });
-
-//     // Observe each card image for lazy loading
-//     const cardImages = cardContainer.querySelectorAll('img');
-//     cardImages.forEach(img => {
-//         img.dataset.src = img.src;
-//         img.src = '';
-//         observer.observe(img);
-//     });
-// }
-
 // Modified displayCards function to include category filtering
 async function displayCards() {
     // Ensure popup links data is loaded

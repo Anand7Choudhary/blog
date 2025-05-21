@@ -40,12 +40,17 @@ notionItem.addEventListener('click', () => {
 });
 
 financeItem.addEventListener('click', () => {
+    window.open('https://handbook.growthbubble.site', '_blank');
     toggleMenu();
-    showCustomAlert(
-        '🚀 Publishing Update',
-        'We’re releasing <strong>5+ financial models</strong><br>on <em>1st June</em>. Stay tuned!'
-    );
 });
+
+// financeItem.addEventListener('click', () => {
+//     toggleMenu();
+//     showCustomAlert(
+//         '🚀 Publishing Update',
+//         'We’re releasing <strong>5+ financial models</strong><br>on <em>1st June</em>. Stay tuned!'
+//     );
+// });
 
 videosItem.addEventListener('click', () => {
     toggleMenu();

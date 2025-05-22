@@ -950,3 +950,28 @@ footer .social-links ul li a:hover {
         overflow-x: visible;
     }
 }
+
+
+#financeItem{
+    background: linear-gradient(135deg, rgb(0, 13, 130), rgb(0, 1, 48));
+}
+.handbook{
+    background: linear-gradient(to right, #ff6161, #fc67fa);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Pacifico",
+    cursive;
+    font-weight: 100;
+    font-style: normal;
+}
+.nav-item:nth-child(2) {
+    transition-delay: 0.2s;
+    border-bottom: 1.5px solid #50d70100;
+    box-shadow: none;
+}
+
+#financeItem .icon{
+    display: none;
+}

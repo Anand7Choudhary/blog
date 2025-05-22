@@ -135,7 +135,7 @@
 
 .nav-item:nth-child(2) {
     transition-delay: 0.2s;
-    border-bottom: 1.5px solid #50d701;
+    border-bottom: 1.5px solid #50d70100;
 }
 
 .nav-item:nth-child(3) {
@@ -149,11 +149,11 @@
     letter-spacing: 0.5px;
 }
 
-.nav-item:hover {
+/* .nav-item:hover {
     transform: translateY(-8px) scale(1.2);
     box-shadow: 0 12px 24px var(--shadow-color1);
     background-color: #ffffff;
-}
+} */
 
 .nav-item:active {
     transform: scale(0.95);

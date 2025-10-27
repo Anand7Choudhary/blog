@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✨ OG Jokes for You ✨</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+  
+    :root {
+      --bg-color: #fdfaf4; /* warmer paper tone */
+      --text-color: #222;
+      --accent-blue: #0056d2;
+      --accent-gold: #d4af37;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --border-color: rgba(0, 0, 0, 0.1);
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+  
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+  
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+  
+    /* Enhanced background texture and mandala overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: 
+        linear-gradient(rgba(253, 250, 244, 0.95), rgba(253, 250, 244, 0.95)),
+        url('https://www.transparenttextures.com/patterns/handmade-paper.png');
+      opacity: 0.5; /* more visible */
+      z-index: -2;
+      background-size: 300px 300px;
+    }
+  
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url('https://www.transparenttextures.com/patterns/arabesque.png');
+      opacity: 0.15; /* more visible mandala layer */
+      z-index: -1;
+      animation: slowPan 80s linear infinite;
+      background-size: 400px 400px;
+      filter: contrast(120%) brightness(1.05);
+    }
+  
+    @keyframes slowPan {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
+    }
+  
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      animation: float 6s ease-in-out infinite;
+    }
+  
+    h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
+    }
+  
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+  
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 1rem;
+      flex-grow: 1;
+      width: 100%;
+    }
+  
+    #joke-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px var(--shadow-color);
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      min-height: 8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+  
+    #joke-text {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.6s ease forwards;
+    }
+  
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+    #controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  
+    #main-joke-btn {
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 86, 210, 0.3);
+      transition: all 0.3s ease;
+    }
+  
+    #main-joke-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 86, 210, 0.4);
+    }
+  
+    #theme-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+  
+    .theme-btn {
+      border: 1px solid var(--border-color);
+      background: white;
+      color: var(--text-color);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+  
+    .theme-btn:hover {
+      background: var(--accent-gold);
+      color: white;
+    }
+  
+    .theme-btn.active {
+      background: var(--accent-blue);
+      color: white;
+      border-color: var(--accent-blue);
+    }
+  
+    footer {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      flex-wrap: wrap;
+    }
+  
+    .footer-link {
+      text-decoration: none;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: transform 0.3s ease;
+    }
+  
+    .footer-link:hover {
+      transform: scale(1.05);
+    }
+  
+    .growth-bubble {
+      background: #007BFF;
+    }
+  
+    .notion {
+      background: #003366;
+    }
+  </style>
+  
+</head>
+<body>
+  <header>
+    <h1>✨ OG Jokes for You ✨</h1>
+  </header>
+
+  <main>
+    <div id="joke-card">
+      <p id="joke-text">Select a category to start laughing.</p>
+    </div>
+
+    <div id="controls">
+      <button id="main-joke-btn">Hear Another One</button>
+      <div id="theme-buttons"></div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://growthbubble.site/" target="_blank" class="footer-link growth-bubble">🐘 Growth Bubble</a>
+    <a href="https://frill-frog-440.notion.site/Articles-by-Growth-Bubble-1f4cdc829468809aaedbe26014686f17" target="_blank" class="footer-link notion">🐘 Notion</a>
+  </footer>
+
+  <script>
+    const JOKE_CATEGORIES = {
+      "Startups 🦄": [
+        "Our runway is so short, we might as well start gliding.",
+        "We pivoted so much we ended up where we started.",
+        "Our app solves a problem no one has, but it looks pretty.",
+        "Our valuation is based on vibes and chai.",
+        "We have traction—mostly with investors chasing us for updates.",
+        "Our burn rate is faster than a Diwali rocket.",
+        "We’re not profitable, but we have great merch.",
+        "Our user base? Just us and our interns.",
+        "We’re pre-everything, but post-hope.",
+        "Our MVP is basically a PowerPoint with feelings.",
+        "We call it stealth mode because no one’s heard of us.",
+        "Our tech stack? Mostly duct tape and optimism.",
+        "We raised from friends and family—mostly family pity.",
+        "Our business model is ‘we’ll figure it out later.’",
+        "We’re the Uber for burning cash.",
+        "Our retention rate is as loyal as our WiFi.",
+        "We’re not failing, we’re iterating… indefinitely.",
+        "Our pitch deck has more ambition than reality.",
+        "We’re in beta—emotionally and technically.",
+        "Our office snacks are our biggest asset.",
+        "We pivoted again—now we’re an AI startup. Obviously.",
+        "We’re bootstrapped, mostly because no one else would.",
+        "Our metrics look great if you squint.",
+        "We have one paying user—our CEO.",
+        "We’re disrupting common sense.",
+        "Our exit plan? Emergency door.",
+        "We’ve gamified investor rejections.",
+        "Our roadmap is more like a treasure map—no one’s found it yet.",
+        "We call it stealth mode; our accountant calls it invisible revenue.",
+        "We’re building the future, just as soon as the WiFi works."
+      ],
+      "Founders 💼": [
+        "Founders don’t sleep—they just close their eyes for funding rounds.",
+        "I told my cofounder we need a vacation—he said ‘Series A first.’",
+        "My hobbies include pitching and pretending everything’s fine.",
+        "The only thing we scale is our stress.",
+        "Our roadmap is just a wish list with deadlines.",
+        "Caffeine is our cofounder.",
+        "We don’t measure success in profit, we measure it in panic.",
+        "We celebrate small wins, like someone replying to our cold email.",
+        "Our morning stand-up is just therapy with metrics.",
+        "We don’t burn bridges, we pivot across them.",
+        "Our company culture is mostly memes and mild despair.",
+        "We have 100 users—98 are bots, but we’re counting it.",
+        "Every founder has imposter syndrome; we just call it leadership.",
+        "Our mission statement changes more often than our sleep schedule.",
+        "Our KPIs: Keep People Interested.",
+        "I asked for traction; I got friction.",
+        "We don’t have job titles; we have ‘whatever needs doing.’",
+        "Our wellness program is surviving until demo day.",
+        "We’re growing fast—our debt, that is.",
+        "Our biggest competitor is our own burnout.",
+        "Our culture deck is prettier than our balance sheet.",
+        "We do agile, mostly emotionally.",
+        "The real MVP is my mom believing in us.",
+        "We’re not raising funds, we’re raising hopes.",
+        "We pitch like poets—beautiful, unrealistic.",
+        "Our motto: sleep is for funded startups.",
+        "Our Slack is just 100 unread investor threads.",
+        "Our biggest bottleneck is reality.",
+        "We raised a seed round and a few eyebrows.",
+        "We’ve achieved product-market confusion."
+      ],
+      "Investors 💰": [
+        "Investors love traction—any direction works.",
+        "VCs don’t age; they compound.",
+        "Our investor feedback was ‘circle back next quarter’—for two years now.",
+        "VCs have pattern recognition: they recognize other VCs.",
+        "They call it dry powder, but it burns founders fast.",
+        "Our investor update reads like a motivational poster.",
+        "The term sheet is the most fictionally optimistic document ever written.",
+        "Investors don’t ghost; they just fade into due diligence.",
+        "Valuation: the art of multiplying dreams by confidence.",
+        "We’re oversubscribed—on caffeine, not capital.",
+        "Our lead investor? Hope.",
+        "Investors say they love risk—as long as it’s yours.",
+        "We were told ‘strategic fit’; turns out we were the wrong shape.",
+        "Due diligence: where optimism goes to die.",
+        "Investors don’t invest in ideas; they invest in timing luck.",
+        "A polite ‘we’ll pass’ hurts more than rejection.",
+        "We’re raising a round, but mostly eyebrows.",
+        "They said ‘come back when you have traction’; we came back with shoes.",
+        "Every VC email starts with ‘We’re impressed…’ and ends with heartbreak.",
+        "Our investor call had more buzzwords than bandwidth.",
+        "Investors believe in the team—until the first missed metric.",
+        "Valuation math is pure poetry.",
+        "We’re pre-revenue, post-delusion.",
+        "Investors say ‘we love what you’re building’; we just don’t love your math.",
+        "‘Strategic investor’ means they know a guy.",
+        "We were told to ‘think big’; now our losses are huge.",
+        "Our data room is more like a data corner.",
+        "We’re on every investor’s radar—mostly as a warning.",
+        "Our cap table looks like a family tree gone wrong.",
+        "Our next round is called ‘friends, fools, and founders.’"
+      ],
+      "Pitch Decks 📊": [
+        "Our deck has more slides than our product has users.",
+        "Our font size shrinks as our desperation grows.",
+        "We say ‘market opportunity’ like it’s a prayer.",
+        "Our deck has storytelling, suspense, and zero revenue.",
+        "Our TAM includes everyone with internet access and hope.",
+        "We added AI to the deck; valuation doubled.",
+        "Our design budget was three Canva templates.",
+        "Our deck tells a story; sadly, it’s fiction.",
+        "Our traction slide has more optimism than data.",
+        "We call it Series A; investors call it ‘cute.’",
+        "Our timeline slide is a work of creative writing.",
+        "Our logo slide is longer than our revenue history.",
+        "We added buzzwords until the file crashed.",
+        "Our ‘Ask’ slide is mostly emotional.",
+        "Our use of funds: 40% marketing, 60% surviving.",
+        "We have a 20-slide deck and a 2-minute attention span.",
+        "Our market map looks like a conspiracy board.",
+        "We used stock photos of success.",
+        "Our competitive advantage: confidence.",
+        "We’re solving problems no one googled.",
+        "Our exit strategy is PowerPoint to PDF.",
+        "Our deck is responsive—to investor rejection.",
+        "We added traction arrows; it’s mostly decorative.",
+        "We have more buzzwords than customers.",
+        "Our ‘Why Now?’ slide just says: why not?",
+        "We replaced numbers with emojis; felt more honest.",
+        "We pivoted mid-pitch, literally.",
+        "Our deck font is smaller than our optimism.",
+        "Our deck closes deals—with printers.",
+        "Our final slide: ‘Thank you’ and silent tears."
+      ],
+      "Tech Bros 👨‍💻": [
+        "We deploy feelings to production.",
+        "Our tech stack includes caffeine and denial.",
+        "Move fast, break morale.",
+        "We don’t do bugs—we do undocumented features.",
+        "Our repo has more TODOs than commits.",
+        "I refactor my emotions on weekends.",
+        "Our sprint velocity is mostly running from deadlines.",
+        "We scale horizontally and emotionally.",
+        "Our dev stand-up lasts until lunch.",
+        "We’re agile—mostly at making excuses.",
+        "Our CI/CD pipeline stands for Constant Insecurity / Continuous Despair.",
+        "Merge conflict is my love language.",
+        "We debug life like it’s production.",
+        "Our uptime is better than our mental health.",
+        "We build MVPs: Minimum Viable Panic.",
+        "My laptop fan is my productivity soundtrack.",
+        "We containerized chaos.",
+        "Commit early, regret often.",
+        "We automate everything—except decisions.",
+        "We’re cloud-native, sleep-deprived.",
+        "My code works on my machine and nowhere else.",
+        "Our AI model hallucinated our funding.",
+        "We sprint like we’re running from investors.",
+        "We call it tech debt; it’s emotional debt.",
+        "Our version control is faith-based.",
+        "Deploying on Friday is a power move.",
+        "We use Scrum to describe lunch plans.",
+        "Our servers are up; our spirits aren’t.",
+        "I don’t write code; I write therapy sessions.",
+        "We ship hope, not features."
+      ]
+    };
+
+    const jokeCard = document.getElementById("joke-card");
+    const jokeText = document.getElementById("joke-text");
+    const mainBtn = document.getElementById("main-joke-btn");
+    const themeButtonsContainer = document.getElementById("theme-buttons");
+
+    let currentCategory = null;
+    let usedJokes = new Set();
+
+    // Create buttons dynamically
+    Object.keys(JOKE_CATEGORIES).forEach(category => {
+      const btn = document.createElement("button");
+      btn.textContent = category;
+      btn.classList.add("theme-btn");
+      btn.addEventListener("click", () => selectCategory(category, btn));
+      themeButtonsContainer.appendChild(btn);
+    });
+
+    function selectCategory(category, btn) {
+      document.querySelectorAll(".theme-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentCategory = category;
+      usedJokes = new Set();
+      showRandomJoke();
+    }
+
+    function showRandomJoke() {
+      if (!currentCategory) {
+        jokeText.textContent = "Select a category to start laughing.";
+        return;
+      }
+
+      const jokes = JOKE_CATEGORIES[currentCategory];
+      if (usedJokes.size === jokes.length) usedJokes.clear();
+
+      let joke;
+      do {
+        joke = jokes[Math.floor(Math.random() * jokes.length)];
+      } while (usedJokes.has(joke));
+
+      usedJokes.add(joke);
+      jokeText.textContent = `"${joke}"`;
+      jokeText.style.animation = "none";
+      void jokeText.offsetWidth; // restart animation
+      jokeText.style.animation = "fadeIn 0.6s ease forwards";
+    }
+
+    mainBtn.addEventListener("click", showRandomJoke);
+  </script>
+</body>
+</html>

@@ -1,8 +1,16 @@
-self.addEventListener('install', (e) => {
-  console.log('Service Worker: Installed');
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
 });
 
-self.addEventListener('fetch', (e) => {
-  // This allows the app to work while the phone is offline
-  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+self.addEventListener('activate', (event) => {
+    return self.clients.claim();
+});
+
+// Chrome REQUIRES a fetch handler to show the 'Install' prompt
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        fetch(event.request).catch(() => {
+            return caches.match(event.request);
+        })
+    );
 });

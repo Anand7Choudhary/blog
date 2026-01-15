@@ -2,9 +2,9 @@
   "name": "Focus Timer",
   "short_name": "Timer",
   "description": "A minimalist focus timer to keep you productive",
-  "id": "/timer",
-  "start_url": "/timer",
-  "scope": "/timer",
+  "id": "/timer/",
+  "start_url": "/timer/",
+  "scope": "/timer/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
@@ -21,15 +21,13 @@
       "src": "https://cdn-icons-png.flaticon.com/512/2553/2553391.png",
       "sizes": "512x512",
       "type": "image/png",
-      "form_factor": "wide",
-      "label": "Timer Desktop"
+      "form_factor": "narrow"
     },
     {
       "src": "https://cdn-icons-png.flaticon.com/512/2553/2553391.png",
       "sizes": "512x512",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Timer Mobile"
+      "form_factor": "wide"
     }
   ]
 }

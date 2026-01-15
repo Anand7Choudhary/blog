@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
     <title>Focus Timer</title>
     <style>
         * {
@@ -53,6 +58,40 @@
                 height: 100vw;
                 transform: rotate(90deg);
                 transform-origin: top left;
+            }
+
+            /* Reposition elements for rotated view */
+            .add-timer-btn {
+                bottom: 16px !important;
+                right: 16px !important;
+            }
+
+            .secondary-menu {
+                bottom: 70px !important;
+                right: 12px !important;
+                width: 200px !important;
+                max-height: calc(100vw - 90px) !important;
+                overflow-y: auto !important;
+                padding: 14px !important;
+            }
+
+            .secondary-menu h3 {
+                font-size: 11px;
+                margin-bottom: 12px;
+            }
+
+            .menu-input-group {
+                gap: 10px;
+            }
+
+            .menu-input-wrapper input {
+                padding: 8px 10px !important;
+                font-size: 13px !important;
+            }
+
+            .start-secondary-btn {
+                padding: 10px 16px;
+                font-size: 12px;
             }
         }
 

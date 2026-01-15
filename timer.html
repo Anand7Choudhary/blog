@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Focus Timer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            transition: background 0.8s ease;
+            position: relative;
+        }
+
+        body.complete {
+            background: #10b981;
+        }
+
+        .app-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Mobile portrait: force landscape by rotating entire app */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            .app-wrapper {
+                position: fixed;
+                top: 0;
+                left: 100vw;
+                width: 100vh;
+                height: 100vw;
+                transform: rotate(90deg);
+                transform-origin: top left;
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .timer-display {
+            font-size: clamp(48px, 12vw, 140px);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            font-variant-numeric: tabular-nums;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            opacity: 0.4;
+            transition: opacity 0.5s ease;
+        }
+
+        body.complete .timer-display {
+            opacity: 1;
+        }
+
+        .digit {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            height: 1.2em;
+            width: 0.65em;
+            text-align: center;
+        }
+
+        .digit.seconds {
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
+        }
+
+        .colon.seconds-colon {
+            opacity: 0.25;
+            transition: opacity 0.5s ease;
+        }
+
+        body.complete .digit.seconds {
+            opacity: 1;
+        }
+
+        body.complete .colon.seconds-colon {
+            opacity: 0.5;
+        }
+
+        .digit-inner {
+            transition: transform 0.2s ease;
+        }
+
+        .colon {
+            opacity: 0.5;
+            margin: 0 0.02em;
+            width: 0.25em;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .pause-indicator {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(24px, 6vw, 50px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .pause-indicator.visible {
+            opacity: 0.3;
+        }
+
+        body.complete .pause-indicator {
+            opacity: 0;
+        }
+
+        .motivation {
+            position: absolute;
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(12px, 1.8vw, 20px);
+            font-weight: 400;
+            opacity: 0.7;
+            letter-spacing: 0.03em;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 90%;
+            line-height: 1.4;
+            transition: opacity 0.5s ease;
+        }
+
+        body.complete .motivation {
+            opacity: 1;
+        }
+
+        .controls-tab {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(calc(100% - 22px));
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+
+        .controls-tab.open {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .tab-handle {
+            background: #1a1a1a;
+            width: 120px;
+            height: 22px;
+            border-radius: 11px 11px 0 0;
+            margin: 0 auto;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.8s ease;
+        }
+
+        body.complete .tab-handle {
+            background: #059669;
+        }
+
+        body.complete .controls {
+            background: linear-gradient(to bottom, #059669, #047857);
+        }
+
+        .tab-handle::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: #444;
+            border-radius: 2px;
+        }
+
+        .controls {
+            background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
+            padding: 24px 32px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            transition: background 0.8s ease;
+            min-width: 280px;
+            max-width: 90vw;
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            width: 100%;
+        }
+
+        .preset-btn {
+            background: linear-gradient(135deg, #2a2a2a, #1f1f1f);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .preset-btn:hover, .preset-btn:active {
+            background: linear-gradient(135deg, #3a3a3a, #2f2f2f);
+            border-color: #444;
+        }
+
+        .custom-input-section {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+            width: 100%;
+            padding-top: 8px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.4;
+            font-weight: 500;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #555;
+            background: #0f0f0f;
+        }
+
+        .set-btn {
+            background: linear-gradient(135deg, #fff, #e0e0e0);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: all 0.2s;
+        }
+
+        .set-btn:hover, .set-btn:active {
+            background: linear-gradient(135deg, #f0f0f0, #d0d0d0);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            padding-top: 8px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .action-btn {
+            flex: 1;
+            background: #2a2a2a;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover, .action-btn:active {
+            background: #3a3a3a;
+            border-color: #444;
+        }
+
+        /* Add Timer Button */
+        .add-timer-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border: none;
+            color: #fff;
+            font-size: 30px;
+            font-weight: 300;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+            z-index: 200;
+        }
+
+        .add-timer-btn:active {
+            transform: scale(0.95);
+        }
+
+        .add-timer-btn.disabled {
+            background: linear-gradient(135deg, #4b5563, #374151);
+            box-shadow: 0 4px 16px rgba(75, 85, 99, 0.3);
+            pointer-events: none;
+        }
+
+        /* Timer Count Badge */
+        .timer-count-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Secondary Timer Menu Popup */
+        .secondary-menu {
+            position: fixed;
+            bottom: 80px;
+            right: 16px;
+            background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
+            border: 1px solid #333;
+            border-radius: 14px;
+            padding: 20px;
+            width: 260px;
+            max-width: calc(100% - 32px);
+            z-index: 199;
+            opacity: 0;
+            transform: translateY(16px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .secondary-menu.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .secondary-menu h3 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+            opacity: 0.7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer-limit-label {
+            font-size: 10px;
+            opacity: 0.5;
+            font-weight: 400;
+        }
+
+        .menu-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-input-wrapper input[type="text"] {
+            text-align: left;
+            padding: 10px 12px;
+        }
+
+        .start-secondary-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: all 0.2s;
+            margin-top: 4px;
+        }
+
+        .start-secondary-btn:active {
+            opacity: 0.9;
+        }
+
+        /* Floating Secondary Timer */
+        .secondary-timer {
+            position: fixed;
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 12px 16px;
+            min-width: 160px;
+            z-index: 90;
+            cursor: grab;
+            transition: box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            touch-action: none;
+        }
+
+        .secondary-timer:active {
+            cursor: grabbing;
+        }
+
+        .secondary-timer.complete {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-color: #10b981;
+        }
+
+        .secondary-timer.minimized {
+            min-width: auto;
+            padding: 8px 12px;
+        }
+
+        .secondary-timer.minimized .secondary-timer-display,
+        .secondary-timer.minimized .secondary-pause-indicator {
+            display: none;
+        }
+
+        .secondary-timer.minimized .secondary-timer-header {
+            margin-bottom: 0;
+        }
+
+        .secondary-timer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            gap: 10px;
+        }
+
+        .secondary-title {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            opacity: 0.8;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90px;
+        }
+
+        .secondary-timer.complete .secondary-title {
+            opacity: 1;
+        }
+
+        .secondary-controls {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .secondary-control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .secondary-control-btn:active {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .secondary-timer-display {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            font-variant-numeric: tabular-nums;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .secondary-timer.complete .secondary-timer-display {
+            opacity: 1;
+        }
+
+        .secondary-pause-indicator {
+            text-align: center;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            margin-top: 4px;
+        }
+
+        .secondary-pause-indicator.visible {
+            opacity: 0.4;
+        }
+
+        .secondary-timer.complete .secondary-pause-indicator {
+            opacity: 0;
+        }
+
+        /* Timers Container */
+        #timersContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 89;
+        }
+
+        #timersContainer .secondary-timer {
+            pointer-events: auto;
+        }
+
+        /* Mobile adjustments */
+        @media screen and (max-width: 768px) {
+            .timer-display {
+                font-size: clamp(56px, 14vw, 120px);
+                font-weight: 700;
+            }
+
+            .motivation {
+                font-size: clamp(12px, 2vw, 18px);
+                top: 15%;
+            }
+
+            .controls {
+                padding: 20px 24px;
+                min-width: 240px;
+            }
+            
+            .preset-buttons {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+
+            .preset-btn {
+                padding: 8px 6px;
+                font-size: 10px;
+            }
+
+            .secondary-menu {
+                width: 220px;
+                padding: 16px;
+            }
+
+            .secondary-timer {
+                min-width: 140px;
+                padding: 10px 12px;
+            }
+
+            .secondary-timer-display {
+                font-size: 24px;
+            }
+
+            .add-timer-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 12px;
+                right: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper" id="appWrapper">
+        <div class="container" id="mainContainer">
+            <div class="motivation" id="motivation">Your family is watching. Make them proud.</div>
+            <div class="timer-display" id="timer">
+                <span class="digit" id="hour-tens"><span class="digit-inner">0</span></span>
+                <span class="digit" id="hour-ones"><span class="digit-inner">1</span></span>
+                <span class="colon">:</span>
+                <span class="digit" id="min-tens"><span class="digit-inner">3</span></span>
+                <span class="digit" id="min-ones"><span class="digit-inner">0</span></span>
+                <span class="colon seconds-colon">:</span>
+                <span class="digit seconds" id="sec-tens"><span class="digit-inner">0</span></span>
+                <span class="digit seconds" id="sec-ones"><span class="digit-inner">0</span></span>
+            </div>
+            <div class="pause-indicator" id="pauseIndicator">⏸</div>
+        </div>
+
+        <div class="controls-tab" id="controlsTab">
+            <div class="tab-handle" id="tabHandle"></div>
+            <div class="controls">
+                <div class="preset-buttons">
+                    <button class="preset-btn" onclick="setPreset(30)">30m</button>
+                    <button class="preset-btn" onclick="setPreset(45)">45m</button>
+                    <button class="preset-btn" onclick="setPreset(60)">60m</button>
+                    <button class="preset-btn" onclick="setPreset(90)">90m</button>
+                </div>
+                
+                <div class="custom-input-section">
+                    <div class="input-wrapper">
+                        <label>Minutes</label>
+                        <input type="number" id="customMinutes" min="1" max="999" placeholder="90">
+                    </div>
+                    <button class="set-btn" onclick="setCustomTime()">Set</button>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="start()">Start</button>
+                    <button class="action-btn" onclick="pause()">Pause</button>
+                    <button class="action-btn" onclick="reset()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Timer Button -->
+        <button class="add-timer-btn" id="addTimerBtn" onclick="toggleSecondaryMenu()">
+            +
+            <span class="timer-count-badge" id="timerCountBadge" style="display: none;">0</span>
+        </button>
+
+        <!-- Secondary Timer Menu -->
+        <div class="secondary-menu" id="secondaryMenu">
+            <h3>
+                Quick Timer
+                <span class="timer-limit-label" id="timerLimitLabel">0/5</span>
+            </h3>
+            <div class="menu-input-group">
+                <div class="menu-input-wrapper">
+                    <label>Title</label>
+                    <input type="text" id="secondaryTitle" placeholder="Meeting, Break...">
+                </div>
+                <div class="menu-input-wrapper">
+                    <label>Minutes</label>
+                    <input type="number" id="secondaryMinutes" min="1" max="999" placeholder="15">
+                </div>
+                <button class="start-secondary-btn" onclick="createSecondaryTimer()">Start</button>
+            </div>
+        </div>
+
+        <!-- Container for multiple timers -->
+        <div id="timersContainer"></div>
+    </div>
+
+    <script>
+        const quotes = [
+            "Time is running out. They won't wait forever.",
+            "Your parents are getting older. Every wasted hour is one less with them.",
+            "They won't be here to see your success if you keep delaying.",
+            "How many more chances will you get? They're counting down.",
+            "Your children are watching you quit. Is this the lesson?",
+            "Someone you love will die before you become who you promised.",
+            "They believed in you when no one else did. Don't let them die disappointed.",
+            "Every moment you waste, they age. You can't buy this time back.",
+            "What will you tell them on their deathbed? That you were comfortable?",
+            "They sacrificed their dreams. You're wasting their sacrifice.",
+            "Your family's pride in you is conditional. Earn it before it's too late.",
+            "Time doesn't pause for your excuses. Neither does mortality.",
+            "You promised them a better life. When?",
+            "They won't remember your potential. Only your results.",
+            "Someone who loves you is losing faith in you right now.",
+            "Your comfort is costing them their peace.",
+            "How much longer will they have to wait to be proud?",
+            "You're running out of time to make it right.",
+            "They deserve better than your tomorrow. Give them today.",
+            "What if this is your last chance to prove them right?",
+            "You'll have plenty of time to rest when they're gone.",
+            "Their time is limited. Your excuses are not.",
+            "Every delay is a betrayal of their trust.",
+            "You can't get these years back. Stop pretending you can.",
+            "They won't be at your funeral to hear your regrets."
+        ];
+
+        // Constants
+        const STORAGE_KEY = 'focusTimerState';
+        const MAX_SECONDARY_TIMERS = 5;
+
+        // Main Timer State
+        let totalSeconds = 5400;
+        let remainingSeconds = totalSeconds;
+        let interval = null;
+        let isRunning = false;
+
+        // Secondary Timers Array
+        let secondaryTimers = [];
+        let timerIdCounter = 0;
+
+        // Drag State
+        let dragState = {
+            isDragging: false,
+            timerId: null,
+            startX: 0,
+            startY: 0,
+            elementStartX: 0,
+            elementStartY: 0,
+            hasMoved: false
+        };
+
+        // DOM Elements
+        const appWrapper = document.getElementById('appWrapper');
+        const hourTens = document.getElementById('hour-tens').querySelector('.digit-inner');
+        const hourOnes = document.getElementById('hour-ones').querySelector('.digit-inner');
+        const minTens = document.getElementById('min-tens').querySelector('.digit-inner');
+        const minOnes = document.getElementById('min-ones').querySelector('.digit-inner');
+        const secTens = document.getElementById('sec-tens').querySelector('.digit-inner');
+        const secOnes = document.getElementById('sec-ones').querySelector('.digit-inner');
+        const motivation = document.getElementById('motivation');
+        const tabHandle = document.getElementById('tabHandle');
+        const controlsTab = document.getElementById('controlsTab');
+        const mainContainer = document.getElementById('mainContainer');
+        const pauseIndicator = document.getElementById('pauseIndicator');
+        const addTimerBtn = document.getElementById('addTimerBtn');
+        const secondaryMenu = document.getElementById('secondaryMenu');
+        const timersContainer = document.getElementById('timersContainer');
+        const timerCountBadge = document.getElementById('timerCountBadge');
+        const timerLimitLabel = document.getElementById('timerLimitLabel');
+
+        // Check if we're in portrait mode (rotated)
+        function isPortraitRotated() {
+            return window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches;
+        }
+
+        // Transform touch coordinates when rotated
+        function getTransformedCoords(clientX, clientY) {
+            if (isPortraitRotated()) {
+                // When rotated 90deg clockwise, swap and invert coordinates
+                // Screen X becomes element Y, Screen Y becomes element X (inverted)
+                return {
+                    x: clientY,
+                    y: window.innerWidth - clientX
+                };
+            }
+            return { x: clientX, y: clientY };
+        }
+
+        // Get container dimensions accounting for rotation
+        function getContainerDimensions() {
+            if (isPortraitRotated()) {
+                return {
+                    width: window.innerHeight,
+                    height: window.innerWidth
+                };
+            }
+            return {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+        }
+
+        // ============ LOCAL STORAGE ============
+        function saveState() {
+            const state = {
+                totalSeconds,
+                remainingSeconds,
+                isRunning,
+                timestamp: Date.now()
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    const state = JSON.parse(saved);
+                    totalSeconds = state.totalSeconds || 5400;
+                    
+                    if (state.isRunning && state.timestamp) {
+                        const elapsedSeconds = Math.floor((Date.now() - state.timestamp) / 1000);
+                        remainingSeconds = Math.max(0, state.remainingSeconds - elapsedSeconds);
+                        
+                        if (remainingSeconds > 0) {
+                            updateDisplay();
+                            start();
+                            return;
+                        } else {
+                            remainingSeconds = 0;
+                            updateDisplay();
+                            document.body.classList.add('complete');
+                            return;
+                        }
+                    } else {
+                        remainingSeconds = state.remainingSeconds || totalSeconds;
+                    }
+                    
+                    updateDisplay();
+                    if (state.remainingSeconds > 0 && !state.isRunning) {
+                        pauseIndicator.classList.add('visible');
+                    }
+                } catch (e) {
+                    console.error('Failed to load state:', e);
+                }
+            }
+        }
+
+        // ============ MAIN TIMER FUNCTIONS ============
+        function setRandomQuote() {
+            motivation.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        function updateDigit(element, value) {
+            const current = parseInt(element.textContent);
+            if (current !== value) {
+                element.style.transform = 'translateY(-100%)';
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    element.textContent = value;
+                    element.style.transition = 'none';
+                    element.style.transform = 'translateY(100%)';
+                    setTimeout(() => {
+                        element.style.transition = 'transform 0.2s ease, opacity 0.2s';
+                        element.style.transform = 'translateY(0)';
+                        element.style.opacity = '1';
+                    }, 20);
+                }, 100);
+            }
+        }
+
+        function updateDisplay() {
+            const hours = Math.floor(remainingSeconds / 3600);
+            const mins = Math.floor((remainingSeconds % 3600) / 60);
+            const secs = remainingSeconds % 60;
+            
+            updateDigit(hourTens, Math.floor(hours / 10));
+            updateDigit(hourOnes, hours % 10);
+            updateDigit(minTens, Math.floor(mins / 10));
+            updateDigit(minOnes, mins % 10);
+            updateDigit(secTens, Math.floor(secs / 10));
+            updateDigit(secOnes, secs % 10);
+        }
+
+        function tick() {
+            if (remainingSeconds > 0) {
+                remainingSeconds--;
+                updateDisplay();
+                saveState();
+                
+                if (remainingSeconds === 0) {
+                    document.body.classList.add('complete');
+                    pause();
+                }
+            }
+        }
+
+        function start() {
+            if (!isRunning && remainingSeconds > 0) {
+                isRunning = true;
+                interval = setInterval(tick, 1000);
+                document.body.classList.remove('complete');
+                pauseIndicator.classList.remove('visible');
+                controlsTab.classList.remove('open');
+                saveState();
+            }
+        }
+
+        function pause() {
+            isRunning = false;
+            if (interval) {
+                clearInterval(interval);
+                interval = null;
+            }
+            if (remainingSeconds > 0) {
+                pauseIndicator.classList.add('visible');
+            }
+            saveState();
+        }
+
+        function toggleTimer() {
+            if (isRunning) {
+                pause();
+            } else {
+                start();
+            }
+        }
+
+        function reset() {
+            pause();
+            remainingSeconds = totalSeconds;
+            updateDisplay();
+            document.body.classList.remove('complete');
+            pauseIndicator.classList.remove('visible');
+            saveState();
+        }
+
+        function setPreset(minutes) {
+            totalSeconds = minutes * 60;
+            remainingSeconds = totalSeconds;
+            updateDisplay();
+            document.body.classList.remove('complete');
+            pauseIndicator.classList.remove('visible');
+            setRandomQuote();
+            saveState();
+        }
+
+        function setCustomTime() {
+            const mins = parseInt(document.getElementById('customMinutes').value);
+            if (mins && mins > 0) {
+                setPreset(mins);
+            }
+        }
+
+        // ============ SECONDARY TIMER FUNCTIONS ============
+        function updateTimerCountUI() {
+            const count = secondaryTimers.length;
+            timerLimitLabel.textContent = `${count}/${MAX_SECONDARY_TIMERS}`;
+            
+            if (count > 0) {
+                timerCountBadge.textContent = count;
+                timerCountBadge.style.display = 'flex';
+            } else {
+                timerCountBadge.style.display = 'none';
+            }
+
+            if (count >= MAX_SECONDARY_TIMERS) {
+                addTimerBtn.classList.add('disabled');
+            } else {
+                addTimerBtn.classList.remove('disabled');
+            }
+        }
+
+        function toggleSecondaryMenu() {
+            if (secondaryTimers.length >= MAX_SECONDARY_TIMERS) {
+                return;
+            }
+            
+            const isOpen = secondaryMenu.classList.contains('open');
+            if (!isOpen) {
+                pause();
+            }
+            secondaryMenu.classList.toggle('open');
+        }
+
+        function getNextPosition() {
+            const dims = getContainerDimensions();
+            const baseTop = 16;
+            const baseRight = 16;
+            const offset = secondaryTimers.length * 50;
+            return {
+                top: Math.min(baseTop + offset, dims.height - 120),
+                right: baseRight
+            };
+        }
+
+        function createSecondaryTimer() {
+            if (secondaryTimers.length >= MAX_SECONDARY_TIMERS) {
+                return;
+            }
+
+            const title = document.getElementById('secondaryTitle').value || 'Timer';
+            const minutes = parseInt(document.getElementById('secondaryMinutes').value) || 15;
+            const id = timerIdCounter++;
+            const position = getNextPosition();
+            const dims = getContainerDimensions();
+
+            const timer = {
+                id,
+                title,
+                totalSeconds: minutes * 60,
+                remainingSeconds: minutes * 60,
+                interval: null,
+                isRunning: false,
+                isComplete: false,
+                isMinimized: false,
+                position: {
+                    x: dims.width - position.right - 160,
+                    y: position.top
+                }
+            };
+
+            secondaryTimers.push(timer);
+            renderSecondaryTimer(timer);
+            startSecondaryTimer(id);
+            updateTimerCountUI();
+
+            secondaryMenu.classList.remove('open');
+            document.getElementById('secondaryTitle').value = '';
+            document.getElementById('secondaryMinutes').value = '';
+        }
+
+        function renderSecondaryTimer(timer) {
+            const el = document.createElement('div');
+            el.className = 'secondary-timer';
+            el.id = `timer-${timer.id}`;
+            el.style.left = `${timer.position.x}px`;
+            el.style.top = `${timer.position.y}px`;
+            
+            el.innerHTML = `
+                <div class="secondary-timer-header">
+                    <div class="secondary-title">${timer.title}</div>
+                    <div class="secondary-controls">
+                        <button class="secondary-control-btn minimize-btn">−</button>
+                        <button class="secondary-control-btn close-btn">×</button>
+                    </div>
+                </div>
+                <div class="secondary-timer-display">${formatTime(timer.remainingSeconds)}</div>
+                <div class="secondary-pause-indicator">⏸</div>
+            `;
+
+            // Mouse events
+            el.addEventListener('mousedown', (e) => startDrag(e, timer.id));
+            
+            // Touch events
+            el.addEventListener('touchstart', (e) => startDrag(e, timer.id), { passive: false });
+            
+            // Click to toggle
+            el.addEventListener('click', (e) => {
+                if (!dragState.hasMoved && !e.target.closest('.secondary-controls')) {
+                    toggleSecondaryTimerState(timer.id);
+                }
+            });
+
+            el.querySelector('.minimize-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMinimize(timer.id);
+            });
+
+            el.querySelector('.close-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeSecondaryTimer(timer.id);
+            });
+
+            timersContainer.appendChild(el);
+        }
+
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            const pad = (n) => n.toString().padStart(2, '0');
+            return `${pad(h)}:${pad(m)}:${pad(s)}`;
+        }
+
+        function updateSecondaryTimerDisplay(id) {
+            const timer = secondaryTimers.find(t => t.id === id);
+            if (!timer) return;
+
+            const el = document.getElementById(`timer-${id}`);
+            if (!el) return;
+
+            el.querySelector('.secondary-timer-display').textContent = formatTime(timer.remainingSeconds);
+        }
+
+        function secondaryTick(id) {
+            const timer = secondaryTimers.find(t => t.id === id);
+            if (!timer || timer.remainingSeconds <= 0) return;
+
+            timer.remainingSeconds--;
+            updateSecondaryTimerDisplay(id);
+
+            if (timer.remainingSeconds === 0) {
+                timer.isComplete = true;
+                timer.isRunning = false;
+                clearInterval(timer.interval);
+                timer.interval = null;
+                
+                const el = document.getElementById(`timer-${id}`);
+                if (el) {
+                    el.classList.add('complete');
+                    el.querySelector('.secondary-pause-indicator').classList.remove('visible');
+                }
+            }
+        }
+
+        function startSecondaryTimer(id) {
+            const timer = secondaryTimers.find(t => t.id === id);
+            if (!timer || timer.isRunning || timer.remainingSeconds <= 0) return;
+
+            timer.isRunning = true;
+            timer.interval = setInterval(() => secondaryTick(id), 1000);
+
+            const el = document.getElementById(`timer-${id}`);
+            if (el) {
+                el.classList.remove('complete');
+                el.querySelector('.secondary-pause-indicator').classList.remove('visible');
+            }
+        }
+
+        function pauseSecondaryTimer(id) {
+            const timer = secondaryTimers.find(t => t.id === id);
+            if (!timer) return;
+
+            timer.isRunning = false;
+            if (timer.interval) {
+                clearInterval(timer.interval);
+                timer.interval = null;
+            }
+
+            const el = document.getElementById(`timer-${id}`);
+            if (el && timer.remainingSeconds > 0) {
+                el.querySelector('.secondary-pause-indicator').classList.add('visible');
+            }
+        }
+
+        function toggleSecondaryTimerState(id) {
+            const timer = secondaryTimers.find(t => t.id === id);
+            if (!timer) return;
+
+            if (timer.isRunning) {
+                pauseSecondaryTimer(id);
+            } else {
+                startSecondaryTimer(id);
+            }
+        }
+
+        function toggleMinimize(id) {
+            const timer = secondaryTimers.find(t => t.id === id);
+            if (!timer) return;
+
+            timer.isMinimized = !timer.isMinimized;
+
+            const el = document.getElementById(`timer-${id}`);
+            if (el) {
+                el.classList.toggle('minimized', timer.isMinimized);
+                el.querySelector('.minimize-btn').textContent = timer.isMinimized ? '+' : '−';
+            }
+        }
+
+        function closeSecondaryTimer(id) {
+            const timer = secondaryTimers.find(t => t.id === id);
+            if (!timer) return;
+
+            if (timer.interval) {
+                clearInterval(timer.interval);
+            }
+
+            secondaryTimers = secondaryTimers.filter(t => t.id !== id);
+
+            const el = document.getElementById(`timer-${id}`);
+            if (el) {
+                el.remove();
+            }
+
+            updateTimerCountUI();
+        }
+
+        // ============ DRAG FUNCTIONALITY ============
+        function startDrag(e, timerId) {
+            const el = document.getElementById(`timer-${timerId}`);
+            if (!el || e.target.closest('.secondary-controls')) return;
+
+            e.preventDefault();
+            
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+            
+            const coords = getTransformedCoords(clientX, clientY);
+            const currentLeft = parseInt(el.style.left) || 0;
+            const currentTop = parseInt(el.style.top) || 0;
+            
+            dragState = {
+                isDragging: false,
+                timerId,
+                startX: coords.x,
+                startY: coords.y,
+                elementStartX: currentLeft,
+                elementStartY: currentTop,
+                hasMoved: false
+            };
+
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchmove', onDrag, { passive: false });
+            document.addEventListener('touchend', endDrag);
+        }
+
+        function onDrag(e) {
+            if (dragState.timerId === null) return;
+
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+            const coords = getTransformedCoords(clientX, clientY);
+            
+            const deltaX = coords.x - dragState.startX;
+            const deltaY = coords.y - dragState.startY;
+
+            if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
+                dragState.isDragging = true;
+                dragState.hasMoved = true;
+            }
+
+            if (!dragState.isDragging) return;
+
+            e.preventDefault();
+
+            const el = document.getElementById(`timer-${dragState.timerId}`);
+            if (!el) return;
+
+            const dims = getContainerDimensions();
+            
+            let newLeft = dragState.elementStartX + deltaX;
+            let newTop = dragState.elementStartY + deltaY;
+
+            // Constrain to container
+            const maxLeft = dims.width - el.offsetWidth - 10;
+            const maxTop = dims.height - el.offsetHeight - 10;
+
+            newLeft = Math.max(10, Math.min(newLeft, maxLeft));
+            newTop = Math.max(10, Math.min(newTop, maxTop));
+
+            el.style.left = `${newLeft}px`;
+            el.style.top = `${newTop}px`;
+
+            // Update timer position
+            const timer = secondaryTimers.find(t => t.id === dragState.timerId);
+            if (timer) {
+                timer.position.x = newLeft;
+                timer.position.y = newTop;
+            }
+        }
+
+        function endDrag() {
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchmove', onDrag);
+            document.removeEventListener('touchend', endDrag);
+
+            setTimeout(() => {
+                dragState.isDragging = false;
+                dragState.timerId = null;
+            }, 10);
+        }
+
+        // ============ EVENT LISTENERS ============
+        mainContainer.addEventListener('click', (e) => {
+            toggleTimer();
+        });
+
+        tabHandle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            controlsTab.classList.toggle('open');
+        });
+
+        controlsTab.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        secondaryMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!secondaryMenu.contains(e.target) && !addTimerBtn.contains(e.target)) {
+                secondaryMenu.classList.remove('open');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'KeyR' && !e.target.matches('input')) {
+                reset();
+            }
+        });
+
+        // ============ INITIALIZATION ============
+        setRandomQuote();
+        loadState();
+        updateTimerCountUI();
+        if (!localStorage.getItem(STORAGE_KEY)) {
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>

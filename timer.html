@@ -13,7 +13,14 @@
 
         html, body {
             width: 100%;
-            height: 100%;
+            height: 100dvh;
+            height: 100vh; /* Fallback for older browsers */
+        }
+
+        @supports (height: 100dvh) {
+            html, body {
+                height: 100dvh;
+            }
         }
 
         body {
@@ -123,10 +130,18 @@
             bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
-            font-size: clamp(24px, 6vw, 50px);
+            display: flex;
+            gap: clamp(6px, 1.5vw, 12px);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
+        }
+
+        .pause-indicator .pause-bar {
+            width: clamp(8px, 2vw, 14px);
+            height: clamp(28px, 6vw, 50px);
+            background: #fff;
+            border-radius: 3px;
         }
 
         .pause-indicator.visible {
@@ -345,8 +360,8 @@
         /* Add Timer Button */
         .add-timer-btn {
             position: fixed;
-            bottom: 28px;
-            right: 28px;
+            bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+            right: calc(28px + env(safe-area-inset-right, 0px));
             width: 52px;
             height: 52px;
             border-radius: 50%;
@@ -648,8 +663,8 @@
                 width: 48px;
                 height: 48px;
                 font-size: 24px;
-                bottom: 12px;
-                right: 12px;
+                bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+                right: calc(12px + env(safe-area-inset-right, 0px));
             }
         }
     </style>
@@ -668,7 +683,10 @@
                 <span class="digit seconds" id="sec-tens"><span class="digit-inner">0</span></span>
                 <span class="digit seconds" id="sec-ones"><span class="digit-inner">0</span></span>
             </div>
-            <div class="pause-indicator" id="pauseIndicator">⏸</div>
+            <div class="pause-indicator" id="pauseIndicator">
+                <span class="pause-bar"></span>
+                <span class="pause-bar"></span>
+            </div>
         </div>
 
         <div class="controls-tab" id="controlsTab">

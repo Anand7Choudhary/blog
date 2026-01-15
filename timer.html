@@ -396,40 +396,6 @@
             border-color: #444;
         }
 
-        .install-btn {
-            position: fixed;
-            bottom: calc(96px + env(safe-area-inset-bottom, 0px));
-            right: calc(28px + env(safe-area-inset-right, 0px));
-            padding: 12px 18px;
-            border-radius: 999px;
-            border: none;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #fff;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
-            z-index: 300;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            }
-
-        .install-btn.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(10px);
-            }
-
-        .install-btn:hover {
-            transform: translateY(-2px);
-            }
-
-        .install-btn:active {
-            transform: translateY(2px);
-            }
-
-
-
         /* Add Timer Button */
         .add-timer-btn {
             position: fixed;
@@ -740,6 +706,64 @@
                 right: calc(12px + env(safe-area-inset-right, 0px));
             }
         }
+
+        /* Install Button */
+        .install-btn {
+            position: fixed;
+            bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+            left: calc(28px + env(safe-area-inset-left, 0px));
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+            z-index: 200;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        .install-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .install-btn:active {
+            transform: scale(0.95);
+        }
+
+        .install-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        @media screen and (max-width: 768px) {
+            .install-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+                bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+                left: calc(12px + env(safe-area-inset-left, 0px));
+            }
+        }
+
+        /* Mobile portrait: reposition for rotated view */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            .install-btn {
+                bottom: 16px !important;
+                left: 16px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -815,7 +839,12 @@
 
         <!-- Container for multiple timers -->
         <div id="timersContainer"></div>
-        <button id="installBtn" class="install-btn hidden add-timer-btn">
+
+        <!-- Install App Button -->
+        <button class="install-btn" id="installBtn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            </svg>
             Install App
         </button>
     </div>
@@ -1446,36 +1475,52 @@
             });
         }
     </script>
+
     <script>
+        // PWA Install Prompt
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
 
         // Listen for install availability
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); // stop Chrome’s mini-infobar
+            e.preventDefault(); // Stop Chrome's mini-infobar
             deferredPrompt = e;
-            installBtn.classList.remove('hidden');
+            installBtn.classList.add('visible');
             console.log('🔥 Install available');
         });
 
         // Handle install click
         installBtn.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
+            if (!deferredPrompt) {
+                // Fallback: show instructions for manual install
+                alert('To install this app:\n\n• iOS Safari: Tap Share → Add to Home Screen\n• Android Chrome: Tap Menu (⋮) → Add to Home Screen\n• Desktop: Look for the install icon in the address bar');
+                return;
+            }
 
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             console.log('Install result:', outcome);
 
             deferredPrompt = null;
-            installBtn.classList.add('hidden');
+            installBtn.classList.remove('visible');
         });
 
         // Hide button once installed
         window.addEventListener('appinstalled', () => {
             console.log('✅ App installed');
-            installBtn.classList.add('hidden');
+            installBtn.classList.remove('visible');
             deferredPrompt = null;
         });
+
+        // Show button on iOS/Safari (where beforeinstallprompt doesn't fire)
+        // This allows users to still see instructions
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        
+        if (isIOS && !isInStandaloneMode) {
+            // Show install button on iOS (it will show instructions when clicked)
+            installBtn.classList.add('visible');
+        }
     </script>
 </body>
 </html>

@@ -1,12 +1,20 @@
 self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open('timer-v1').then((cache) => {
+            return cache.addAll([
+                '/timer.html',
+                '/icons/icon-192.png',
+                '/icons/icon-512.png'
+            ]);
+        })
+    );
     self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-    return self.clients.claim();
+    event.waitUntil(clients.claim());
 });
 
-// Chrome REQUIRES a fetch handler to show the 'Install' prompt
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         fetch(event.request).catch(() => {

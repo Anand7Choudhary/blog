@@ -1,10 +1,9 @@
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open('timer-v1').then((cache) => {
+        caches.open('timer-v2').then((cache) => {
             return cache.addAll([
                 '/timer.html',
-                '/icons/icon-192.png',
-                '/icons/icon-512.png'
+                '/manifest.json'
             ]);
         })
     );

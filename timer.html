@@ -1478,11 +1478,16 @@
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
 
+        // Check if already installed (standalone mode)
+        const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (isInStandaloneMode) {
+            installBtn.classList.add('hidden');
+        }
+
         // Listen for install availability
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault(); // Stop Chrome's mini-infobar
             deferredPrompt = e;
-            installBtn.classList.add('visible');
             console.log('🔥 Install available');
         });
 
@@ -1499,25 +1504,15 @@
             console.log('Install result:', outcome);
 
             deferredPrompt = null;
-            installBtn.classList.remove('visible');
+            installBtn.classList.add('hidden');
         });
 
         // Hide button once installed
         window.addEventListener('appinstalled', () => {
             console.log('✅ App installed');
-            installBtn.classList.remove('visible');
+            installBtn.classList.add('hidden');
             deferredPrompt = null;
         });
-
-        // Show button on iOS/Safari (where beforeinstallprompt doesn't fire)
-        // This allows users to still see instructions
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-        
-        if (isIOS && !isInStandaloneMode) {
-            // Show install button on iOS (it will show instructions when clicked)
-            installBtn.classList.add('visible');
-        }
     </script>
 </body>
 </html>

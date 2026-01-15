@@ -63,12 +63,12 @@
             /* Reposition elements for rotated view */
             .add-timer-btn {
                 bottom: 16px !important;
-                right: 16px !important;
+                left: 16px !important;
             }
 
             .secondary-menu {
                 bottom: 70px !important;
-                right: 12px !important;
+                left: 12px !important;
                 width: 200px !important;
                 max-height: calc(100vw - 90px) !important;
                 overflow-y: auto !important;
@@ -400,7 +400,7 @@
         .add-timer-btn {
             position: fixed;
             bottom: calc(28px + env(safe-area-inset-bottom, 0px));
-            right: calc(28px + env(safe-area-inset-right, 0px));
+            left: calc(28px + env(safe-area-inset-left, 0px));
             width: 52px;
             height: 52px;
             border-radius: 50%;
@@ -448,8 +448,8 @@
         /* Secondary Timer Menu Popup */
         .secondary-menu {
             position: fixed;
-            bottom: 80px;
-            right: 16px;
+            bottom: 90px;
+            left: 16px;
             background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
             border: 1px solid #333;
             border-radius: 14px;
@@ -703,7 +703,7 @@
                 height: 48px;
                 font-size: 24px;
                 bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-                right: calc(12px + env(safe-area-inset-right, 0px));
+                left: calc(12px + env(safe-area-inset-left, 0px));
             }
         }
     </style>

@@ -396,6 +396,40 @@
             border-color: #444;
         }
 
+        .install-btn {
+            position: fixed;
+            bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+            right: calc(28px + env(safe-area-inset-right, 0px));
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+            z-index: 300;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+
+        .install-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            }
+
+        .install-btn:hover {
+            transform: translateY(-2px);
+            }
+
+        .install-btn:active {
+            transform: translateY(2px);
+            }
+
+
+
         /* Add Timer Button */
         .add-timer-btn {
             position: fixed;
@@ -1409,5 +1443,40 @@
             });
         }
     </script>
+    <script>
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        // Listen for install availability
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); // stop Chrome’s mini-infobar
+            deferredPrompt = e;
+            installBtn.classList.remove('hidden');
+            console.log('🔥 Install available');
+        });
+
+        // Handle install click
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('Install result:', outcome);
+
+            deferredPrompt = null;
+            installBtn.classList.add('hidden');
+        });
+
+        // Hide button once installed
+        window.addEventListener('appinstalled', () => {
+            console.log('✅ App installed');
+            installBtn.classList.add('hidden');
+            deferredPrompt = null;
+        });
+    </script>
+
+    <button id="installBtn" class="install-btn hidden">
+  Install App
+</button>
 </body>
 </html>

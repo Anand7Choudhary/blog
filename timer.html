@@ -658,6 +658,320 @@
         }
 
         /* Mobile adjustments */
+        /* Analytics Button */
+        .analytics-btn {
+            position: fixed;
+            top: calc(16px + env(safe-area-inset-top, 0px));
+            left: calc(16px + env(safe-area-inset-left, 0px));
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            font-family: Georgia, serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 200;
+        }
+
+        .analytics-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .analytics-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Analytics Modal Overlay */
+        .analytics-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .analytics-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .analytics-modal {
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            border: 1px solid #333;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .analytics-overlay.open .analytics-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .analytics-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .analytics-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .analytics-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .analytics-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+        }
+
+        /* Summary Cards */
+        .analytics-summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .summary-card.highlight {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .summary-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.5;
+            margin-bottom: 6px;
+        }
+
+        .summary-value {
+            font-size: 22px;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .summary-unit {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-left: 4px;
+        }
+
+        .summary-subtext {
+            font-size: 11px;
+            opacity: 0.5;
+            margin-top: 4px;
+        }
+
+        /* Daily Breakdown */
+        .daily-breakdown {
+            margin-top: 16px;
+        }
+
+        .daily-breakdown-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.5;
+            margin-bottom: 12px;
+        }
+
+        .day-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #222;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .day-header:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .day-date {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .day-date .today-badge {
+            font-size: 9px;
+            background: #3b82f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .day-total {
+            font-size: 14px;
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .day-details {
+            display: none;
+            padding: 0 14px 14px;
+            border-top: 1px solid #222;
+        }
+
+        .day-card.expanded .day-details {
+            display: block;
+        }
+
+        .day-card.expanded .day-header {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .session-item:last-child {
+            border-bottom: none;
+        }
+
+        .session-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .session-type {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 3px 6px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .session-type.primary {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .session-type.secondary {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .session-title {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .session-time {
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+
+        .session-delete-btn {
+            background: rgba(239, 68, 68, 0.15);
+            border: none;
+            color: #ef4444;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            opacity: 0.6;
+            transition: all 0.2s;
+        }
+
+        .session-delete-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            opacity: 1;
+        }
+
+        .session-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .no-data-message {
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0.4;
+            font-size: 14px;
+        }
+
         @media screen and (max-width: 768px) {
             .timer-display {
                 font-size: clamp(56px, 14vw, 120px);
@@ -704,6 +1018,35 @@
                 font-size: 24px;
                 bottom: calc(12px + env(safe-area-inset-bottom, 0px));
                 left: calc(12px + env(safe-area-inset-left, 0px));
+            }
+
+            .analytics-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                top: calc(12px + env(safe-area-inset-top, 0px));
+                left: calc(12px + env(safe-area-inset-left, 0px));
+            }
+
+            .analytics-modal {
+                max-height: 90vh;
+            }
+
+            .analytics-summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .summary-value {
+                font-size: 18px;
+            }
+        }
+
+        /* Portrait rotation adjustments for analytics */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            .analytics-btn {
+                top: 16px !important;
+                left: 16px !important;
             }
         }
     </style>
@@ -781,6 +1124,22 @@
 
         <!-- Container for multiple timers -->
         <div id="timersContainer"></div>
+
+        <!-- Analytics Button -->
+        <button class="analytics-btn" id="analyticsBtn" onclick="toggleAnalytics()">i</button>
+
+        <!-- Analytics Modal -->
+        <div class="analytics-overlay" id="analyticsOverlay">
+            <div class="analytics-modal">
+                <div class="analytics-header">
+                    <h2>📊 7-Day Analytics</h2>
+                    <button class="analytics-close-btn" onclick="toggleAnalytics()">×</button>
+                </div>
+                <div class="analytics-content" id="analyticsContent">
+                    <!-- Content populated by JS -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -814,6 +1173,7 @@
 
         // Constants
         const STORAGE_KEY = 'focusTimerState';
+        const HISTORY_KEY = 'focusTimerHistory';
         const MAX_SECONDARY_TIMERS = 5;
 
         // Main Timer State
@@ -821,6 +1181,7 @@
         let remainingSeconds = totalSeconds;
         let interval = null;
         let isRunning = false;
+        let primarySessionStartRemaining = null; // remainingSeconds when this session started
 
         // Secondary Timers Array
         let secondaryTimers = [];
@@ -855,6 +1216,8 @@
         const timersContainer = document.getElementById('timersContainer');
         const timerCountBadge = document.getElementById('timerCountBadge');
         const timerLimitLabel = document.getElementById('timerLimitLabel');
+        const analyticsOverlay = document.getElementById('analyticsOverlay');
+        const analyticsContent = document.getElementById('analyticsContent');
 
         // Check if we're in portrait mode (rotated)
         function isPortraitRotated() {
@@ -966,6 +1329,14 @@
                 
                 if (remainingSeconds === 0) {
                     document.body.classList.add('complete');
+                    // Record completed primary session
+                    if (primarySessionStartRemaining !== null) {
+                        const timeSpent = primarySessionStartRemaining - remainingSeconds;
+                        if (timeSpent >= 60) {
+                            recordSession('primary', 'Focus Session', totalSeconds, timeSpent);
+                        }
+                        primarySessionStartRemaining = null;
+                    }
                     pause();
                 }
             }
@@ -974,6 +1345,10 @@
         function start() {
             if (!isRunning && remainingSeconds > 0) {
                 isRunning = true;
+                // Start tracking session if not already tracking
+                if (primarySessionStartRemaining === null) {
+                    primarySessionStartRemaining = remainingSeconds;
+                }
                 interval = setInterval(tick, 1000);
                 document.body.classList.remove('complete');
                 pauseIndicator.classList.remove('visible');
@@ -1004,6 +1379,14 @@
 
         function reset() {
             pause();
+            // Record session if any time was spent
+            if (primarySessionStartRemaining !== null) {
+                const timeSpent = primarySessionStartRemaining - remainingSeconds;
+                if (timeSpent >= 60) {
+                    recordSession('primary', 'Focus Session', totalSeconds, timeSpent);
+                }
+                primarySessionStartRemaining = null;
+            }
             remainingSeconds = totalSeconds;
             updateDisplay();
             document.body.classList.remove('complete');
@@ -1012,6 +1395,15 @@
         }
 
         function setPreset(minutes) {
+            pause();
+            // Record session if any time was spent before changing
+            if (primarySessionStartRemaining !== null) {
+                const timeSpent = primarySessionStartRemaining - remainingSeconds;
+                if (timeSpent >= 60) {
+                    recordSession('primary', 'Focus Session', totalSeconds, timeSpent);
+                }
+                primarySessionStartRemaining = null;
+            }
             totalSeconds = minutes * 60;
             remainingSeconds = totalSeconds;
             updateDisplay();
@@ -1086,6 +1478,7 @@
                 title,
                 totalSeconds: minutes * 60,
                 remainingSeconds: minutes * 60,
+                sessionStartRemaining: minutes * 60, // Track when this session started
                 interval: null,
                 isRunning: false,
                 isComplete: false,
@@ -1182,6 +1575,13 @@
                 clearInterval(timer.interval);
                 timer.interval = null;
                 
+                // Record completed secondary session
+                const timeSpent = timer.sessionStartRemaining - timer.remainingSeconds;
+                if (timeSpent >= 60) {
+                    recordSession('secondary', timer.title, timer.totalSeconds, timeSpent);
+                }
+                timer.sessionStartRemaining = null;
+                
                 const el = document.getElementById(`timer-${id}`);
                 if (el) {
                     el.classList.add('complete');
@@ -1247,6 +1647,14 @@
         function closeSecondaryTimer(id) {
             const timer = secondaryTimers.find(t => t.id === id);
             if (!timer) return;
+
+            // Record session if time was spent and not already complete
+            if (!timer.isComplete && timer.sessionStartRemaining !== null) {
+                const completedSeconds = timer.sessionStartRemaining - timer.remainingSeconds;
+                if (completedSeconds >= 60) {
+                    recordSession('secondary', timer.title, timer.totalSeconds, completedSeconds);
+                }
+            }
 
             if (timer.interval) {
                 clearInterval(timer.interval);
@@ -1350,6 +1758,247 @@
             }, 10);
         }
 
+        // ============ ANALYTICS FUNCTIONS ============
+        function getTodayDate() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function getHistory() {
+            try {
+                return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveHistory(history) {
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+        }
+
+        function cleanupOldHistory() {
+            const history = getHistory();
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            const cutoffDate = sevenDaysAgo.toISOString().split('T')[0];
+            
+            const filtered = history.filter(session => session.date >= cutoffDate);
+            saveHistory(filtered);
+        }
+
+        function recordSession(type, title, allocatedSeconds, completedSeconds) {
+            if (completedSeconds < 60) return; // Don't record sessions less than 1 minute
+            
+            const history = getHistory();
+            history.push({
+                date: getTodayDate(),
+                type,
+                title,
+                allocatedMinutes: Math.round(allocatedSeconds / 60),
+                completedMinutes: Math.round(completedSeconds / 60),
+                timestamp: Date.now()
+            });
+            saveHistory(history);
+        }
+
+        function deleteSession(timestamp) {
+            const history = getHistory();
+            const filtered = history.filter(session => session.timestamp !== timestamp);
+            saveHistory(filtered);
+            renderAnalytics(); // Re-render to reflect deletion
+        }
+
+        function recordSecondarySession(timer) {
+            const completedSeconds = timer.totalSeconds - timer.remainingSeconds;
+            if (completedSeconds >= 60) {
+                recordSession('secondary', timer.title, timer.totalSeconds, completedSeconds);
+            }
+        }
+
+        function toggleAnalytics() {
+            const isOpening = !analyticsOverlay.classList.contains('open');
+            
+            // Pause all timers when opening analytics
+            if (isOpening) {
+                pause(); // Pause primary timer
+                // Pause all secondary timers
+                secondaryTimers.forEach(timer => {
+                    if (timer.isRunning) {
+                        pauseSecondaryTimer(timer.id);
+                    }
+                });
+            }
+            
+            analyticsOverlay.classList.toggle('open');
+            if (analyticsOverlay.classList.contains('open')) {
+                renderAnalytics();
+            }
+        }
+
+        function formatDateDisplay(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            const todayStr = today.toISOString().split('T')[0];
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            
+            if (dateStr === todayStr) return 'Today';
+            if (dateStr === yesterdayStr) return 'Yesterday';
+            
+            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        }
+
+        function renderAnalytics() {
+            cleanupOldHistory();
+            const history = getHistory();
+            
+            if (history.length === 0) {
+                analyticsContent.innerHTML = `
+                    <div class="no-data-message">
+                        <p>No timer sessions recorded yet.</p>
+                        <p style="margin-top: 8px; font-size: 12px;">Complete or reset a timer to start tracking!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Calculate totals
+            let totalAllocated = 0;
+            let totalCompleted = 0;
+            let primaryTime = 0;
+            let secondaryTime = 0;
+            let sessionCount = history.length;
+            
+            // Group by date
+            const byDate = {};
+            const last7Days = [];
+            for (let i = 0; i < 7; i++) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                last7Days.push(d.toISOString().split('T')[0]);
+            }
+            
+            history.forEach(session => {
+                totalAllocated += session.allocatedMinutes;
+                totalCompleted += session.completedMinutes;
+                
+                if (session.type === 'primary') {
+                    primaryTime += session.completedMinutes;
+                } else {
+                    secondaryTime += session.completedMinutes;
+                }
+                
+                if (!byDate[session.date]) {
+                    byDate[session.date] = [];
+                }
+                byDate[session.date].push(session);
+            });
+
+            // Find most productive day
+            let mostProductiveDay = '';
+            let mostProductiveMinutes = 0;
+            Object.entries(byDate).forEach(([date, sessions]) => {
+                const dayTotal = sessions.reduce((sum, s) => sum + s.completedMinutes, 0);
+                if (dayTotal > mostProductiveMinutes) {
+                    mostProductiveMinutes = dayTotal;
+                    mostProductiveDay = date;
+                }
+            });
+
+            const completionRate = totalAllocated > 0 ? Math.round((totalCompleted / totalAllocated) * 100) : 0;
+            const dailyAvg = Math.round(totalCompleted / 7);
+
+            // Build HTML
+            let html = `
+                <div class="analytics-summary">
+                    <div class="summary-card highlight">
+                        <div class="summary-label">Total Completed</div>
+                        <div class="summary-value">${totalCompleted}<span class="summary-unit">min</span></div>
+                        <div class="summary-subtext">${Math.floor(totalCompleted / 60)}h ${totalCompleted % 60}m</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Sessions</div>
+                        <div class="summary-value">${sessionCount}</div>
+                        <div class="summary-subtext">Last 7 days</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Completion Rate</div>
+                        <div class="summary-value">${completionRate}<span class="summary-unit">%</span></div>
+                        <div class="summary-subtext">${totalCompleted}/${totalAllocated} min</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Daily Average</div>
+                        <div class="summary-value">${dailyAvg}<span class="summary-unit">min</span></div>
+                    </div>
+                </div>
+
+                <div class="analytics-summary" style="margin-top: -12px; margin-bottom: 20px;">
+                    <div class="summary-card">
+                        <div class="summary-label">Primary Timer</div>
+                        <div class="summary-value">${primaryTime}<span class="summary-unit">min</span></div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Secondary Timers</div>
+                        <div class="summary-value">${secondaryTime}<span class="summary-unit">min</span></div>
+                    </div>
+                </div>
+
+                <div class="daily-breakdown">
+                    <div class="daily-breakdown-title">Daily Breakdown</div>
+            `;
+
+            // Render each day (only days with data)
+            const todayStr = getTodayDate();
+            last7Days.forEach(date => {
+                const sessions = byDate[date] || [];
+                if (sessions.length === 0) return;
+                
+                const dayTotal = sessions.reduce((sum, s) => sum + s.completedMinutes, 0);
+                const isToday = date === todayStr;
+                
+                html += `
+                    <div class="day-card" onclick="this.classList.toggle('expanded')">
+                        <div class="day-header">
+                            <div class="day-date">
+                                ${formatDateDisplay(date)}
+                                ${isToday ? '<span class="today-badge">Today</span>' : ''}
+                            </div>
+                            <div class="day-total">${dayTotal} min</div>
+                        </div>
+                        <div class="day-details">
+                `;
+                
+                sessions.forEach(session => {
+                    const isComplete = session.completedMinutes >= session.allocatedMinutes;
+                    const timeDisplay = isComplete 
+                        ? `${session.completedMinutes} min ✓`
+                        : `${session.completedMinutes} min <span style="opacity: 0.5">(of ${session.allocatedMinutes})</span>`;
+                    
+                    html += `
+                        <div class="session-item">
+                            <div class="session-info">
+                                <span class="session-type ${session.type}">${session.type}</span>
+                                <span class="session-title">${session.title}</span>
+                            </div>
+                            <div class="session-right">
+                                <span class="session-time">${timeDisplay}</span>
+                                <button class="session-delete-btn" onclick="event.stopPropagation(); deleteSession(${session.timestamp})">×</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            analyticsContent.innerHTML = html;
+        }
+
         // ============ EVENT LISTENERS ============
         mainContainer.addEventListener('click', (e) => {
             toggleTimer();
@@ -1378,12 +2027,24 @@
             if (e.code === 'KeyR' && !e.target.matches('input')) {
                 reset();
             }
+            // Press 'i' to toggle analytics
+            if (e.code === 'KeyI' && !e.target.matches('input')) {
+                toggleAnalytics();
+            }
+        });
+
+        // Close analytics when clicking overlay background
+        analyticsOverlay.addEventListener('click', (e) => {
+            if (e.target === analyticsOverlay) {
+                toggleAnalytics();
+            }
         });
 
         // ============ INITIALIZATION ============
         setRandomQuote();
         loadState();
         updateTimerCountUI();
+        cleanupOldHistory(); // Clean up entries older than 7 days
         if (!localStorage.getItem(STORAGE_KEY)) {
             updateDisplay();
         }

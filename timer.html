@@ -1028,8 +1028,33 @@
                 left: calc(12px + env(safe-area-inset-left, 0px));
             }
 
+            .analytics-overlay {
+                padding: 10px;
+            }
+
             .analytics-modal {
-                max-height: 90vh;
+                max-height: 85vh;
+                max-width: 100%;
+                border-radius: 12px;
+            }
+
+            .analytics-header {
+                padding: 14px 16px;
+            }
+
+            .analytics-header h2 {
+                font-size: 13px;
+            }
+
+            .analytics-close-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+            }
+
+            .analytics-content {
+                padding: 14px 16px;
+                -webkit-overflow-scrolling: touch;
             }
 
             .analytics-summary {
@@ -1037,8 +1062,81 @@
                 gap: 8px;
             }
 
+            .summary-card {
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .summary-label {
+                font-size: 9px;
+                margin-bottom: 4px;
+            }
+
             .summary-value {
-                font-size: 18px;
+                font-size: 16px;
+            }
+
+            .summary-unit {
+                font-size: 10px;
+            }
+
+            .summary-subtext {
+                font-size: 10px;
+                margin-top: 2px;
+            }
+
+            .daily-breakdown-title {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .day-card {
+                border-radius: 8px;
+            }
+
+            .day-header {
+                padding: 10px 12px;
+            }
+
+            .day-date {
+                font-size: 12px;
+            }
+
+            .day-date .today-badge {
+                font-size: 8px;
+                padding: 2px 5px;
+            }
+
+            .day-total {
+                font-size: 12px;
+            }
+
+            .day-details {
+                padding: 0 12px 12px;
+            }
+
+            .session-item {
+                padding: 6px 0;
+            }
+
+            .session-type {
+                font-size: 7px;
+                padding: 2px 5px;
+            }
+
+            .session-title {
+                font-size: 11px;
+            }
+
+            .session-time {
+                font-size: 11px;
+            }
+
+            .session-delete-btn {
+                width: 20px;
+                height: 20px;
+                font-size: 11px;
+                margin-left: 6px;
             }
         }
 
@@ -1047,6 +1145,16 @@
             .analytics-btn {
                 top: 16px !important;
                 left: 16px !important;
+            }
+
+            /* Analytics overlay needs special handling for rotated view */
+            .analytics-overlay {
+                padding: 8px;
+            }
+
+            .analytics-modal {
+                max-height: 95vw; /* Use vw since we're rotated */
+                max-width: 95vh;
             }
         }
     </style>

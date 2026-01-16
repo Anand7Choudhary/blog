@@ -2015,10 +2015,23 @@
         }
 
         function deleteSession(timestamp) {
+            // Save expanded state of all day cards before re-render
+            const expandedDates = [];
+            document.querySelectorAll('.day-card.expanded').forEach(card => {
+                const dateAttr = card.getAttribute('data-date');
+                if (dateAttr) expandedDates.push(dateAttr);
+            });
+            
             const history = getHistory();
             const filtered = history.filter(session => session.timestamp !== timestamp);
             saveHistory(filtered);
-            renderAnalytics(); // Re-render to reflect deletion
+            renderAnalytics();
+            
+            // Restore expanded state after re-render
+            expandedDates.forEach(date => {
+                const card = document.querySelector(`.day-card[data-date="${date}"]`);
+                if (card) card.classList.add('expanded');
+            });
         }
 
         function recordSecondarySession(timer) {
@@ -2169,7 +2182,7 @@
                 const isToday = date === todayStr;
                 
                 html += `
-                    <div class="day-card" onclick="this.classList.toggle('expanded')">
+                    <div class="day-card" data-date="${date}" onclick="this.classList.toggle('expanded')">
                         <div class="day-header">
                             <div class="day-date">
                                 ${formatDateDisplay(date)}

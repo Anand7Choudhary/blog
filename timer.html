@@ -773,14 +773,26 @@
             flex: 1;
             overflow-y: auto;
             padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .analytics-left-column {
+            width: 100%;
+        }
+
+        .analytics-right-column {
+            width: 100%;
+            flex: 1;
+            overflow-y: auto;
         }
 
         /* Summary Cards */
         .analytics-summary {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .summary-card {
@@ -1138,6 +1150,96 @@
                 font-size: 11px;
                 margin-left: 6px;
             }
+
+            /* Two-column layout for mobile landscape */
+            .analytics-content {
+                display: flex;
+                gap: 16px;
+                padding: 12px;
+            }
+
+            .analytics-left-column {
+                flex: 0 0 45%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .analytics-right-column {
+                flex: 1;
+                overflow-y: auto;
+                max-height: 100%;
+            }
+
+            .analytics-summary {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+                margin-bottom: 0;
+            }
+
+            .summary-card {
+                padding: 8px;
+                border-radius: 8px;
+            }
+
+            .summary-label {
+                font-size: 8px;
+                margin-bottom: 3px;
+            }
+
+            .summary-value {
+                font-size: 14px;
+            }
+
+            .summary-unit {
+                font-size: 9px;
+            }
+
+            .summary-subtext {
+                font-size: 9px;
+                margin-top: 2px;
+            }
+
+            .daily-breakdown {
+                margin-top: 0;
+            }
+
+            .daily-breakdown-title {
+                font-size: 9px;
+                margin-bottom: 8px;
+            }
+
+            .day-card {
+                margin-bottom: 6px;
+            }
+
+            .day-header {
+                padding: 8px 10px;
+            }
+
+            .day-date {
+                font-size: 11px;
+            }
+
+            .day-total {
+                font-size: 11px;
+            }
+
+            .session-item {
+                padding: 5px 0;
+            }
+
+            .session-type {
+                font-size: 7px;
+            }
+
+            .session-title {
+                font-size: 10px;
+            }
+
+            .session-time {
+                font-size: 10px;
+            }
         }
 
         /* Portrait rotation adjustments for analytics */
@@ -1153,8 +1255,12 @@
             }
 
             .analytics-modal {
-                max-height: 95vw; /* Use vw since we're rotated */
-                max-width: 95vh;
+                max-height: 80vw; /* Use vw since we're rotated */
+                max-width: 60vh; /* 60% of landscape width */
+            }
+
+            .analytics-content {
+                flex-direction: row;
             }
         }
     </style>
@@ -2017,43 +2123,40 @@
             const completionRate = totalAllocated > 0 ? Math.round((totalCompleted / totalAllocated) * 100) : 0;
             const dailyAvg = Math.round(totalCompleted / 7);
 
-            // Build HTML
+            // Build HTML - Two column layout for mobile
             let html = `
-                <div class="analytics-summary">
-                    <div class="summary-card highlight">
-                        <div class="summary-label">Total Completed</div>
-                        <div class="summary-value">${totalCompleted}<span class="summary-unit">min</span></div>
-                        <div class="summary-subtext">${Math.floor(totalCompleted / 60)}h ${totalCompleted % 60}m</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-label">Sessions</div>
-                        <div class="summary-value">${sessionCount}</div>
-                        <div class="summary-subtext">Last 7 days</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-label">Completion Rate</div>
-                        <div class="summary-value">${completionRate}<span class="summary-unit">%</span></div>
-                        <div class="summary-subtext">${totalCompleted}/${totalAllocated} min</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-label">Daily Average</div>
-                        <div class="summary-value">${dailyAvg}<span class="summary-unit">min</span></div>
-                    </div>
-                </div>
-
-                <div class="analytics-summary" style="margin-top: -12px; margin-bottom: 20px;">
-                    <div class="summary-card">
-                        <div class="summary-label">Primary Timer</div>
-                        <div class="summary-value">${primaryTime}<span class="summary-unit">min</span></div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-label">Secondary Timers</div>
-                        <div class="summary-value">${secondaryTime}<span class="summary-unit">min</span></div>
+                <div class="analytics-left-column">
+                    <div class="analytics-summary">
+                        <div class="summary-card highlight">
+                            <div class="summary-label">Total</div>
+                            <div class="summary-value">${totalCompleted}<span class="summary-unit">m</span></div>
+                            <div class="summary-subtext">${Math.floor(totalCompleted / 60)}h ${totalCompleted % 60}m</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Sessions</div>
+                            <div class="summary-value">${sessionCount}</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Rate</div>
+                            <div class="summary-value">${completionRate}<span class="summary-unit">%</span></div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Avg/Day</div>
+                            <div class="summary-value">${dailyAvg}<span class="summary-unit">m</span></div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Primary</div>
+                            <div class="summary-value">${primaryTime}<span class="summary-unit">m</span></div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Secondary</div>
+                            <div class="summary-value">${secondaryTime}<span class="summary-unit">m</span></div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="daily-breakdown">
-                    <div class="daily-breakdown-title">Daily Breakdown</div>
+                <div class="analytics-right-column">
+                    <div class="daily-breakdown">
+                        <div class="daily-breakdown-title">Daily Breakdown</div>
             `;
 
             // Render each day (only days with data)
@@ -2072,7 +2175,7 @@
                                 ${formatDateDisplay(date)}
                                 ${isToday ? '<span class="today-badge">Today</span>' : ''}
                             </div>
-                            <div class="day-total">${dayTotal} min</div>
+                            <div class="day-total">${dayTotal}m</div>
                         </div>
                         <div class="day-details">
                 `;
@@ -2080,13 +2183,13 @@
                 sessions.forEach(session => {
                     const isComplete = session.completedMinutes >= session.allocatedMinutes;
                     const timeDisplay = isComplete 
-                        ? `${session.completedMinutes} min ✓`
-                        : `${session.completedMinutes} min <span style="opacity: 0.5">(of ${session.allocatedMinutes})</span>`;
+                        ? `${session.completedMinutes}m ✓`
+                        : `${session.completedMinutes}m <span style="opacity: 0.5">(${session.allocatedMinutes})</span>`;
                     
                     html += `
                         <div class="session-item">
                             <div class="session-info">
-                                <span class="session-type ${session.type}">${session.type}</span>
+                                <span class="session-type ${session.type}">${session.type === 'primary' ? 'P' : 'S'}</span>
                                 <span class="session-title">${session.title}</span>
                             </div>
                             <div class="session-right">
@@ -2103,7 +2206,7 @@
                 `;
             });
 
-            html += '</div>';
+            html += '</div></div>';
             analyticsContent.innerHTML = html;
         }
 

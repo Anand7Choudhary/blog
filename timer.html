@@ -905,28 +905,16 @@
                 try {
                     const state = JSON.parse(saved);
                     totalSeconds = state.totalSeconds || 5400;
-                    
-                    if (state.isRunning && state.timestamp) {
-                        const elapsedSeconds = Math.floor((Date.now() - state.timestamp) / 1000);
-                        remainingSeconds = Math.max(0, state.remainingSeconds - elapsedSeconds);
-                        
-                        if (remainingSeconds > 0) {
-                            updateDisplay();
-                            start();
-                            return;
-                        } else {
-                            remainingSeconds = 0;
-                            updateDisplay();
-                            document.body.classList.add('complete');
-                            return;
-                        }
-                    } else {
-                        remainingSeconds = state.remainingSeconds || totalSeconds;
-                    }
+                    // Always restore from the saved remainingSeconds, treating tab/browser close as a pause
+                    remainingSeconds = state.remainingSeconds || totalSeconds;
                     
                     updateDisplay();
-                    if (state.remainingSeconds > 0 && !state.isRunning) {
+                    
+                    // Show pause indicator if timer was running or paused with time remaining
+                    if (remainingSeconds > 0 && remainingSeconds < totalSeconds) {
                         pauseIndicator.classList.add('visible');
+                    } else if (remainingSeconds === 0) {
+                        document.body.classList.add('complete');
                     }
                 } catch (e) {
                     console.error('Failed to load state:', e);

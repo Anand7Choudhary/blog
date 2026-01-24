@@ -752,6 +752,398 @@
             background: rgba(255, 255, 255, 0.25);
         }
 
+        /* Settings Button */
+        .settings-btn {
+            position: fixed;
+            top: calc(16px + env(safe-area-inset-top, 0px));
+            left: calc(70px + env(safe-area-inset-left, 0px));
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 200;
+        }
+
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        body.complete .settings-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+
+        body.complete .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .settings-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Settings Modal Overlay */
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .settings-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .settings-modal {
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            border: 1px solid #333;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .settings-overlay.open .settings-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .settings-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .settings-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .settings-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .settings-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+        }
+
+        /* Toggle Switch */
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #fff;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: #10b981;
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Sound Selection Sections */
+        .sound-sections {
+            display: none;
+            margin-top: 16px;
+        }
+
+        .sound-sections.visible {
+            display: block;
+        }
+
+        .sound-section {
+            margin-bottom: 20px;
+        }
+
+        .sound-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .sound-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .sound-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sound-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #444;
+        }
+
+        .sound-option.selected {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+        }
+
+        .sound-option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sound-name {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .sound-option.selected .sound-name {
+            color: #10b981;
+        }
+
+        .play-preview-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .play-preview-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .sound-check {
+            display: none;
+            color: #10b981;
+            font-size: 14px;
+        }
+
+        .sound-option.selected .sound-check {
+            display: inline;
+        }
+
+        .sound-option.none-option {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .sound-option.none-option.selected {
+            background: rgba(100, 100, 100, 0.15);
+            border-color: #666;
+        }
+
+        .sound-option.none-option.selected .sound-name {
+            color: #999;
+        }
+
+        @media screen and (max-width: 768px) {
+            .settings-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+                top: calc(12px + env(safe-area-inset-top, 0px));
+                left: calc(52px + env(safe-area-inset-left, 0px));
+            }
+
+            .settings-overlay {
+                padding: 8px;
+            }
+
+            .settings-modal {
+                max-height: 70vh;
+                max-width: 280px;
+                border-radius: 10px;
+            }
+
+            .settings-header {
+                padding: 10px 12px;
+            }
+
+            .settings-header h2 {
+                font-size: 11px;
+            }
+
+            .settings-close-btn {
+                width: 24px;
+                height: 24px;
+                font-size: 14px;
+            }
+
+            .settings-content {
+                padding: 10px 12px;
+            }
+
+            .toggle-row {
+                padding: 8px 0;
+            }
+
+            .toggle-label {
+                font-size: 11px;
+            }
+
+            .toggle-switch {
+                width: 40px;
+                height: 22px;
+            }
+
+            .toggle-slider:before {
+                height: 16px;
+                width: 16px;
+            }
+
+            .toggle-switch input:checked + .toggle-slider:before {
+                transform: translateX(18px);
+            }
+
+            .sound-section {
+                margin-bottom: 12px;
+            }
+
+            .sound-section-title {
+                font-size: 10px;
+                margin-bottom: 8px;
+            }
+
+            .sound-grid {
+                gap: 6px;
+            }
+
+            .sound-option {
+                padding: 8px;
+                border-radius: 8px;
+                gap: 4px;
+            }
+
+            .sound-name {
+                font-size: 10px;
+            }
+
+            .play-preview-btn {
+                width: 20px;
+                height: 20px;
+                font-size: 8px;
+            }
+
+            .sound-check {
+                font-size: 10px;
+            }
+        }
+
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            .settings-btn {
+                top: 16px !important;
+                left: 66px !important;
+            }
+        }
+
         .analytics-btn:active {
             transform: scale(0.95);
         }
@@ -1411,6 +1803,46 @@
         <!-- Analytics Button -->
         <button class="analytics-btn" id="analyticsBtn" onclick="toggleAnalytics()">i</button>
 
+        <!-- Settings Button -->
+        <button class="settings-btn" id="settingsBtn" onclick="toggleSettings()">⚙</button>
+
+        <!-- Settings Modal -->
+        <div class="settings-overlay" id="settingsOverlay">
+            <div class="settings-modal">
+                <div class="settings-header">
+                    <h2>⚙️ Settings</h2>
+                    <button class="settings-close-btn" onclick="toggleSettings()">×</button>
+                </div>
+                <div class="settings-content" id="settingsContent">
+                    <div class="toggle-row">
+                        <span class="toggle-label">Play sound on completion</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="soundToggle" onchange="handleSoundToggle()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="sound-sections" id="soundSections">
+                        <!-- Primary Task Sound Selection -->
+                        <div class="sound-section">
+                            <div class="sound-section-title">🎯 Primary Task Sound</div>
+                            <div class="sound-grid" id="primarySoundGrid">
+                                <!-- Sound options will be generated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Secondary Task Sound Selection -->
+                        <div class="sound-section">
+                            <div class="sound-section-title">⏱️ Secondary Task Sound</div>
+                            <div class="sound-grid" id="secondarySoundGrid">
+                                <!-- Sound options with None will be generated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Analytics Modal -->
         <div class="analytics-overlay" id="analyticsOverlay">
             <div class="analytics-modal">
@@ -1457,7 +1889,30 @@
         // Constants
         const STORAGE_KEY = 'focusTimerState';
         const HISTORY_KEY = 'focusTimerHistory';
+        const SETTINGS_KEY = 'focusTimerSettings';
         const MAX_SECONDARY_TIMERS = 5;
+
+        // Available Sounds
+        const AVAILABLE_SOUNDS = [
+            { id: 'Alert', name: 'Alert', file: 'AlertSounds/Alert.mp3' },
+            { id: 'Celebrate', name: 'Celebrate', file: 'AlertSounds/Celebrate.mp3' },
+            { id: 'Happy-Huming', name: 'Happy Huming', file: 'AlertSounds/Happy-Huming.mp3' },
+            { id: 'Hell-Yeah', name: 'Hell Yeah', file: 'AlertSounds/Hell-Yeah.mp3' }
+        ];
+
+        // Sound Settings State
+        let soundSettings = {
+            enabled: false,
+            primarySound: 'Alert',
+            secondarySound: 'Alert'
+        };
+
+        // Preview audio element
+        let previewAudio = new Audio();
+
+        // Tab blinking state
+        let tabBlinkInterval = null;
+        const originalTitle = 'Focus Timer';
 
         // Main Timer State
         let totalSeconds = 5400;
@@ -1501,6 +1956,11 @@
         const timerLimitLabel = document.getElementById('timerLimitLabel');
         const analyticsOverlay = document.getElementById('analyticsOverlay');
         const analyticsContent = document.getElementById('analyticsContent');
+        const settingsOverlay = document.getElementById('settingsOverlay');
+        const soundToggle = document.getElementById('soundToggle');
+        const soundSections = document.getElementById('soundSections');
+        const primarySoundGrid = document.getElementById('primarySoundGrid');
+        const secondarySoundGrid = document.getElementById('secondarySoundGrid');
 
         // Check if we're in portrait mode (rotated)
         function isPortraitRotated() {
@@ -1615,6 +2075,10 @@
                 
                 if (remainingSeconds === 0) {
                     document.body.classList.add('complete');
+                    // Play completion sound
+                    playCompletionSound('primary');
+                    // Start tab blinking
+                    startTabBlinking();
                     // Record completed primary session
                     if (primarySessionStartRemaining !== null) {
                         const timeSpent = primarySessionStartRemaining - remainingSeconds;
@@ -1631,6 +2095,8 @@
         function start() {
             if (!isRunning && remainingSeconds > 0) {
                 isRunning = true;
+                // Stop tab blinking if it was active
+                stopTabBlinking();
                 // Start tracking session if not already tracking
                 if (primarySessionStartRemaining === null) {
                     primarySessionStartRemaining = remainingSeconds;
@@ -1665,6 +2131,8 @@
 
         function reset() {
             pause();
+            // Stop tab blinking if it was active
+            stopTabBlinking();
             // Record session if any time was spent
             if (primarySessionStartRemaining !== null) {
                 const timeSpent = primarySessionStartRemaining - remainingSeconds;
@@ -1880,6 +2348,9 @@
                 timer.isRunning = false;
                 clearInterval(timer.interval);
                 timer.interval = null;
+                
+                // Play completion sound
+                playCompletionSound('secondary');
                 
                 // Record completed secondary session
                 const timeSpent = timer.sessionStartRemaining - timer.remainingSeconds;
@@ -2315,6 +2786,164 @@
             analyticsContent.innerHTML = html;
         }
 
+        // ============ SETTINGS FUNCTIONS ============
+        function loadSettings() {
+            try {
+                const saved = localStorage.getItem(SETTINGS_KEY);
+                if (saved) {
+                    soundSettings = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Failed to load settings:', e);
+            }
+        }
+
+        function saveSettings() {
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify(soundSettings));
+        }
+        // ============ TAB BLINKING FUNCTIONS ============
+        function startTabBlinking() {
+            // Change theme-color to green
+            const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+            if (themeColorMeta) {
+                themeColorMeta.setAttribute('content', '#10b981');
+            }
+            
+            // Start blinking the title
+            let isAlt = false;
+            tabBlinkInterval = setInterval(() => {
+                isAlt = !isAlt;
+                document.title = isAlt ? '✓ Complete!' : originalTitle;
+            }, 800);
+        }
+
+        function stopTabBlinking() {
+            // Stop the interval
+            if (tabBlinkInterval) {
+                clearInterval(tabBlinkInterval);
+                tabBlinkInterval = null;
+            }
+            
+            // Reset title
+            document.title = originalTitle;
+            
+            // Reset theme-color to black
+            const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+            if (themeColorMeta) {
+                themeColorMeta.setAttribute('content', '#000000');
+            }
+        }
+
+        function toggleSettings() {
+            const isOpening = !settingsOverlay.classList.contains('open');
+            
+            // Pause all timers when opening settings
+            if (isOpening) {
+                pause(); // Pause primary timer
+                secondaryTimers.forEach(timer => {
+                    if (timer.isRunning) {
+                        pauseSecondaryTimer(timer.id);
+                    }
+                });
+                renderSoundGrids();
+                updateSettingsUI();
+            } else {
+                // Stop any preview audio when closing
+                previewAudio.pause();
+                previewAudio.currentTime = 0;
+            }
+            
+            settingsOverlay.classList.toggle('open');
+        }
+
+        function handleSoundToggle() {
+            soundSettings.enabled = soundToggle.checked;
+            soundSections.classList.toggle('visible', soundSettings.enabled);
+            saveSettings();
+        }
+
+        function updateSettingsUI() {
+            soundToggle.checked = soundSettings.enabled;
+            soundSections.classList.toggle('visible', soundSettings.enabled);
+        }
+
+        function renderSoundGrids() {
+            // Render Primary Sound Grid (no "None" option)
+            let primaryHtml = '';
+            AVAILABLE_SOUNDS.forEach(sound => {
+                const isSelected = soundSettings.primarySound === sound.id;
+                primaryHtml += `
+                    <div class="sound-option ${isSelected ? 'selected' : ''}" onclick="selectSound('primary', '${sound.id}')">
+                        <div class="sound-option-header">
+                            <span class="sound-name">${sound.name}</span>
+                            <button class="play-preview-btn" onclick="event.stopPropagation(); playPreview('${sound.file}')">▶</button>
+                        </div>
+                        <span class="sound-check">✓</span>
+                    </div>
+                `;
+            });
+            primarySoundGrid.innerHTML = primaryHtml;
+
+            // Render Secondary Sound Grid (with "None" option)
+            let secondaryHtml = `
+                <div class="sound-option none-option ${soundSettings.secondarySound === 'none' ? 'selected' : ''}" onclick="selectSound('secondary', 'none')">
+                    <div class="sound-option-header">
+                        <span class="sound-name">None</span>
+                    </div>
+                    <span class="sound-check">✓</span>
+                </div>
+            `;
+            AVAILABLE_SOUNDS.forEach(sound => {
+                const isSelected = soundSettings.secondarySound === sound.id;
+                secondaryHtml += `
+                    <div class="sound-option ${isSelected ? 'selected' : ''}" onclick="selectSound('secondary', '${sound.id}')">
+                        <div class="sound-option-header">
+                            <span class="sound-name">${sound.name}</span>
+                            <button class="play-preview-btn" onclick="event.stopPropagation(); playPreview('${sound.file}')">▶</button>
+                        </div>
+                        <span class="sound-check">✓</span>
+                    </div>
+                `;
+            });
+            secondarySoundGrid.innerHTML = secondaryHtml;
+        }
+
+        function playPreview(file) {
+            previewAudio.pause();
+            previewAudio.currentTime = 0;
+            previewAudio.src = file;
+            previewAudio.play().catch(e => console.log('Audio play failed:', e));
+        }
+
+        function selectSound(type, soundId) {
+            if (type === 'primary') {
+                soundSettings.primarySound = soundId;
+            } else {
+                soundSettings.secondarySound = soundId;
+            }
+            saveSettings();
+            renderSoundGrids();
+        }
+
+        function playCompletionSound(type) {
+            if (!soundSettings.enabled) return;
+            
+            let soundId;
+            if (type === 'primary') {
+                soundId = soundSettings.primarySound;
+            } else {
+                soundId = soundSettings.secondarySound;
+            }
+            
+            if (soundId === 'none') return;
+            
+            const sound = AVAILABLE_SOUNDS.find(s => s.id === soundId);
+            if (sound) {
+                const audio = new Audio(sound.file);
+                audio.play().catch(e => console.log('Completion sound failed:', e));
+            }
+        }
+
         // ============ EVENT LISTENERS ============
         mainContainer.addEventListener('click', (e) => {
             toggleTimer();
@@ -2356,7 +2985,15 @@
             }
         });
 
+        // Close settings when clicking overlay background
+        settingsOverlay.addEventListener('click', (e) => {
+            if (e.target === settingsOverlay) {
+                toggleSettings();
+            }
+        });
+
         // ============ INITIALIZATION ============
+        loadSettings();
         setRandomQuote();
         loadState();
         updateTimerCountUI();
